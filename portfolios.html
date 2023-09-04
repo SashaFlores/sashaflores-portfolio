@@ -1,0 +1,526 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <!-- meta tags -->
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta content="width=device-width, initial-scale=1.0" name="viewport">
+   
+        <title>Sasha Flores</title>
+        <meta content="" name="description">
+        <meta content="" name="keywords">
+
+        <!-- Bootstrap CSS -->
+        <link href="css/bootstrap.min.css" rel="stylesheet">
+        <link href="css/aos.css" rel="stylesheet">
+        <link href="css/style.css" rel="stylesheet">
+    </head>
+
+
+    <body>
+        <i class="bi bi-list mobile-nav-toggle d-xl-none"></i>
+        <header>
+            <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+                <div class="container-fluid px-md-5">
+
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+
+                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                        <ul class="navbar-nav me-auto mb-2 mb-lg-0" data-aos="fade-down" data-aos-duration="1000">
+                            <li class="nav-item"> <a class="nav-link" aria-current="page" href="./index.html">HOME</a></li>
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" id="aboutDropdown" role="button"
+                                    data-bs-toggle="dropdown" aria-expanded="false">ABOUT ME</a>
+                                <ul class="dropdown-menu" aria-labelledby="aboutDropdown">
+                                    <li><a class="dropdown-item" href="./background.html">Background</a></li>
+                                    <li><a class="dropdown-item" href="./skills.html">Skills</a></li>
+                                    <li><a class="dropdown-item" href="./experience.html">Experience</a></li>
+                                </ul>
+                            </li>
+                            <li class="nav-item"><a class="nav-link active" href="#">PORTFOLIO</a></li>
+                            <li class="nav-item"> <a class="nav-link" href="./blog.html">BLOG</a></li>
+                            <li class="nav-item"><a class="nav-link" href="./contact.html">CONTACT</a></li>
+                            <li class="nav-item"><a class="nav-link" href="#footer">FUN FACTS</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+        </header>
+
+
+        <!-----------Projects----------------->
+        <!-------Start NavBar--------------------->
+        <section id="portfolio" class="py-5">
+            <div class="container py-5">
+                <div class="row">
+                    <div class="col-12 my-4" data-aos="fade-up" data-aos-duration="1000">
+                        <h1 class="fw-bold text-center text-uppercase">PORTFOLIO</h1>
+                    </div>
+                    <div id="myBtnContainer" class="my-4 text-center" data-aos="fade-bottom" data-aos-duration="1000">
+                        <button class="btn active" onclick="filterSelection('all')"> ALL</button>
+                        <button class="btn" onclick="filterSelection('blockchain')"> BLOCKCHAIN</button>
+                        <button class="btn" onclick="filterSelection('machine_learning')"> MACHINE LEARNING</button>
+                    </div>
+                    <!-------End NavBar--------------------->
+
+
+                    <!-- Portfolio Gallery Grid -->
+                    <!------blockchain------->
+                    <div class="row justify-content-center" data-aos="fade-up" data-aos-duration="1000">
+                        <div class="column blockchain col-md-4">
+                            <a class="stretched-link portfolio_modal" href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#portfolio_modal_"></a>
+                            <div class="content shadow card"><span class="viewicon"><img src="./images/eyeicon.png" height="25" /></span>
+                                <img src="./images/portfolio/bits.jpeg" alt="Nature" style="width:100%">
+                                <div class="portfolioDtl">
+                                    <span class="maintitle">BitBucks</span>
+                                    <span class="techname">
+                                        Hardhat, Open Zeppelin, UUPS & Beacon Proxies, Hardhat-deploy, 
+                                        Ethers, Chai, Slither, Mythx, Solidity Coverage, Solidity, JavaScript.
+                                    </span>
+                                    <span class="website"> - </span>
+                                    <span class="githublink">https://github.com/SashaFlores/BitBucks</span>
+                                    <span class="details">
+                                        <ul>
+                                            <li>
+                                                This project aims to create a bridge between the physical world and the blockchain 
+                                                by allowing individuals and businesses to tokenize their assets, such as real estate, cars, 
+                                                jewelry, and other valuable items, after completing the necessary KYC/KYB identification process.
+                                                By doing so, users can establish a secure and transparent record of ownership and track their 
+                                                asset's payment and maintenance history.
+                                            </li>
+                                            <li>
+                                                The project also introduces a stable token backed by 
+                                                USD, enabling users to transact without being affected by the volatility of other
+                                                cryptocurrencies. Additionally, the platform provides flexibility for sellers to 
+                                                choose between selling their asset as a whole or through fractionalization and 
+                                                decide whether to hold open sales or limit them to invitation only.
+                                            </li>
+                                        </ul>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!---------------------DAO------------------------->
+                        <div class="column blockchain col-md-4">
+                            <a class="stretched-link portfolio_modal" href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#portfolio_modal_"></a>
+                            <div class="content shadow card"><span class="viewicon"><img src="./images/eyeicon.png" height="25" /></span>
+                                <img src="./images/portfolio/DAO.jpg" alt="Nature" style="width:100%">
+                                <div class="portfolioDtl">
+                                    <span class="maintitle">DAO</span>
+                                    <span class="techname">
+                                        Hardhat, Hardhat-deploy, Solidity, TypeScript, JavaScript, Slither.
+                                    </span>
+                                    <span class="website"> - </span>
+                                    <span class="githublink">https://github.com/SashaFlores/DAO</span>
+                                    <span class="details">
+                                        <ul>
+                                            <li>
+                                                This project is an on-chain DAO that utilizes a Governor Controller to manage 
+                                                voting for proposals with:
+                                                <ol>
+                                                    <li>
+                                                        VOTING_DELAY of 1 block, meaning that a proposal can be voted on one
+                                                         block after it has been proposed.
+                                                    </li>
+                                                    <li>
+                                                        VOTING_PERIOD is set to 5 blocks, indicating that the voting period 
+                                                        for each proposal is 5 blocks long.
+                                                    </li>
+                                                    <li>
+                                                        QUORUM_PERCENTAGE is set to 4%, which means that at least 4% of the 
+                                                        total token holders need to vote in order for a proposal to be considered valid.
+                                                    </li>
+                                                </ol>
+                                            </li>
+                                            <li>
+                                                The project also includes a TimeLock mechanism, which sets a minimum delay of 3600 
+                                                seconds (1 hour) for executing any proposed changes. 
+                                                The EXECUTORS and PROPOSERS arrays are used to specify the addresses of individuals 
+                                                or entities that can execute or propose changes, respectively.
+                                            </li>
+                                            <li>
+                                                Overall, the project seeks to create an on-chain DAO that allows for transparent and 
+                                                democratic decision-making through voting on proposals. 
+                                                The Governor Controller, TimeLock mechanism, and script proposals ensure that proposals 
+                                                are rigorously reviewed and executed in a secure and transparent manner.
+                                            </li>
+                                        </ul>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!---------------------Blockchain Development------------------------->
+                        <div class="column blockchain col-md-4">
+                            <a class="stretched-link portfolio_modal" href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#portfolio_modal_"></a>
+                            <div class="content shadow card"><span class="viewicon"><img src="./images/eyeicon.png"  height="25" /></span>
+                                <img src="./images/portfolio/BlockChain.jpg" alt="Nature" style="width:100%">
+                                <div class="portfolioDtl">
+                                    <span class="maintitle">Blockchain Development</span>
+                                    <span class="techname">GO-LANG(geth), Python, nodes.js, HD-Wallet.</span>
+                                    <span class="website"> - </span>
+                                    <span class="githublink">https://github.com/SashaFlores/Blockchain_Developement</span>
+                                    <span class="details">
+                                        <ul>
+                                            <li>
+                                                This project involves setting up and running a private blockchain network from gnosis 
+                                                block with a Proof-of-Stake (PoS) consensus algorithm and mining rewards system to 
+                                                enable banks to send and receive client transactions securely and efficiently.
+                                            </li>
+                                            <li>
+                                                The ultimate goal of this project is to provide banks with a private blockchain network 
+                                                that enables them to send and receive client transactions securely, efficiently, and 
+                                                cost-effectively.
+                                            </li>
+                                        </ul>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!---------------------Mini DeFi------------------------->
+                        <div class="column blockchain col-md-4">
+                            <a class="stretched-link portfolio_modal" href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#portfolio_modal_"></a>
+                            <div class="content shadow card"><span class="viewicon"><img src="./images/eyeicon.png" height="25" /></span>
+                                <img src="./images/portfolio/Mini-Defi.jpg" alt="Lights" style="width:100%">
+                                <div class="portfolioDtl">
+                                    <span class="maintitle">Mini-DeFi</span>
+                                    <span class="techname">Truffle, Solidity, SushiSwap Protocol, Open Zeppelin, Ropsten Testnet</span>
+                                    <span class="website"> - </span>
+                                    <span class="githublink">https://github.com/SashaFlores/Mini-DeFi</span>
+                                    <span class="details">
+                                        <ul>
+                                            <li>
+                                                This project involves creating a new MiniDeFi token by forking the SushiSwap protocol 
+                                                and starting a DAI-ETH liquidity pool. 
+                                                The project also includes a rewards and staking mechanism, where incentive tokens are 
+                                                paid to both the token holders and the developer team.
+                                            </li>
+                                            <li>
+                                                By forking the SushiSwap protocol, the project can leverage the existing decentralized 
+                                                exchange infrastructure to create a new MiniDeFi token. 
+                                                The DAI-ETH liquidity pool enables users to swap between DAI and ETH while earning 
+                                                rewards in the form of the new MiniDeFi token.
+                                            </li>
+                                            <li>
+                                                The staking mechanism encourages users to hold the MiniDeFi token by offering additional 
+                                                incentive tokens as rewards. The developer team also receives incentive tokens, which 
+                                                incentivize them to continue developing and improving the project.
+                                            </li>
+                                            <li>
+                                                Overall, the project aims to provide a decentralized financial ecosystem where users 
+                                                can earn rewards by participating in liquidity provision and staking while benefiting 
+                                                from the SushiSwap protocol's established infrastructure.
+                                            </li>
+                                        </ul>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!---------------------Flash Loan------------------------->
+                        <div class="column blockchain col-md-4">
+                            <a class="stretched-link portfolio_modal" href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#portfolio_modal_"></a>
+                            <div class="content shadow card"><span class="viewicon"><img src="./images/eyeicon.png" height="25" /></span>
+                                <img src="./images/portfolio/flash_loan.jpg" alt="Nature" style="width:100%">
+                                <div class="portfolioDtl">
+                                    <span class="maintitle">Flash Loans</span>
+                                    <span class="techname">
+                                        Solidity, Truffle, ganache-cli, Money-Legos, Compound
+                                        Protocol, Open Zeppelin, Infura.
+                                    </span>
+                                    <span class="website"> - </span>
+                                    <span class="githublink">github.com/SashaFlores/Flash-Loans</span>
+                                    <span class="details">
+                                        This project involves creating a smart contract that enables users to take a flash .
+                                        loan from DYDX, a flash loan provider, to farm yield with leverage on the Compound platform. 
+                                        The smart contract works by:
+                                        <ol>
+                                            <li>Sending an initial deposit to DYDX, which is then used to take out a flash loan.</li>
+                                            <li>The flash loan is then used to deposit a lump sum amount in the Compound protocol, 
+                                                which allows the user to earn Compound tokens and borrow against the collateral 
+                                                deposit to earn even more Compound tokens.</li>
+                                        </ol>
+                                        The ultimate goal of this project is to provide users with a simple and efficient way 
+                                        to earn yield with leverage using the DYDX and Compound platforms. 
+                                        By using a smart contract to automate the process, users can take advantage of 
+                                        the benefits of flash loans and yield farming with leverage without having to 
+                                        invest significant time and effort in the process.
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!---------------------Fork Safe Moon------------------------->
+                        <div class="column blockchain col-md-4">
+                            <a class="stretched-link portfolio_modal" href="javascript:void(0)" data-bs-toggle="modal"
+                                data-bs-target="#portfolio_modal_"></a>
+                            <div class="content shadow card"><span class="viewicon"><img src="./images/eyeicon.png" height="25"/></span>
+                                <img src="./images/portfolio/social_thumb.png" alt="Nature" style="width:100%">
+                                <div class="portfolioDtl">
+                                    <span class="maintitle">Fork Safemoon Protocol</span>
+                                    <span class="techname">Safemoon Protocol, Truffle, Open Zeppelin, Solidity, Binance Testnet</span>
+                                    <span class="website"> - </span>
+                                    <span class="githublink">https://github.com/SashaFlores/Fork-Safemoon-Protocol-</span>
+                                    <span class="details">
+                                        <ul>
+                                            <li>
+                                                This project involves forking the Safemoon Protocol to create a new token called 
+                                                "AriesCode." The AriesCode token has a fixed supply mechanism, meaning that the total 
+                                                number of tokens in circulation will not change.
+                                            </li>
+                                            <li>
+                                                In addition to the fixed supply mechanism, the project introduces administrative fees 
+                                                to the existing liquidity pool and reflection ratios. These administrative fees are 
+                                                designed to generate revenue for the project and incentivize liquidity providers 
+                                                to hold AriesCode tokens. The reflection ratios enable token holders to earn passive 
+                                                income through the redistribution of transaction fees.
+                                            </li>
+                                            <li>
+                                                Overall, the project seeks to create a decentralized financial ecosystem that 
+                                                incentivizes holding AriesCode tokens while generating revenue for the project 
+                                                through administrative fees.
+                                            </li>
+                                        </ul>
+                                   
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+
+                        
+                        <!---------------------Flamingo Token------------------------->
+                        <div class="column blockchain col-md-4">
+                            <a class="stretched-link portfolio_modal" href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#portfolio_modal_"></a>
+                            <div class="content shadow card"><span class="viewicon"><img src="./images/eyeicon.png"  height="25" /></span>
+                                <img src="./images/portfolio/flamingo.jpg" alt="Nature" style="width:100%">
+                                <div class="portfolioDtl">
+                                    <span class="maintitle">Flamingo Token</span>
+                                    <span class="techname">Truffle, Solidity, Binance Testnet, Open Zeppelin, BEP-20</span>
+                                    <span class="website"> - </span>
+                                    <span class="githublink">https://github.com/SashaFlores/Flamingo-Token</span>
+                                    <span class="details">
+                                        <ul>
+                                            <li>
+                                                This project involves creating a customized BEP20 token with unlimited supply 
+                                                and an inherited staking mechanism.
+                                            </li>
+                                            <li>
+                                                The customized BEP20 token has an unlimited supply, meaning that the number of tokens 
+                                                in circulation can increase over time. The inherited staking mechanism from staking contract
+                                                allows token holders to stake their tokens and earn rewards based on the amount of 
+                                                tokens they hold and the duration of the stake.
+                                            </li>
+                                            <li>
+                                                Overall, the project aims to create a customizable token that can leverage the BSC 
+                                                ecosystem's features while incentivizing token holders to hold onto their tokens for 
+                                                longer periods through the staking mechanism.
+                                            </li>
+                                        </ul>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        
+
+                        <!--------------machine_learning------------------------------>
+
+                        <div class="column machine_learning col-md-4">
+                            <a class="stretched-link portfolio_modal" href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#portfolio_modal_"></a>
+                            <div class="content shadow card"><span class="viewicon"><img src="./images/eyeicon.png" height="25" /></span>
+                                <img src="./images/portfolio/bot.jpg" alt="Nature" style="width:100%">
+                                <div class="portfolioDtl">
+                                    <span class="maintitle">Retirement Bot</span>
+                                    <span class="techname">Python, AWS.</span>
+                                    <span class="website"> - </span>
+                                    <span class="githublink">https://github.com/SashaFlores/RoboAdvisor</span>
+                                    <span class="details">
+                                        <ul>
+                                            <li>
+                                                This project involves developing a retirement robo-advisor using Python on 
+                                                the Amazon Web Services (AWS) platform.
+                                            </li>
+                                            <li>
+                                                The robo-advisor will utilize a variety of investment algorithms and data analysis 
+                                                techniques to provide personalized investment recommendations 
+                                                based on the user's risk tolerance level.
+                                            </li>
+                                            <li>
+                                                The user will be required to input their risk tolerance level, and the robo-advisor 
+                                            will then use this information to recommend suitable investment options from a pre-selected pool 
+                                            of investment options. The robo-advisor will continuously monitor the user's portfolio 
+                                            and adjust its recommendations based on changing market conditions and the user's investment 
+                                            performance.
+                                            </li>
+                                            <li>
+                                                The ultimate goal of this project is to provide users with a reliable and efficient 
+                                                way to manage their retirement investments and achieve their long-term financial goals.
+                                            </li>
+                                        </ul> 
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="column machine_learning col-md-4">
+                            <a class="stretched-link portfolio_modal" href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#portfolio_modal_"></a>
+                            <div class="content shadow card"><span class="viewicon"><img src="./images/eyeicon.png" height="25" /></span>
+                                <img src="./images/portfolio/NLP.jpg" alt="Nature" style="width:100%">
+                                <div class="portfolioDtl">
+                                    <span class="maintitle">Twitter Sentiment Analysis</span>
+                                    <span class="techname">Twitter API, NLP, Python.</span>
+                                    <span class="website"> - </span>
+                                    <span class="githublink">https://github.com/SashaFlores/NLP_Election</span>
+                                    <span class="details">
+                                        <ul>
+                                            <li>
+                                                This project involves conducting a sentiment analysis of tweets related to each 
+                                                presidential candidate in the 2020 US presidential election. 
+                                            </li>
+                                            <li>
+                                                The analysis will involve using the Twitter API to gather last 5000 tweets, 
+                                                and then using natural language processing (NLP) techniques to classify the sentiment 
+                                                of each tweet as positive, negative, or neutral. Additionally, the analysis will 
+                                                involve gauging the polarity and subjectivity of each tweet, which can provide 
+                                                deeper insights into the sentiment of voters towards the candidates.
+                                            </li>
+                                            <li>
+                                                The ultimate goal of this project is to provide a comprehensive view of the public's 
+                                                opinion of the candidates and their campaigns.
+                                            </li>
+                                        </ul>  
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="column machine_learning col-md-4">
+                            <a class="stretched-link portfolio_modal" href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#portfolio_modal_"></a>
+                            <div class="content shadow card"><span class="viewicon"><img src="./images/eyeicon.png" height="25" /></span>
+                                <img src="./images/portfolio/risk.jpg" alt="Nature" style="width:100%">
+                                <div class="portfolioDtl">
+                                    <span class="maintitle">Risk Analysis</span>
+                                    <span class="techname">Scikit-learn, imbalanced-learn, Python.</span>
+                                    <span class="website"> - </span>
+                                    <span class="githublink">https://github.com/SashaFlores/Machine_Learning</span>
+                                    <span class="details">
+                                        <ul>
+                                            <li>
+                                                This project involves building and evaluating multiple machine learning models 
+                                                to predict the credit risk analysis of peer-to-peer lending using LendingClub data 
+                                                from the first quarter of 2019. The project will involve the use of the Scikit-learn 
+                                                and imbalanced-learn libraries in Python programming language to preprocess the data, 
+                                                build the models, and evaluate their performance.
+                                            </li>
+                                            <li>
+                                                The project will involve several stages, including data preprocessing, 
+                                                feature engineering, model selection, hyperparameter tuning, and model evaluation:
+                                                <ol>
+                                                    <li>
+                                                        The data preprocessing stage will involve cleaning and transforming 
+                                                        the raw data into a format suitable for machine learning algorithms.
+                                                    </li>
+                                                    <li>
+                                                        Feature engineering will involve selecting and transforming relevant 
+                                                        features from the data to improve the accuracy of the models. 
+                                                    </li>
+                                                    <li>
+                                                        Model selection will involve testing and comparing several machine learning 
+                                                        models, such as logistic regression, decision trees, random forests, and 
+                                                        support vector machines, to determine  the most suitable model for the task.
+                                                    </li>
+                                                    <li>
+                                                        Hyperparameter tuning will involve optimizing the parameters of the chosen 
+                                                        model to improve its performance.
+                                                    </li>
+                                                    <li>
+                                                        Model evaluation will involve assessing the accuracy, precision, recall, and 
+                                                        F1 score of the chosen model using a range of evaluation metrics.
+                                                    </li>
+                                                </ol>
+                                            </li>
+                                            <li>
+                                                The ultimate goal of this project is to build an accurate and reliable machine
+                                                learning model that can predict credit risk analysis of peer-to-peer lending with 
+                                                high accuracy using LendingClub data from the first quarter of 2019.
+                                            </li>
+                                        </ul>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- END Portfolio GRID -->
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!----------------End Of Portfolio------------>
+   
+
+
+
+
+        <!-- Modal -->
+
+        <div class="modal fade" id="portfolio_modal_" tabindex="-1" aria-labelledby="exampleModalLabel"
+            aria-hidden="true">
+
+            <div class="modal-dialog modal-xl">
+
+                <div class="modal-content position-relative">
+
+                    <div class="text-end position-absolute p-3" style="right: 0; z-index: 1;">
+
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+
+                    </div>
+
+                    <div class="modal-body portfolio_dtl">
+
+                    </div>
+
+
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- Optional JavaScript; choose one of the two! -->
+
+        <!-- Option 1: Bootstrap Bundle with Popper -->
+
+        <script src="js/bootstrap.bundle.min.js"></script>
+
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+        <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+
+        <script src="js/aos.js"></script>
+
+
+
+        <script src="js/custom.js"></script>
+
+
+
+        <!-- Option 2: Separate Popper and Bootstrap JS -->
+
+        <!--
+
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.1/dist/umd/popper.min.js" integrity="sha384-SR1sx49pcuLnqZUnnPwx6FCym0wLsk5JZuNx2bPPENzswTNFaQU1RDvt3wT4gWFG" crossorigin="anonymous"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.min.js" integrity="sha384-j0CNLUeiqtyaRmlzUHCPZ+Gy5fQu0dQ6eZ/xAww941Ai1SxSY+0EQqNXNE6DZiVc" crossorigin="anonymous"></script>
+
+    -->
+
+    </body>
+</html>

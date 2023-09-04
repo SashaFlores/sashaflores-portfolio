@@ -1,0 +1,72 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap');
+@import url("https://fonts.googleapis.com/css?family=Raleway:900&display=swap");
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: #000;
+}
+
+.navbar-dark .navbar-nav .nav-link {
+    color: #d5d0d0;
+    font-weight: 300;
+    font-size: large;
+    font-weight: 400;
+    text-transform: uppercase;
+}
+
+.navbar-dark .navbar-nav .nav-link.active {
+    color:hsl(45, 100%, 71%);
+}
+
+nav.navbar {
+    padding-top: 40px;
+    transition: all .3s;
+    font-weight: bold;
+}
+
+body.scrolled nav.navbar {
+    background: black;
+    padding-top: .5em;
+}
+
+body.scrolled .navbar-dark .navbar-nav .nav-link {
+    color: #d5d0d0;
+}
+
+
+.navbar-dark .navbar-nav .dropdown-menu {
+    background-color: black; 
+    border: none;
+    border-radius: 10px;
+}
+
+.navbar-dark .navbar-nav .dropdown-item {
+    color: #d5d0d0;
+    font-weight: 300;
+    font-size: large;
+}
+
+.navbar-dark .navbar-nav .dropdown-item:hover {
+    background-color: black;
+    color: hsl(45, 100%, 71%);
+}
+.navbar-dark .navbar-nav .nav-item.dropdown .nav-link.active,
+.navbar-dark .navbar-nav .nav-item.dropdown .nav-link.active:focus,
+.navbar-dark .navbar-nav .nav-item.dropdown .nav-link.active:hover {
+    background-color: black;
+    color: hsl(45, 100%, 71%);
+    
+}
+
+body.scrolled .navbar-dark .navbar-nav .nav-link.active {
+    color:hsl(45, 100%, 71%);
+}
+
+
+
+
+
+
+
+
+
+

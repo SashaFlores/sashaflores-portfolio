@@ -1,0 +1,106 @@
+
+
+/*quote1*/
+
+#quote1 {
+    background-image: url(../images/sm_banner.png);
+    background-repeat: no-repeat; 
+    background-size: auto;
+    border-radius: 5px;
+}
+
+#quote1 h5 { color: #fff;  margin-top: 20px; text-align: center;}
+
+#quote1 p { margin-right: 15%; text-align-last: right; }
+
+/*quote1*/
+
+/*about-me*/
+#background {
+    margin-top: 10%;
+    margin-bottom: 5%;
+}
+
+
+#background .col-md-4 .download-button {
+    background-color: #9370DB; /* Green */
+    border: none;
+    border-radius: 20px;
+    /* color: hsl(0, 0%, 85%); */
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: block;
+    font-size: 16px;
+    margin: 0 auto;
+    cursor: pointer;
+}
+#background .col-md-4 .download-button a {
+    color: white;
+}
+/*about-me*/
+
+#details h5, #details h6 { margin-top: 30px;}
+
+#details h6 {margin-bottom: 20px;}
+
+#details h5, #details h6, #details p { color: #b6b6b6; }
+
+#skills { margin-top: 5%; }
+
+#experience { margin-top: 10%; }
+
+.experience-header { margin-bottom: 20px; }
+
+.experience-item { margin-bottom: 30px; }
+
+#skills h2, #experience h3 { color: #d5d0d0; }
+
+#skills h4, #experience h4 { color: hsl(194, 40%, 37%); }
+
+#experience h6 { color: hsl(217, 94%, 81%); }   
+
+#skills h6, #experience p { color: hsl(194, 60%, 50%); }
+
+#experience ul { color: hsl(0, 0%, 85%); }
+
+.section-divider {
+    border-top: 1px solid gray;
+    margin: 20px 0;
+}
+
+#service { margin: 10% 20%;}
+
+.header { color: hsl(0, 0%, 85%); margin-bottom: 60px;}
+
+.service-list {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 30px;
+    list-style: none;
+    padding: 0;
+}
+
+.service-item {
+    background: hsl(0, 0%, 16%);
+    padding: 20px;
+    border-radius: 14px;
+    box-shadow: hsl(194, 40%, 37%);
+    z-index: 1;
+}
+
+.service-title { color: hsl(194, 60%, 50%); margin: 0;}
+  
+
+.service-icon-box { margin-bottom: 10px; display: flex;  align-items: center; }
+
+.service-icon-box img { margin-right: 20px; }
+
+
+
+  
+
+
+
+
+ 

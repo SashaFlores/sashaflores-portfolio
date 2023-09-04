@@ -1,0 +1,218 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <!-- meta tags -->
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta content="width=device-width, initial-scale=1.0" name="viewport">
+   
+        <title>Sasha Flores</title>
+        <meta content="" name="description">
+        <meta content="" name="keywords">
+
+        <!-- Bootstrap CSS -->
+        <link href="css/bootstrap.min.css" rel="stylesheet">
+        <link href="css/aos.css" rel="stylesheet">
+        <link href="css/navbar.css" rel="stylesheet">
+        <link href="css/blog.css" rel="stylesheet">
+        <link href="css/footer.css" rel="stylesheet">
+
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-MXTX916K7T"></script>
+        <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'G-MXTX916K7T');
+        </script>
+    </head>
+
+
+    <body>
+      <i class="bi bi-list mobile-nav-toggle d-xl-none"></i>
+      <header>
+        
+        <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+          <div class="container-fluid px-md-5">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+              aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+            </button>
+          
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0" data-aos="fade-down" data-aos-duration="1000">
+              <li class="nav-item">
+                <a class="nav-link" aria-current="page" href="./index.html">home</a>
+              </li>
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="aboutDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">about me</a>
+                <ul class="dropdown-menu" aria-labelledby="aboutDropdown">
+                  <li><a class="dropdown-item" href="./background.html">background</a></li>
+                  <li><a class="dropdown-item" href="./skills.html">skills</a></li>
+                  <li><a class="dropdown-item" href="./experience.html">experience</a></li>
+                </ul>
+              </li>
+              <li class="nav-item"><a class="nav-link" href="./portfolio.html">portfolio</a></li>
+              <li class="nav-item"> <a class="nav-link active" href="#">blog</a></li>
+              <li class="nav-item"><a class="nav-link" href="./contact.html">contact</a></li>
+            </ul>
+            <ul class="navbar-nav ml-auto mb-2 mb-lg-0">
+              <li class="nav-item connect-button">
+                <a class="nav-link" href="#">connect</a>
+              </li>
+            </ul>
+
+            <ul class="navbar-nav ml-auto mb-2 mb-lg-0">
+              <li class="nav-item subscribe-button">
+                <a class="nav-link" href="#">
+                  <button id="myButton">subscribe</button>
+                  <div id="myPopup" class="popup" data-sub>
+                    <div class="popup-content">
+                      <span id="closePopup" class="popup-close">&times;</span>
+                      <h3>Receive new articles directly in your inbox</h3>
+                      <input type="email" placeholder="Enter your email" class="popup-input">
+                      <button id="popup-subscribe-btn" disabled data-sub-btn>Subscribe</button>
+                      <div id="error-message" style="color: red;"></div>
+                    </div>
+                  </div>
+                </a>
+              </li>
+            </ul>
+          </div>
+          </div>
+        </nav>
+      </header>
+      
+      <article class="blog" data-page="blog">
+        <section class="articles">
+          <ul class="filter-list">
+            <li class="filter-item"><button class="active" data-filter-btn>All</button></li>
+            <li class="filter-item"><button data-filter-btn>Blockchain</button></li>
+            <li class="filter-item"><button data-filter-btn>Smart Contract</button></li>
+            <li class="filter-item"><button data-filter-btn>Security</button></li>
+            <li class="filter-item"><button data-filter-btn>Tools</button></li>
+          </ul>
+          
+          
+          <ul class="blog-list">
+            
+            <li class="blog-item active" data-filter-btn data-category="smart contract">
+              <!-- <a href="./articles/trial.html"></a> -->
+              <a href="./articles/d4c046bb2a95.html">
+                <figure class="blog-banner-box">
+                  <img src="./images/blog/assembly.jpeg" alt="Image" loading="lazy">
+                </figure>
+                <div class="blog-content">
+                  <h3 class="blog-item-title">Unlock the Power of Inline Assembly: A Smart Contract Developer's Guide</h3>
+                  <div class="blog-meta"><time>Aug 14, 2023</time>
+                    <p class="blog-category">Smart Contract</p>
+                  </div>
+                </div>
+              </a>
+            </li>
+              
+            <li class="blog-item active" data-filter-btn data-category="tools">
+              <a href="./articles/95d12cac7792.html">
+                <figure class="blog-banner-box">
+                  <img src="https://miro.medium.com/1*lkALRpeH2vwbKtORiEzCFQ.png" alt="Image" loading="lazy"></figure>
+                  <div class="blog-content">
+                    <h3 class="blog-item-title">How to Manage Multiple SSH Keys with Separate GitHub Accounts</h3>
+                    <div class="blog-meta"><time>Jul 23, 2023</time>
+                      <p class="blog-category">Tools</p>
+                    </div>
+                  </div>
+              </a>
+            </li>
+    
+            <li class="blog-item active" data-filter-btn data-category="smart contract">
+              <a href="./articles/af818efc7a2e.html">
+                <figure class="blog-banner-box"><img src="https://miro.medium.com/1*zgsFrtE0dg3nqaNzX-H_MQ.jpeg" alt="Image" loading="lazy"></figure>
+                <div class="blog-content">
+                  <h3 class="blog-item-title">Optimization of Gas and Bytecode Limitation</h3>
+                  <div class="blog-meta"><time>Jul 12, 2023</time>
+                    <p class="blog-category">Smart Contract</p>
+                  </div>
+                </div>
+              </a>
+            </li>
+    
+            <li class="blog-item active" data-filter-btn data-category="blockchain">
+              <a href="./articles/ce35ab0a564d.html">
+                <figure class="blog-banner-box"><img src="./images/blog/upgrade.webp" alt="Image" loading="lazy"></figure>
+                <div class="blog-content">
+                  <h3 class="blog-item-title">Everything you need to know about Ethereum’s Shanghai Upgrade & EOS launching EVM supporting solidity</h3>
+                  <div class="blog-meta"><time>Apr 18, 2023</time>
+                    <p class="blog-category">Blockchain</p>
+                  </div>
+                </div>
+              </a>
+            </li>
+    
+              <li class="blog-item active" data-filter-btn data-category="smart contract">
+                <a href="./articles/a100e825ff8c.html">
+                  <figure class="blog-banner-box"><img src="./images/blog/eip712.gif" alt="Image" loading="lazy"></figure>
+                  <div class="blog-content">
+                    <h3 class="blog-item-title">EIP-712: Typed Structured Data</h3>
+                    <div class="blog-meta"><time>Apr 12, 2023</time>
+                      <p class="blog-category">Smart Contract</p>
+                    </div>
+                  </div>
+                </a>
+              </li>
+    
+              <li class="blog-item active" data-filter-btn data-category="smart contract">
+                <a href="./articles/51cb4f656257.html">
+                  <figure class="blog-banner-box"><img src="./images/blog/ecdsa.gif" alt="Image" loading="lazy"></figure>
+                  <div class="blog-content">
+                    <h3 class="blog-item-title">Public-Private Keys Generation & Signature Verification using ECDSA Algorithm</h3>
+                    <div class="blog-meta"><time>Apr 04, 2023</time>
+                      <p class="blog-category">Smart Contract</p>
+                    </div>
+                  </div>
+                </a>
+              </li>
+
+              <li class="blog-item active" data-filter-btn data-category="tools">
+                <a href="./articles/6da5ba68db69.html">
+                  <figure class="blog-banner-box"><img src="./images/blog/keys.webp" alt="Image" loading="lazy"></figure>
+                  <div class="blog-content">
+                    <h3 class="blog-item-title">A step-by-step tutorial on how to install Git bash, 
+                      manage SSH keys, integrate it to the remote server of GitHub, and text editor Visual Studio Code
+                    </h3>
+                    <div class="blog-meta"><time>Sep 13, 2021</time>
+                      <p class="blog-category">Tools</p>
+                    </div>
+                  </div>
+                </a>
+              </li>
+    
+            </ul>
+          </section>
+        </article>
+
+        <footer>
+          <div class="footer-content">
+            <p>&copy; 2023 Sasha Flores. All Rights Reserved.</p>
+              <div class="social-links">
+                <a href="https://www.linkedin.com/in/sflores369/" target="_blank"><ion-icon name="logo-linkedin"></ion-icon></a>
+                  <a href="https://medium.com/@sahaflores" target="_blank"><ion-icon name="logo-medium"></ion-icon></a>
+                  <a href="https://discord.com/users/827160247428710422" target="_blank"><ion-icon name="logo-discord"></ion-icon></a>
+                  <a href="https://github.com/SashaFlores" target="_blank"><ion-icon name="logo-github"></ion-icon></a>
+                  <a href="https://drive.google.com/file/d/1OBkrdL3GnYlaEpCo7GLOd4Nge8fsv-_c/view?usp=sharing" target="_blank"><ion-icon name="cloud-download-outline"></ion-icon></a>
+              </div>
+          </div>
+        </footer>
+
+
+       
+        <script src="js/bootstrap.bundle.min.js"></script>
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <!-- <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script> -->
+        <script src="js/aos.js"></script>
+        <script src="js/custom.js"></script>
+
+        <script type="module" src="https://unpkg.com/ionicons@latest/dist/ionicons/ionicons.esm.js"></script>
+        <script nomodule="" src="https://unpkg.com/ionicons@latest/dist/ionicons/ionicons.js"></script>
+
+    </body>
+</html>

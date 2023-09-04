@@ -1,0 +1,60 @@
+<html lang="en">
+    <head>
+        <title>A step-by-step tutorial on how to install Git bash, manage SSH keys, and integrate it to the…</title>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width initial-scale=1.0">
+        <meta name="description" content="Git Bash Integration with GitHub & Visual Studio Code">
+        <meta name="keywords" content="github, git-bash, ssh-keys, visual-studio-code">
+        <meta name="author" content="Sasha Flores">
+        <meta property="og:type" content="website">
+        <meta property="og:title" content="A step-by-step tutorial on how to install Git bash, manage SSH keys, and integrate it to the…">
+        <meta property="og:description" content="Git Bash Integration with GitHub & Visual Studio Code">
+        <meta property="og:image" content="https://miro.medium.com/1*h1hLj8cf0Y33lO3Gw05IKA.png">
+        <meta property="twitter:card" content="summary">
+        <meta property="twitter:title" content="A step-by-step tutorial on how to install Git bash, manage SSH keys, and integrate it to the…">
+        <meta property="twitter:description" content="Git Bash Integration with GitHub & Visual Studio Code">
+        <meta property="twitter:image" content="https://miro.medium.com/1*h1hLj8cf0Y33lO3Gw05IKA.png">
+    </head>
+    <body>
+        <div class="blog">
+            <h1 id="2b4f">
+                <b>A step-by-step tutorial on how to install Git bash, manage SSH keys, integrate it to the remote server of GitHub, 
+                    and text editor Visual Studio Code.
+                </b>
+            </h1>
+            <img alt="" src="https://miro.medium.com/1*JL1jC28dmazKDMsfBUfLJA.png" />
+            <p>1- 
+                <b>
+                    <a href="https://github.com/join.">GitHub</a> account:
+                </b> you can sign up here GitHub
+            </p>
+            <p>2- 
+                <b>Install <a href="https://code.visualstudio.com/download.">Visual Studio Code</a>
+                </b>
+            </p>
+            <p>You can choose User Installer, which does not require Administrator privileges as the location will be 
+                <code>C:\users\{username}\AppData\Local\Programs\Microsoft VS Code</code>
+            </p>
+            <p>Or you can choose System Installer, which requires elevation to Administrator privileges and will place the installation under Program Files <code>C:\Program Files\</code></p><p>3- <b>Install <a href="https://git-scm.com/downloads">Git bash</a></b></p><p>Note that the default path should be <code>C:\Program Files\</code>according to documentation, but you can definitely change it if you want to.</p><p>when the setup wizard pops up, one of the questions you will be asked is to choose your default text editor with a drop-down menu to choose your preferred text editor, in our case it will VSC.</p><p>4- <b>Check out if the SSH key already exists or not</b></p><p>Open Git bash and run this command: <code>$ ls -al/.ssh</code> if you got the image below, that means there is already an SSH key exist.</p><p><i><b>id_rsa</b></i> is your <a href="https://en.wikipedia.org/wiki/RSA_%28cryptosystem%29">RSA </a>private key that is used to sign and authenticate your connection to a remote host, and <i><b>id_rsa</i>.pub</b> is your public key</p><img alt="" src="https://miro.medium.com/1*4l3CxANVmeMaidh9_whf8w.png" /><p>If you the result as the same screenshot above, you can either overwrite it => step 5 or you can use the existing key => step 6.</p><p>5- <b>Generate SSH keys:</b></p><p>run this command <code>$ ssh-keygen -t rsa -b 4096 -C "youremail@email.net"</code> you will then be asked to "Enter file in which to save the key(C:Users/username/.ssh/id_rsa)" = it's recommended to save SSH key in this default location, you can change it if desired but remember the location.</p><p>If there is a key that already exists, will ask to overwrite it? (Y/N)</p><ul><li>if Y: will ask to enter a new passphrase.</li><li>if N: go to Step 6, to run & add existing keys to the agent.</li></ul><p>6- <b>Run SSH agent</b></p><p>An SSH agent is a key manager for SSH. It holds your keys and certificates in memory, unencrypted, and ready for use by SSH. It saves you from typing a passphrase every time you connect to a server. It runs in the background on your system, separately from SSH, and it usually starts up the first time you run SSH after a reboot.</p><p>The SSH agent keeps private keys safe because of what it <i>doesn't</i> do:</p><ul><li>It doesn't write any key material to disk.</li><li>It doesn't allow your private keys to be exported.</li></ul><p>Private keys stored in the agent can only be used for one purpose: signing a message, run command below to add the agent:</p><p><code>$ eval "$(ssh-agent -s)"</code></p><p>7- <b>Add SSH key to SSH agent</b></p><p>If you choose a non-blank passphrase in step 5, you can have to enter it after running the following command: <code>$ ssh-add ~/.ssh/id_rsa</code></p><p>8- <b>Copy SSH Key</b></p><p>There are two ways to do copy your key, FIRST using bash to run this command <code>$ clip < ~/.ssh/id_rsa.pub</code></p><p>SECOND, coy your key manually by opening <i>id_rsa.pub</i> key with notepad, in GitHub settings, go to SSH and GPG keys tab, select the green button "New SSH Key" paste your public key, give it a name, and hit save.</p><img alt="" src="https://miro.medium.com/1*h1hLj8cf0Y33lO3Gw05IKA.png" /><p>9- Make sure that GitHub has been added to your computer's list of acceptable SSH hosts, by running this command: <code>$ ssh -T git@github.com</code></p><p>You should see the image below, if you follow every step smoothly</p><img alt="" src="https://miro.medium.com/1*-lIg36jE6LRgsT8xhfaxGw.png" /><p>The last step is to Integrate Git bash as one of your terminals or default terminal if you would like to, open VSC and start a new terminal, from the drop-down menu, select "bash" or "select default profile" then "bash".</p><p>troubleshooting: if your VSC can't detect Git Bash, go to settings, then type "terminal: integrated profiles" in the search bar, and open the JSON file</p><img alt="" src="https://miro.medium.com/1*oX3g531oE4DrjCGC6j_69g.png" /><p>Copy and paste, the following in JSON to make git bash your default terminal.</p><pre>"terminal.integrated.profiles.windows": {
+"PowerShell": {
+"source": "PowerShell",
+"icon": "terminal-powershell"
+},
+"Command Prompt": {
+"path": [
+"${env:windir}\\Sysnative\\cmd.exe",
+"${env:windir}\\System32\\cmd.exe"
+],
+"args": [],
+"icon": "terminal-cmd"
+},
+"Git Bash": {
+"source": "Git Bash",
+"path": "C:\\ProgramFiles\\Git\\bin\\bash.exe"
+}
+},
+//"terminal.integrated.defaultProfile.windows": "",
+"terminal.integrated.automationShell.windows": "Git Bash",
+"terminal.integrated.defaultProfile.windows": "Git Bash",
+</pre><img alt="" src="https://miro.medium.com/1*d6tWG7Je5Tnsj_gp3mcCYA.png" /><p>You have successfully installed and integrated Git Bash and Visual Studio Code, and connected remotely to the GitHub server. Enjoy coding.</p></div></body></html>
