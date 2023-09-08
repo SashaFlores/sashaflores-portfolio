@@ -292,6 +292,8 @@ document.addEventListener('DOMContentLoaded', function () {
     const form = document.querySelector("form[name='contact-me']");
     const formBtn = document.querySelector("[data-form-btn]");
     const formInputs = document.querySelectorAll("[data-form-input]");
+    const successMessage = document.querySelector(".success-message");
+    const errorMessage = document.querySelector(".error-message");
 
     // Function to check if the form is valid
     function checkFormValidity() {
@@ -327,16 +329,23 @@ document.addEventListener('DOMContentLoaded', function () {
         })
         .then(response => {
             if (response.ok) {
-                // Redirect to the thank-you page on success
-                window.location.href = "../response.html";
+                // Display success message
+                successMessage.textContent = "Your message was sent successfully. I will get back to you as quickly as I can.";
+                errorMessage.textContent = "";
             } else {
-                // Redirect to the thank-you page on failure
-                window.location.href = "../response.html";
+                // Display error message
+                successMessage.textContent = "";
+                errorMessage.textContent = "There was an error sending your message. Please try again.";
             }
         })
         .catch(() => {
-            // Redirect to the thank-you page on failure
-            window.location.href = "../response.html";
+            // Display error message
+            successMessage.textContent = "";
+            errorMessage.textContent = "There was an error sending your message. Please try again.";
+        })
+        .finally(() => {
+            // Reset the button text
+            formBtn.innerHTML = '<ion-icon name="paper-plane"></ion-icon><span>Send Message</span>';
         });
     });
 });
