@@ -331,18 +331,18 @@ document.addEventListener('DOMContentLoaded', function () {
         .then(response => {
             if (response.ok) {
                 // Display success message
-                successMessage.textContent = "Your message was sent successfully. I will get back to you as quickly as I can.";
+                successMessage.textContent = "Your message was sent successfully. \nI will get back to you as quickly as I can.";
                 errorMessage.textContent = "";
             } else {
                 // Display error message
                 successMessage.textContent = "";
-                errorMessage.textContent = "There was an error sending your message. Please try again.";
+                errorMessage.textContent = "Please try again. \nThere was an error sending your message!";
             }
         })
         .catch(() => {
             // Display error message
             successMessage.textContent = "";
-            errorMessage.textContent = "There was an error sending your message. Please try again.";
+            errorMessage.textContent = "Please try again. \nThere was an error sending your message!";
         })
         .finally(() => {
             // Reset the button text
