@@ -133,6 +133,33 @@ $(function () {
     });
 });
 
+
+
+
+// Filtering projects
+document.addEventListener('DOMContentLoaded', function () {
+    const projectFilterButtons = document.querySelectorAll('[data-filter-btn]');
+    const projectItems = document.querySelectorAll('.project-item');
+  
+    projectFilterButtons.forEach(button => {
+      button.addEventListener('click', () => {
+        const selectedCategory = button.textContent.toLowerCase();
+  
+        projectFilterButtons.forEach(btn => btn.classList.remove('active'));
+        button.classList.add('active');
+  
+        projectItems.forEach(item => {
+          if (selectedCategory === 'all' || item.dataset.category === selectedCategory) {
+            item.classList.add('active');
+          } else {
+            item.classList.remove('active');
+          }
+        });
+      });
+    });
+});
+
+// blog filtering
 document.addEventListener('DOMContentLoaded', function () {
     // Function to handle blog filtering
     function initBlogFiltering() {
@@ -209,30 +236,9 @@ document.addEventListener('DOMContentLoaded', function () {
     initPopup();
 });
 
+/*  --------Send Mail---------- */
 
-// Filtering projects
-document.addEventListener('DOMContentLoaded', function () {
-    const projectFilterButtons = document.querySelectorAll('[data-filter-btn]');
-    const projectItems = document.querySelectorAll('.project-item');
-  
-    projectFilterButtons.forEach(button => {
-      button.addEventListener('click', () => {
-        const selectedCategory = button.textContent.toLowerCase();
-  
-        projectFilterButtons.forEach(btn => btn.classList.remove('active'));
-        button.classList.add('active');
-  
-        projectItems.forEach(item => {
-          if (selectedCategory === 'all' || item.dataset.category === selectedCategory) {
-            item.classList.add('active');
-          } else {
-            item.classList.remove('active');
-          }
-        });
-      });
-    });
-});
-
+//contact form and validation
 document.addEventListener('DOMContentLoaded', function () {
     const form = document.querySelector("[data-form]");
     const formInputs = document.querySelectorAll("[data-form-input]");
@@ -250,23 +256,27 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     });
 
-    $('.msgform').on('Send Message', function (e) {
+    $('.from').submit(function (e) {
         e.preventDefault();
 
         // Change the button text to indicate sending
-        $('.msgme').text('Sending...');
+        formBtn.text('Sending...');
 
         var form = $(this);
         $.ajax({
-            url: "email.php", 
+            url: "../PHPMailer/email.php",
             method: form.attr('method'),
             data: form.serialize(),
             success: function (result) {
                 if (result == 'success') {
-                    $('.msgme').text('Message Sent!');
+                    formBtn.text('Message Sent!');
                 } else {
-                    $('.msgme').text('Error Sending email!');
+                    formBtn.text('Error Sending email!');
                 }
+            },
+            complete: function () {
+                // Reset the button text when the AJAX request completes
+                formBtn.text('Send Message');
             }
         });
 
@@ -274,6 +284,7 @@ document.addEventListener('DOMContentLoaded', function () {
         return false;
     });
 });
+
 
 /*particles*/
 /* ---- particles.js config ---- */
@@ -388,10 +399,6 @@ particlesJS("particles-js", {
     },
     "retina_detect": true
 });
-
-
-/*  --------Send Mail---------- */
-
 
 
 
