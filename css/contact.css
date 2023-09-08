@@ -125,12 +125,12 @@ textarea.form-input::-webkit-resizer { display: none; }
 
 .success-message {
     color: #4CAF50; 
-    background-color: hsl(0, 0%, 25%); 
+    /* background-color: hsl(0, 0%, 25%);  */
 }
 
 .error-message {
     color: #f44336; 
-    background-color: hsl(0, 0%, 25%); 
+    /* background-color: hsl(0, 0%, 25%);  */
 }
 
 /* 
