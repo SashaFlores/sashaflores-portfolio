@@ -256,28 +256,27 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     });
 
-    $('.from').submit(function (e) {
+    form.addEventListener('submit', function (e) {
         e.preventDefault();
 
         // Change the button text to indicate sending
-        formBtn.text('Sending...');
+        formBtn.innerHTML = 'Sending...';
 
-        var form = $(this);
+        var formData = new FormData(this);
+
         $.ajax({
             url: "../PHPMailer/email.php",
-            method: form.attr('method'),
-            data: form.serialize(),
+            method: $(this).attr('method'),
+            data: formData,
+            contentType: false,
+            processData: false,
             success: function (result) {
                 if (result == 'success') {
-                    formBtn.text('Message Sent!');
+                    formBtn.innerHTML = 'Message Sent!';
                 } else {
-                    formBtn.text('Error Sending email!');
+                    formBtn.innerHTML = 'Error Sending Email!';
                 }
             },
-            complete: function () {
-                // Reset the button text when the AJAX request completes
-                formBtn.text('Send Message');
-            }
         });
 
         // Prevent the default form submission
