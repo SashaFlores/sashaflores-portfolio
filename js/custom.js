@@ -238,17 +238,23 @@ document.addEventListener('DOMContentLoaded', function () {
 
 /*  --------Send Mail---------- */
 
-//contact form and validation
+//contact form as per Netlify Docs 
+// email validation
 document.addEventListener('DOMContentLoaded', function () {
-    const form = document.querySelector("[data-form]");
-    const formInputs = document.querySelectorAll("[data-form-input]");
+    const form = document.querySelector("form[name='contact']");
     const formBtn = document.querySelector("[data-form-btn]");
+    const formInputs = document.querySelectorAll("[data-form-input]");
+
+    // Function to check if the form is valid
+    function checkFormValidity() {
+        return Array.from(formInputs).every(input => input.checkValidity());
+    }
 
     // Add event listeners to form input fields
     formInputs.forEach(input => {
         input.addEventListener("input", function () {
             // Check form validation
-            if (form.checkValidity()) {
+            if (checkFormValidity()) {
                 formBtn.removeAttribute("disabled");
             } else {
                 formBtn.setAttribute("disabled", "");
@@ -262,27 +268,26 @@ document.addEventListener('DOMContentLoaded', function () {
         // Change the button text to indicate sending
         formBtn.innerHTML = 'Sending...';
 
-        var formData = new FormData(this);
+        const formData = new FormData(this);
 
-        $.ajax({
-            url: "../PHPMailer/email.php",
-            method: $(this).attr('method'),
-            data: formData,
-            contentType: false,
-            processData: false,
-            success: function (result) {
-                if (result == 'success') {
-                    formBtn.innerHTML = 'Message Sent!';
-                } else {
-                    formBtn.innerHTML = 'Error Sending Email!';
-                }
+        fetch("/", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/x-www-form-urlencoded"
             },
+            body: new URLSearchParams(formData).toString()
+        })
+        .then(() => {
+            // Reset the button text on success
+            formBtn.innerHTML = 'Message Sent!';
+        })
+        .catch(() => {
+            // Reset the button text on error
+            formBtn.innerHTML = 'Error Sending Email!';
         });
-
-        // Prevent the default form submission
-        return false;
     });
 });
+
 
 
 /*particles*/
@@ -402,48 +407,6 @@ particlesJS("particles-js", {
 
 
 
-// const form = document.querySelector("[data-form]");
-// const formInputs = document.querySelectorAll("[data-form-input]");
-// const formBtn = document.querySelector("[data-form-btn]");
-
-// // add event to all form input field
-// for (let i = 0; i < formInputs.length; i++) {
-//   formInputs[i].addEventListener("input", function () {
-
-//     // check form validation
-//     if (form.checkValidity()) {
-//       formBtn.removeAttribute("disabled");
-//     } else {
-//       formBtn.setAttribute("disabled", "");
-//     }
-
-//   });
-// }
-
-// $('.msgform').on('Send Message', function (e) {
-
-//     e.preventDefault();
-
-//     // Add text 'loading...' right after clicking on the submit button. 
-//     $('.msgme').text('Sending...');
-
-//     var form = $(this);
-//     $.ajax({
-//         url: "email.php",
-//         method: form.attr('method'),
-//         data: form.serialize(),
-//         success: function (result) {
-//             if (result == 'success') {
-//                 $('.msgme').text('Message Sent!');
-//             } else {
-//                 $('.msgme').text('Error Sending email!');
-//             }
-//         }
-//     });
-
-//     // Prevents default submission of the form after clicking on the submit button. 
-//     return false;
-// });
 
 
 
