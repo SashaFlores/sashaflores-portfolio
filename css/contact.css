@@ -115,6 +115,22 @@ textarea.form-input::-webkit-resizer { display: none; }
 
 .form-btn:disabled:hover::before { background-color: hsla(240, 1%, 18%, 0.251); }
 
+.message-container {
+    font-size: 16px; 
+    border-radius: 5px; 
+    background-color: hsl(0, 0%, 25%); 
+    display: none;
+    padding: 10px;
+    margin-top: 10px; 
+}
+
+.success-message {
+    color: #4CAF50; /* Green background for success */
+}
+
+.error-message {
+    color: #f44336; /* Red background for error */
+}
 
 /* 
 a {

@@ -238,7 +238,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
 /*  --------Send Mail---------- */
 
-//contact form as per Netlify Docs 
+//contact form as per Netlify Docs using thank-you generic response from netlify
 // email validation
 // document.addEventListener('DOMContentLoaded', function () {
 //     const form = document.querySelector("form[name='contact']");
@@ -288,6 +288,7 @@ document.addEventListener('DOMContentLoaded', function () {
 //     });
 // });
 
+/* contact form customize response as per netlify docs */
 document.addEventListener('DOMContentLoaded', function () {
     const form = document.querySelector("form[name='contact-me']");
     const formBtn = document.querySelector("[data-form-btn]");
