@@ -118,8 +118,8 @@ textarea.form-input::-webkit-resizer { display: none; }
 .message-container {
     display: inline-block;
     font-size: 20px; 
-    margin-top: 20px; 
-    margin-left: 25%;
+    /* margin-top: 20px;  */
+    margin-left: 50%;
     text-align: center;
     white-space: pre-line;
 }
