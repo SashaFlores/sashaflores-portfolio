@@ -240,8 +240,56 @@ document.addEventListener('DOMContentLoaded', function () {
 
 //contact form as per Netlify Docs 
 // email validation
+// document.addEventListener('DOMContentLoaded', function () {
+//     const form = document.querySelector("form[name='contact']");
+//     const formBtn = document.querySelector("[data-form-btn]");
+//     const formInputs = document.querySelectorAll("[data-form-input]");
+
+//     // Function to check if the form is valid
+//     function checkFormValidity() {
+//         return Array.from(formInputs).every(input => input.checkValidity());
+//     }
+
+//     // Add event listeners to form input fields
+//     formInputs.forEach(input => {
+//         input.addEventListener("input", function () {
+//             // Check form validation
+//             if (checkFormValidity()) {
+//                 formBtn.removeAttribute("disabled");
+//             } else {
+//                 formBtn.setAttribute("disabled", "");
+//             }
+//         });
+//     });
+
+//     form.addEventListener('submit', function (e) {
+//         e.preventDefault();
+
+//         // Change the button text to indicate sending
+//         formBtn.innerHTML = 'Sending...';
+
+//         const formData = new FormData(this);
+
+//         fetch("/", {
+//             method: "POST",
+//             headers: {
+//                 "Content-Type": "application/x-www-form-urlencoded"
+//             },
+//             body: new URLSearchParams(formData).toString()
+//         })
+//         .then(() => {
+//             // Reset the button text on success
+//             formBtn.innerHTML = 'Message Sent!';
+//         })
+//         .catch(() => {
+//             // Reset the button text on error
+//             formBtn.innerHTML = 'Error Sending Email!';
+//         });
+//     });
+// });
+
 document.addEventListener('DOMContentLoaded', function () {
-    const form = document.querySelector("form[name='contact']");
+    const form = document.querySelector("form[name='contact-me']");
     const formBtn = document.querySelector("[data-form-btn]");
     const formInputs = document.querySelectorAll("[data-form-input]");
 
@@ -277,17 +325,21 @@ document.addEventListener('DOMContentLoaded', function () {
             },
             body: new URLSearchParams(formData).toString()
         })
-        .then(() => {
-            // Reset the button text on success
-            formBtn.innerHTML = 'Message Sent!';
+        .then(response => {
+            if (response.ok) {
+                // Redirect to the thank-you page on success
+                window.location.href = "../response.html";
+            } else {
+                // Redirect to the thank-you page on failure
+                window.location.href = "../response.html";
+            }
         })
         .catch(() => {
-            // Reset the button text on error
-            formBtn.innerHTML = 'Error Sending Email!';
+            // Redirect to the thank-you page on failure
+            window.location.href = "../response.html";
         });
     });
 });
-
 
 
 /*particles*/
