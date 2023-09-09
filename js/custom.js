@@ -230,6 +230,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 errorMessageElement.textContent = "";
             } else {
                 subscribeButton.setAttribute("disabled", "true");
+                errorMessageElement.textContent = "Please enter a valid email !";
             }
         }
 
