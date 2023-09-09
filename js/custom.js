@@ -136,7 +136,7 @@ $(function () {
 
 
 
-// Filtering projects
+/* -----------Filtering projects --------------------------------*/
 document.addEventListener('DOMContentLoaded', function () {
     const projectFilterButtons = document.querySelectorAll('[data-filter-btn]');
     const projectItems = document.querySelectorAll('.project-item');
@@ -159,7 +159,7 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 });
 
-// blog filtering
+/* -----blog filtering ----------------------*/
 document.addEventListener('DOMContentLoaded', function () {
     // Function to handle blog filtering
     function initBlogFiltering() {
@@ -200,16 +200,14 @@ document.addEventListener('DOMContentLoaded', function () {
             return emailRegex.test(email);
         }
 
-        // Function to handle the subscribe button click
-        function handleSubscribeClick() {
-            const email = emailInput.value;
-
-            if (validateEmail(email)) {
+        // Function to update the error message
+        function updateErrorMessage(isValid) {
+            if (isValid) {
                 subscribeButton.removeAttribute("disabled");
                 errorMessageElement.textContent = "";
             } else {
-                errorMessageElement.textContent = "Invalid email address. Please enter a valid email.";
                 subscribeButton.setAttribute("disabled", "true");
+                errorMessageElement.textContent = "Please enter a valid email !";
             }
         }
 
@@ -228,7 +226,24 @@ document.addEventListener('DOMContentLoaded', function () {
             }
         });
 
-        subscribeButton.addEventListener("click", handleSubscribeClick);
+        // Listen for the input field's blur event (losing focus)
+        emailInput.addEventListener("blur", function () {
+            const email = emailInput.value;
+            const isValid = validateEmail(email);
+            updateErrorMessage(isValid);
+        });
+
+        // Form submission event listener
+        const subscribeForm = document.querySelector("form[name='subscribe-form']");
+        subscribeForm.addEventListener("submit", function (e) {
+            const email = emailInput.value;
+            const isValid = validateEmail(email);
+            updateErrorMessage(isValid);
+
+            if (!isValid) {
+                e.preventDefault(); // Prevent form submission if the email is invalid
+            }
+        });
     }
 
     // Initialize blog filtering and popup after DOM is loaded
@@ -236,58 +251,7 @@ document.addEventListener('DOMContentLoaded', function () {
     initPopup();
 });
 
-/*  --------Send Mail---------- */
-
-//contact form as per Netlify Docs using thank-you generic response from netlify
-// email validation
-// document.addEventListener('DOMContentLoaded', function () {
-//     const form = document.querySelector("form[name='contact']");
-//     const formBtn = document.querySelector("[data-form-btn]");
-//     const formInputs = document.querySelectorAll("[data-form-input]");
-
-//     // Function to check if the form is valid
-//     function checkFormValidity() {
-//         return Array.from(formInputs).every(input => input.checkValidity());
-//     }
-
-//     // Add event listeners to form input fields
-//     formInputs.forEach(input => {
-//         input.addEventListener("input", function () {
-//             // Check form validation
-//             if (checkFormValidity()) {
-//                 formBtn.removeAttribute("disabled");
-//             } else {
-//                 formBtn.setAttribute("disabled", "");
-//             }
-//         });
-//     });
-
-//     form.addEventListener('submit', function (e) {
-//         e.preventDefault();
-
-//         // Change the button text to indicate sending
-//         formBtn.innerHTML = 'Sending...';
-
-//         const formData = new FormData(this);
-
-//         fetch("/", {
-//             method: "POST",
-//             headers: {
-//                 "Content-Type": "application/x-www-form-urlencoded"
-//             },
-//             body: new URLSearchParams(formData).toString()
-//         })
-//         .then(() => {
-//             // Reset the button text on success
-//             formBtn.innerHTML = 'Message Sent!';
-//         })
-//         .catch(() => {
-//             // Reset the button text on error
-//             formBtn.innerHTML = 'Error Sending Email!';
-//         });
-//     });
-// });
-
+/* ------------------Send Mail ---------- */
 /* contact form customize response as per netlify docs */
 document.addEventListener('DOMContentLoaded', function () {
     const form = document.querySelector("form[name='contact-me']");
