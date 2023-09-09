@@ -192,7 +192,8 @@ document.addEventListener('DOMContentLoaded', function () {
         const closePopup = document.getElementById("closePopup");
         const emailInput = document.querySelector(".popup-input");
         const subscribeButton = document.getElementById("popup-subscribe-btn");
-        const errorMessageElement = document.getElementById("error-message");
+        const errorMessageElement = document.querySelector(".error-message");
+        const successMessageElement = document.querySelector(".success-message");
 
         // Function to validate an email address
         function validateEmail(email) {
@@ -207,8 +208,13 @@ document.addEventListener('DOMContentLoaded', function () {
                 errorMessageElement.textContent = "";
             } else {
                 subscribeButton.setAttribute("disabled", "true");
-                errorMessageElement.textContent = "Please enter a valid email !";
+                errorMessageElement.textContent = " Please enter a valid email !";
             }
+        }
+
+        // Function to display a success message
+        function displaySuccessMessage() {
+            successMessageElement.textContent = "Thank you for subscribing !";
         }
 
         // Event listeners for the popup
@@ -242,6 +248,9 @@ document.addEventListener('DOMContentLoaded', function () {
 
             if (!isValid) {
                 e.preventDefault(); // Prevent form submission if the email is invalid
+            } else {
+                // Display the success message
+                displaySuccessMessage();
             }
         });
     }
@@ -302,11 +311,6 @@ document.addEventListener('DOMContentLoaded', function () {
                 successMessage.textContent = "";
                 errorMessage.textContent = "Please try again. \nThere was an error sending your message!";
             }
-        })
-        .catch(() => {
-            // Display error message
-            successMessage.textContent = "";
-            errorMessage.textContent = "Please try again. \nThere was an error sending your message!";
         })
         .finally(() => {
             // Reset the button text
