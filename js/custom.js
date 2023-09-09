@@ -201,22 +201,6 @@ document.addEventListener('DOMContentLoaded', function () {
             return emailRegex.test(email);
         }
 
-        // Function to update the error message
-        function updateErrorMessage(isValid) {
-            if (isValid) {
-                subscribeButton.removeAttribute("disabled");
-                errorMessageElement.textContent = "";
-            } else {
-                subscribeButton.setAttribute("disabled", "true");
-                errorMessageElement.textContent = " Please enter a valid email !";
-            }
-        }
-
-        // Function to display a success message
-        function displaySuccessMessage() {
-            successMessageElement.textContent = "Thank you for subscribing !";
-        }
-
         // Event listeners for the popup
         myButton.addEventListener("click", function () {
             myPopup.classList.add("show");
@@ -239,18 +223,43 @@ document.addEventListener('DOMContentLoaded', function () {
             updateErrorMessage(isValid);
         });
 
+        // Function to update the error message
+        function updateErrorMessage(isValid) {
+            if (isValid) {
+                subscribeButton.removeAttribute("disabled");
+                errorMessageElement.textContent = "";
+            } else {
+                subscribeButton.setAttribute("disabled", "true");
+            }
+        }
+
         // Form submission event listener
         const subscribeForm = document.querySelector("form[name='subscribe-form']");
         subscribeForm.addEventListener("submit", function (e) {
+            e.preventDefault();
+
             const email = emailInput.value;
             const isValid = validateEmail(email);
-            updateErrorMessage(isValid);
 
             if (!isValid) {
-                e.preventDefault(); // Prevent form submission if the email is invalid
+                errorMessageElement.textContent = "Please enter a valid email!";
             } else {
-                // Display the success message
-                displaySuccessMessage();
+                // Fetch code here to submit the form data
+                const formData = new FormData(subscribeForm);
+                fetch("/", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/x-www-form-urlencoded"
+                    },
+                    body: new URLSearchParams(formData).toString()
+                })
+                .then(response => {
+                    if (response.ok) {
+                        successMessageElement.textContent = "Thank you for subscribing!";
+                    } else {
+                        errorMessageElement.textContent = "An error occurred. Please try again later.";
+                    }
+                })
             }
         });
     }
