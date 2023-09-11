@@ -1,0 +1,48 @@
+body {
+    margin: 10% 20%;
+}
+
+.meta { text-align: center;}
+
+.meta img {
+    position: relative;
+    margin: 30px 5px auto;
+    height: 400px;
+    width: 70%;
+    align-items: center;
+    display: inline-block;
+}
+
+img {
+    position: relative;
+    margin: 30px auto;
+    display: block;
+    height: 5%;
+    width: 70%;
+}
+
+.meta img:hover { transition: 0.30s ease;  transform: scale(1.3); }
+
+h1 {
+    color: #d5d0d0;
+    text-align: center;
+    line-height: 1.5;
+}
+
+.caption {
+    color: #737070;
+    font-size: 14px;
+    margin: 5px 10px auto;
+    display: block;
+    text-align: center;
+}
+
+p { color: #e9eef2;}
+
+ul { color: rgb(147, 174, 174);} 
+
+.article-list { color: whitesmoke}
+
+.article-item { color: antiquewhite;}
+
+.code-block { font-size: medium; color: blanchedalmond;}
