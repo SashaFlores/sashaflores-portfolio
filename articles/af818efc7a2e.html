@@ -1,64 +1,191 @@
-<html lang="en"><head><title>Optimization of Gas and Bytecode Limitation</title>
-    <meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge">
+<html lang="en">
+    <head>
+        <title>Optimization of Gas and Bytecode Limitation</title>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width initial-scale=1.0">
-    <meta name="description" content="Solidity is a curly-bracket language influenced by C++, Python, & JavaScript; yet coding in solidity is 
-    different from any other language…">
+    <meta name="description" content="Solidity is a curly-bracket language influenced by C++, Python, & JavaScript; 
+    yet coding in solidity is different from any other language…">
     <meta name="keywords" content="gas, solidity, ethereum, bytecode, blockchain">
     <meta name="author" content="Sasha Flores">
     <meta property="og:type" content="website">
     <meta property="og:title" content="Optimization of Gas and Bytecode Limitation">
-    <meta property="og:description" content="Solidity is a curly-bracket language influenced by C++, Python, & JavaScript; 
-    yet coding in solidity is different from any other language…">
-    <meta property="og:image" content="https://miro.medium.com/1*zgsFrtE0dg3nqaNzX-H_MQ.jpeg"><meta property="twitter:card" content="summary"><meta property="twitter:title" content="Optimization of Gas and Bytecode Limitation"><meta property="twitter:description" content="Solidity is a curly-bracket language influenced by C++, Python, & JavaScript; yet coding in solidity is different from any other language…"><meta property="twitter:image" content="https://miro.medium.com/1*zgsFrtE0dg3nqaNzX-H_MQ.jpeg"></head><body><div class="blog"><h1 id="22bb">Optimization of Gas and Bytecode Limitation</h1><img alt="" src="https://miro.medium.com/1*zgsFrtE0dg3nqaNzX-H_MQ.jpeg" /><p>Solidity is a curly-bracket language influenced by C++, Python, & JavaScript; yet coding in solidity is different from any other language as every piece of code cost you gas.</p><p>Solidity is designed to target the EVM, so before we dig into the tips & tricks of saving gas & reducing bytecode size, we will have a quick overview of six areas where data is stored in the EVM:</p><ul><li>Storage: 
-— is persistent between function calls and transactions.
-— is a key-value store that maps 256-bit words to 256-bit words.
+ 
+    <meta property="og:image" content="https://miro.medium.com/1*zgsFrtE0dg3nqaNzX-H_MQ.jpeg">
+    <meta property="twitter:card" content="summary">
+    <meta property="twitter:title" content="Optimization of Gas and Bytecode Limitation">
+    <meta property="twitter:image" content="https://miro.medium.com/1*zgsFrtE0dg3nqaNzX-H_MQ.jpeg">
+
+</head>
+<body>
+    <div class="blog">
+        <h1 id="22bb">Optimization of Gas and Bytecode Limitation</h1>
+        <img alt="" src="https://miro.medium.com/1*zgsFrtE0dg3nqaNzX-H_MQ.jpeg" />
+        <p>Solidity is a curly-bracket language influenced by C++, Python, & JavaScript; yet coding in solidity is different 
+            from any other language as every piece of code cost you gas.
+        </p>
+        <p>Solidity is designed to target the EVM, so before we dig into the tips & tricks of saving gas & reducing bytecode size, 
+            we will have a quick overview of six areas where data is stored in the EVM:
+        </p>
+        <ul>
+            <li>Storage: 
+                — is persistent between function calls and transactions.
+                — is a key-value store that maps 256-bit words to 256-bit words.
 — each storage slot is 32 bytes in size.
 — <code>SSTORE</code>opcode will cost 20,000 gas units to store a value, which will vary based on the opcode arguments.
-— <code>SLOAD</code> opcode will cost 800 gas units to read from storage, which will vary based on the opcode arguments.</li><li>Memory:
+— <code>SLOAD</code> opcode will cost 800 gas units to read from storage, which will vary based on the opcode arguments.
+</li>
+
+<li>Memory:
 — is temporary across functions execution, where the contract obtains a freshly cleared instance for each transaction.
 — is linear and can be addressed at byte level, but reads are limited to a width of 256 bits, while writes can be either 8 bits or 256 bits wide.
 — is relatively cheap to write & read to memory, but have to consider the expansion cost when writing to memory, as explained below.
-— <code>MLOAD, MSTORE, MSTORE8</code> opcode have a base cost of 3 gas units.</li><li>Stack:
+— <code>MLOAD, MSTORE, MSTORE8</code> opcode have a base cost of 3 gas units.
+</li>
+
+<li>Stack:
 — EVM isn't a register machine but a stack machine where all computations are performed on a data area called the stack.
 — It has a maximum size of 1024 elements and maintains a stack of uint256s used to hold local variables, function call arguments and return addresses.
 — opcodes to push, duplicate, & swap have a base cost of 3 gas units, which may vary based on opcode arguments, while pop has cost of 2 gas units:
 <code>PUSH</code>to push from 1 to 32 bytes.
 <code>DUP</code>to clone from the last value to the last to the 16th last value on the stack.
 <code>SWAP</code>to swap from the last 2 values to the top of the stack within the 17th last element.
-<code>POP</code>removes a (u)int256 off the stack and discards it.</li><li>Calldata:
+<code>POP</code>removes a (u)int256 off the stack and discards it.
+</li>
+
+<li>Calldata:
 — is a non-modifiable, non-persistent area where function arguments are stored, and behaves mostly like memory.
 — It usually contains a 4-byte method identifier followed by serialized arguments.
 — It is read-only and mainly used to retrieve information or parameters supplied by external callers.
 — reading from calldata is less expensive than reading from memory.
  - <code>CALLDATASIZE</code> opcode will cost 2 gas units, which will vary based on the data size retrieved.
- - <code>CALLDATALOAD & CALLDATACOPY</code>opcode will cost 3 gas units.</li><li>Code:
-— is the bytecode of your smart contract limited to 2457 6bytes.</li><li>Logs:
+ - <code>CALLDATALOAD & CALLDATACOPY</code>opcode will cost 3 gas units.
+</li>
+
+<li>Code:
+— is the bytecode of your smart contract limited to 2457 6bytes.</li>
+
+<li>Logs:
 — is the mechanism for recording and storing events or data in a decentralized and immutable manner.
 — are included as part of the transaction receipt, which is generated when a transaction is successfully executed on the blockchain.
-— logs are considerably cheap but still accumulating events, especially with indexed values will accumulate gas.</li></ul><h2 id="3167"><i><b>Solidity tips and tricks to save gas and reduce bytecode size</b></i></h2><h3 id="977b">1- State Variables:</h3><ul><li><b>You can pack as many state variables in one slot as long as it fits 32 bytes.</b></li></ul><pre><code class="language-cpp">// poor code example
+— logs are considerably cheap but still accumulating events, especially with indexed values will accumulate gas.
+</li>
+</ul>
+
+<h2 id="3167">
+    <i><b>Solidity tips and tricks to save gas and reduce bytecode size</b></i>
+</h2>
+<h3 id="977b">1- State Variables:</h3>
+<ul>
+    <li><b>You can pack as many state variables in one slot as long as it fits 32 bytes.</b></li>
+</ul>
+
+<pre><code class="language-cpp">// poor code example
 address public sender;  // slot 1: 20 bytes
 uint256 private count;  // slot 2: 32 bytes
 uint96 private value;  // slot 3: 12 bytes
-bytes32 private name;  // slot 4: 32 bytes</code></pre><p>The code snippet above is a poor code because it didn't fully utilize each storage slot & used more than the number of slots needed for the state variables, instead you can pack your variables as follows:</p><pre><code class="language-cpp">// good code example
+bytes32 private name;  // slot 4: 32 bytes
+</code></pre>
+
+<p>The code snippet above is a poor code because it didn't fully utilize each storage slot & used more 
+    than the number of slots needed for the state variables, instead you can pack your variables as follows:
+</p>
+
+<pre><code class="language-cpp">// good code example
 address public sender;  // slot 1: 20 bytes
 uint96 private value;  // slot 1: 12 bytes
 uint256 private count;  // slot 2: 32 bytes
-bytes32 private name;  // slot 3: 32 bytes</code></pre><ul><li><b>Reconsider type & size of state variable</b></li></ul><pre><code class="language-csharp">// poor code example
+bytes32 private name;  // slot 3: 32 bytes
+</code></pre>
+
+<ul>
+    <li><b>Reconsider type & size of state variable</b></li>
+</ul>
+    
+<pre><code class="language-csharp">// poor code example
 uint256 public amount;  // slot 1: 32 bytes
 string private name;    // slot variable: depends on the string length
-bytes private identifier;  // slot variable: depends size of bytes</code></pre><p>The code snippet above can be considered poor code because:
+bytes private identifier;  // slot variable: depends size of bytes
+</code></pre>
+
+<p>The code snippet above can be considered poor code because:
 — you can use uint96 instead of uint256:
 2 ^96–1 = 79,228,162,514,264,337,593,543,950,335
 — if you are certain that your data can fit into bytes 32, then it's way cheaper to use bytes 32 instead of strings & bytes. 
 — Generally speaking, fixed size data is cheaper than dynamic data.
- - To calculate the storage size of a string in bytes, you can use the following formula: Size in bytes = (string length * 32) + 32; let's say you have a string of 10 characters, then the storage size would be: (10 * 32) + 32 = 352.</p><pre><code class="language-cpp">// good code example
+ - To calculate the storage size of a string in bytes, you can use the following formula: Size in bytes = (string length * 32) + 32; 
+ let's say you have a string of 10 characters, then the storage size would be: (10 * 32) + 32 = 352.
+</p>
+
+<pre><code class="language-cpp">// good code example
 uint96 public amount;  // slot 1: 12 bytes
 bytes20 private name;  // slot 1: 20 bytes
-bytes32 private identifier;  // slot 2:32 bytes</code></pre><ul><li><b>Consider constant & immutable variables if their state wouldn't change during the lifetime of a smart contract.</b></li></ul><p>The compiler does not reserve a storage slot for these variables, and every occurrence is replaced by its respective value.</p><p><i>For constant variables:</i>
+bytes32 private identifier;  // slot 2:32 bytes
+</code></pre>
+
+<ul>
+    <li><b>Consider constant & immutable variables if their state wouldn't change during the lifetime of a smart contract.</b></li>
+</ul>
+
+<p>The compiler does not reserve a storage slot for these variables, and every occurrence is replaced by its respective value.</p>
+<p>
+    <i>For constant variables:</i>
  - The value has to be fixed at compile-time.
- - Disallowed any expression that accesses storage, blockchain data (e.g., <code>block.timestamp</code>, <code>address(this).balance</code> or <code>block.number</code>) or execution data (<code>msg.value</code> or <code>gasleft()</code>) or makes calls to external contracts.</p><p><i>For immutable variables:</i>
+ - Disallowed any expression that accesses storage, blockchain data (e.g., <code>block.timestamp</code>, 
+ <code>address(this).balance</code> or <code>block.number</code>) or execution data (<code>msg.value</code> or 
+ <code>gasleft()</code>) or makes calls to external contracts.
+</p>
+
+<p>
+    <i>For immutable variables:</i>
  - It can still be assigned at construction time.
- - The contract creation code generated by the compiler will modify the contract's runtime code before it is returned by replacing all references to immutable with the values assigned to them. This is important if you are comparing the runtime code generated by the compiler with the one actually stored in the blockchain.</p><blockquote class="small"><p>In some cases, constant values can be cheaper than immutable values as the EVM reserve 32 bytes for immutable regardless if they can fit in fewer bytes.</p></blockquote><ul><li><b>Don't initialize variables with their default value</b></li></ul><p>If you're declaring a state variable with their prospective default value, you're wasting gas and will be considered a poor code, the default values for different types are as follows:</p><p><i>Boolean:</i>The default value for a boolean variable is <code>false</code>. If a boolean variable is declared without initialization, it will have the default value of <code>false</code>.</p><p><i>Unsigned Integer</i>The default value for is <code>uint</code>is <code>0</code>. If a uint variable is declared without initialization, it will have the default value of <code>0</code>. The default value for other unsigned integer types, like <code>uint8</code>, <code>uint16</code>, etc., follows the same rule and is <code>0</code>.</p><p><i>Bytes</i>The default value for a bytes variable is an empty byte array, represented by <code>0x</code> (a hexadecimal value indicating an empty byte array). If a bytes variable is declared without initialization, it will have the default value of an empty byte array.</p><ul><li><b>Minimize touching the storage</b></li></ul><p>Try to minimize reading from and writing to storage as much as you can, we all know the value of a state variable can change in the scoop of any function. If it is necessary to iterate over or modify a variable, consider the following example:</p><pre><code class="language-java">contract PoorExampleContract {
+ - The contract creation code generated by the compiler will modify the contract's runtime code before it is returned by 
+ replacing all references to immutable with the values assigned to them. This is important if you are comparing the 
+ runtime code generated by the compiler with the one actually stored in the blockchain.
+</p>
+
+<blockquote class="small">
+    <p>In some cases, constant values can be cheaper than immutable values as the EVM reserve 32 bytes for immutable regardless 
+        if they can fit in fewer bytes.
+    </p>
+</blockquote>
+<ul>
+    <li><b>Don't initialize variables with their default value</b></li>
+</ul>
+
+
+<p>If you're declaring a state variable with their prospective default value, you're wasting gas and will be considered a poor code, 
+    the default values for different types are as follows:
+</p>
+
+<p>
+    <i>Boolean:</i>The default value for a boolean variable is <code>false</code>. 
+    If a boolean variable is declared without initialization, it will have the default value of <code>false</code>.
+</p>
+
+<p>
+    <i>Unsigned Integer</i>The default value for is <code>uint</code>is <code>0</code>. 
+    If a uint variable is declared without initialization, it will have the default value of <code>0</code>. 
+    The default value for other unsigned integer types, like <code>uint8</code>, <code>uint16</code>, etc., 
+    follows the same rule and is <code>0</code>.
+</p>
+
+<p>
+    <i>Bytes</i>The default value for a bytes variable is an empty byte array, represented by <code>0x</code> 
+    (a hexadecimal value indicating an empty byte array). If a bytes variable is declared without initialization, 
+    it will have the default value of an empty byte array.
+</p>
+
+<ul>
+    <li><b>Minimize touching the storage</b></li>
+</ul>
+
+<p>Try to minimize reading from and writing to storage as much as you can, we all know the value of a state variable can 
+    change in the scoop of any function. If it is necessary to iterate over or modify a variable, consider the following example:
+</p>
+
+<pre>
+    <code class="language-java">contract PoorExampleContract {
     uint256[] public dataArray;
     uint256 public index;
 
@@ -76,7 +203,10 @@ bytes32 private identifier;  // slot 2:32 bytes</code></pre><ul><li><b>Consider 
             }
         }
     }
-}</code></pre><pre><code class="language-java">contract GoodExampleContract {
+}
+</code></pre>
+<pre>
+    <code class="language-java">contract GoodExampleContract {
     uint256[] public dataArray;
     uint256 public index;
 
@@ -96,9 +226,48 @@ bytes32 private identifier;  // slot 2:32 bytes</code></pre><ul><li><b>Consider 
         // 2nd storage touch
         index = tempIndex;
     }
-}</code></pre><blockquote class="small"><p>Remember, it's important to handle memory variables properly to avoid potential issues like exceeding the available memory or running out of gas due to excessive memory usage.</p></blockquote><h3 id="b2f7">2- Memory</h3><p>While memory considered cheaper compared to storage, it is expanded by a word (256-bit), when accessing (either reading or writing) a previously untouched memory word (i.e., any offset within a word). At the time of expansion, the cost in gas must be paid. Memory is more costly the larger it grows (it scales quadratically).</p><img alt="Memory Expansion Gas Cost" src="https://miro.medium.com/1*SIUHDodEb4si2ex80mgsSw.png" /><p><code>calldata</code> is an appealing and cheaper alternative to memory, <a href="https://eips.ethereum.org/EIPS/eip-2028#simple-summary">EIP-2028</a> reduced gas per non-zero byte from <b>68 gas per byte to 16 gas per byte</b>. Depending on how you want to handle and access the data within a function. Here's a guideline on when to use each type:</p><p><i>Calldata:</i> - Calldata is read-only, meaning you cannot modify its contents within the function. This is useful when you want to minimize gas costs by avoiding unnecessary data copying.
- - Use <code>calldata</code> for input parameters, especially when you want to access data sent to your contract from an external source, such as another contract or an external account.</p><p><i>Memory:</i> - when you need to modify or store data within the function, especially for temporary variables or data manipulation.
- - If you want to store a copy of <code>calldata</code> for later use within the function, you can assign it to a <code>memory</code> variable.</p><pre><code class="language-kotlin">contract ExampleContract{
+}
+</code>
+</pre>
+
+<blockquote class="small">
+    <p>
+        Remember, it's important to handle memory variables properly to avoid potential issues like exceeding the available 
+        memory or running out of gas due to excessive memory usage.
+    </p>
+</blockquote>
+
+
+<h3 id="b2f7">2- Memory</h3>
+<p>While memory considered cheaper compared to storage, it is expanded by a word (256-bit), when accessing 
+    (either reading or writing) a previously untouched memory word (i.e., any offset within a word). At the time of 
+    expansion, the cost in gas must be paid. Memory is more costly the larger it grows (it scales quadratically).
+</p>
+
+<img alt="Memory Expansion Gas Cost" src="https://miro.medium.com/1*SIUHDodEb4si2ex80mgsSw.png" />
+<p>
+    <code>calldata</code> is an appealing and cheaper alternative to memory, 
+    <a href="https://eips.ethereum.org/EIPS/eip-2028#simple-summary">EIP-2028</a> 
+    reduced gas per non-zero byte from <b>68 gas per byte to 16 gas per byte</b>. Depending on how you 
+    want to handle and access the data within a function. Here's a guideline on when to use each type:
+</p>
+
+<p>
+    <i>Calldata:</i> - Calldata is read-only, meaning you cannot modify its contents within the function. 
+    This is useful when you want to minimize gas costs by avoiding unnecessary data copying.
+ - Use <code>calldata</code> for input parameters, especially when you want to access data sent to 
+ your contract from an external source, such as another contract or an external account.
+</p>
+
+<p>
+    <i>Memory:</i> 
+    - when you need to modify or store data within the function, especially for temporary variables or data manipulation.
+    - If you want to store a copy of <code>calldata</code> for later use within the function, you can assign it 
+    to a <code>memory</code> variable.
+</p>
+
+<pre>
+    <code class="language-kotlin">contract ExampleContract{
     function processData(uint256[] calldata data) public {
         // Read-only access to calldata
         uint256 sum = 0;
@@ -116,7 +285,29 @@ bytes32 private identifier;  // slot 2:32 bytes</code></pre><ul><li><b>Consider 
             data[i] = data[i] * 2;
         }
     }
-}</code></pre><blockquote class="small"><p>By choosing the appropriate type (<code>calldata</code> or <code>memory</code>), you can optimize gas costs and efficiently handle data based on your specific requirements within your Solidity functions.</p></blockquote><h3 id="ed79">3- Pack & Hash Struct:</h3><p>If you have a struct in your code that will eventually need to be set, modified, or read from in any function, you can hash and store the struct</p><pre><code class="language-typescript">contract PoorExampleContract {
+}
+</code>
+</pre>
+
+<blockquote class="small">
+    
+    <p>
+        By choosing the appropriate type (<code>calldata</code> or <code>memory</code>), 
+        you can optimize gas costs and efficiently handle data based on your specific requirements 
+        within your Solidity functions.
+    </p>
+</blockquote>
+
+<h3 id="ed79">3- Pack & Hash Struct:</h3>
+
+<p>
+    If you have a struct in your code that will eventually need to be set, modified, or read from in any function, 
+    you can hash and store the struct
+</p>
+
+<pre>
+    
+    <code class="language-typescript">contract PoorExampleContract {
 
     struct Employee {
         uint256 id;  // slot 1 storage
@@ -136,7 +327,18 @@ bytes32 private identifier;  // slot 2:32 bytes</code></pre><ul><li><b>Consider 
 
         emp.salary = _newSalary;
     }
-}</code></pre><p>— Each time an employee's data is modified, the entire struct is updated in storage, which can lead to higher gas costs if the struct size is large or if frequent modifications are made.</p><p>— String will be expensive depending on its length and occupied slots.</p><pre><code class="language-java">contract GoodExampleContract{
+}
+</code>
+</pre>
+
+<p>— Each time an employee's data is modified, the entire struct is updated in storage, which can 
+    lead to higher gas costs if the struct size is large or if frequent modifications are made.
+</p>
+
+<p>— String will be expensive depending on its length and occupied slots.</p>
+
+<pre>
+    <code class="language-java">contract GoodExampleContract{
 
     struct Employee {
         uint15 id;  // slot 1 storage
@@ -173,7 +375,41 @@ bytes32 private identifier;  // slot 2:32 bytes</code></pre><ul><li><b>Consider 
     function updateHash(bytes32 _oldHash, uint17 _oldValue, uint17 _newValue) internal pure returns (bytes32) {
         return keccak256(abi.encodePacked(_oldHash, _oldValue, _newValue));
     }
-}</code></pre><p>—By accepting the struct as input in the <code>addEmployee</code> and <code>updateSalary</code> functions, we improve gas efficiency by avoiding unnecessary data copying or parameter conversions. This can lead to lower gas costs when interacting with the contract.</p><p>— Employing hashing techniques, can help reduce gas costs by storing compact representations of struct data and perform data integrity checks efficiently.</p><p>— Using <code>calldata</code> option in the <code>addEmployee</code>improves gas efficiency by avoiding unnecessary data copying.</p><p>— Using bytes32 for first & last name is more gas efficient than strings and bytes, but may have limitations in terms of length and flexibility.</p><p>— Using uint15 for employee id will provide you with a max value of 32,768 which depends on the company size.</p><p>— Using uint17 for salary will provide you with max value of 131,072 per month, which depends on the company payroll.</p><h3 id="0f82">4- Use Assembly instead of Solidity</h3><p>Assembly is a low-level programming language that is converted to machine code using an <a href="https://techterms.com/definition/assembler">assembler</a>. The EVM has its own instruction set which is abstracted by Solidity, its high level language for writing smart contract.</p><pre><code class="language-csharp">contract AssemblyContract {
+}
+</code>
+</pre>
+
+<p>
+    —By accepting the struct as input in the <code>addEmployee</code> and <code>updateSalary</code> functions, 
+    we improve gas efficiency by avoiding unnecessary data copying or parameter conversions. This can lead to 
+    lower gas costs when interacting with the contract.
+</p>
+<p>
+    — Employing hashing techniques, can help reduce gas costs by storing compact representations of 
+    struct data and perform data integrity checks efficiently.
+</p>
+<p>
+    — Using <code>calldata</code> option in the <code>addEmployee</code>improves gas efficiency by avoiding unnecessary data copying.
+</p>
+<p>— Using bytes32 for first & last name is more gas efficient than strings and bytes, but may have limitations in terms of length 
+    and flexibility.
+</p>
+
+<p>— Using uint15 for employee id will provide you with a max value of 32,768 which depends on the company size.</p>
+<p>— Using uint17 for salary will provide you with max value of 131,072 per month, which depends on the company payroll.</p>
+
+<h3 id="0f82">4- Use Assembly instead of Solidity</h3>
+
+<p>
+    Assembly is a low-level programming language that is converted to machine code using an 
+    <a href="https://techterms.com/definition/assembler">assembler</a>. 
+    The EVM has its own instruction set which is abstracted by Solidity, its high level language 
+    for writing smart contract.
+</p>
+
+
+<pre>
+    <code class="language-csharp">contract AssemblyContract {
 
     address private _owner;
 
@@ -236,7 +472,28 @@ bytes32 private identifier;  // slot 2:32 bytes</code></pre><ul><li><b>Consider 
         }
     }
 
-}</code></pre><blockquote class="small"><p>The trade-off lies between complexity and gas efficiency. Inline assembly code can be more intricate to work with, but it offers improved gas efficiency. However, utilizing inline assembly requires knowledge of EVM opcodes.</p></blockquote><h3 id="c515">5- Time of Deployment and init function</h3><p>You can trade-off more cost during deployment than for execution of other functions, as shown below in the heatmap of gas prices at various of the day gas cost changed dramatically due to network congestion; hence you can deploy your contract for a gas price 5x or 10x less than other times.</p><img alt="Source: intotheblock" src="https://miro.medium.com/1*VDkjPzMtndj2gOgOCWxYxw.png" /><p>Another great possibility is to do more in the init function to help reduce the gas needed at other times.</p><pre><code class="language-csharp">// source: NFTX Protocol
+}
+</code>
+</pre>
+
+<blockquote class="small">
+    <p>
+        The trade-off lies between complexity and gas efficiency. Inline assembly code can be more intricate to work with, 
+        but it offers improved gas efficiency. However, utilizing inline assembly requires knowledge of EVM opcodes.
+    </p>
+</blockquote>
+
+<h3 id="c515">5- Time of Deployment and init function</h3>
+<p>You can trade-off more cost during deployment than for execution of other functions, as shown below in the heatmap 
+    of gas prices at various of the day gas cost changed dramatically due to network congestion; hence you can deploy your 
+    contract for a gas price 5x or 10x less than other times.
+</p>
+<img alt="Source: intotheblock" src="https://miro.medium.com/1*VDkjPzMtndj2gOgOCWxYxw.png" />
+
+<p>Another great possibility is to do more in the init function to help reduce the gas needed at other times.</p>
+
+<pre>
+    <code class="language-csharp">// source: NFTX Protocol
 function __NFTXVault_init(
         string memory _name,
         string memory _symbol,
@@ -254,41 +511,231 @@ function __NFTXVault_init(
         allowAllItems = _allowAllItems;
         emit VaultInit(vaultId, _assetAddress, _is1155, _allowAllItems);
         setVaultFeatures(true /*enableMint*/, true /*enableRandomRedeem*/, true /*enableTargetRedeem*/, true /*enableRandomSwap*/, true /*enableTargetSwap*/);
-    }</code></pre><h3 id="8f0f">6- Choose Wisely the type of data to store on-chain</h3><p>When deciding what data to store on-chain, you need to consider factors such as data size, security, and efficiency. Here's a comparison of storing data as bytes, strings, or hashes:</p><p><i>Bytes</i> - Storing data as bytes allows you to handle arbitrary binary data.
+    }
+</code>
+</pre>
+
+<h3 id="8f0f">6- Choose Wisely the type of data to store on-chain</h3>
+<p>
+    When deciding what data to store on-chain, you need to consider factors such as data size, security, and efficiency. 
+    Here's a comparison of storing data as bytes, strings, or hashes:
+</p>
+<p>
+    <i>Bytes</i> - Storing data as bytes allows you to handle arbitrary binary data.
 — Use bytes when you need to handle raw binary information or when the data format is not known in advance.
- - It provides flexibility but can result in higher storage costs and gas consumption, especially for large amounts of data.</p><p>For example: 1 word can take from 0 to 31 bytes, 3 words can take from 32 to 64 bytes, 4 words can take from 65 to 96 bytes, and so bytes cost a variable amount of gas which can be a lot.</p><p><i>Strings</i> - Storing data as strings is suitable for storing human-readable text.
+ - It provides flexibility but can result in higher storage costs and gas consumption, especially for large amounts of data.
+</p>
+
+<p>For example: 1 word can take from 0 to 31 bytes, 3 words can take from 32 to 64 bytes, 4 words can take from 65 to 96 bytes, 
+    and so bytes cost a variable amount of gas which can be a lot..
+</p>
+<p>
+    <i>Strings</i> - Storing data as strings is suitable for storing human-readable text.
  - Strings are convenient for readability and handling textual data, but they come with higher storage and gas costs compared to bytes.
- - If the data contains variable-length or frequently changing text, consider the gas cost implications.</p><p>Hashes
+ - If the data contains variable-length or frequently changing text, consider the gas cost implications.
+</p>
+
+<p>Hashes
  - Storing the hash of information instead of the actual data can be beneficial for certain scenarios.
- - Hashes are fixed-size, regardless of the original data size, resulting in lower storage costs and efficient comparison of data integrity.</p><h3 id="a43f">7- Consider passing Admin functions cost to user functions</h3><p>There a significant number of contracts that require access control mechanism in place to prevent unauthorized use of some of its' functions which will increase the total gas cost of deploying & running the contract. One get away is to pass this cost to the end user instead of paying it ourselves or the admin of the contract, let's take a look into some EIPs that increase gas cost:</p><p>—<i>First we have to differentiate between accounts haven't been accessed during a transaction; called Cold Accounts and accounts have been accessed; called Warn accounts.</i></p><img alt="" src="https://miro.medium.com/1*anejceRNWAcdyL8XINvBUQ.png" /><pre><code class="language-cpp">contract AdminCostExample {
+ - Hashes are fixed-size, regardless of the original data size, resulting in lower storage costs and efficient comparison of data integrity.
+</p>
+
+<h3 id="a43f">7- Consider passing Admin functions cost to user functions</h3>
+<p>There a significant number of contracts that require access control mechanism in place to prevent unauthorized use of 
+    some of its' functions which will increase the total gas cost of deploying & running the contract. One get away is to pass 
+    this cost to the end user instead of paying it ourselves or the admin of the contract, let's take a look into some EIPs that 
+    increase gas cost:
+</p>
+
+<p>
+    —<i>First we have to differentiate between accounts haven't been accessed during a transaction; called Cold Accounts and 
+        accounts have been accessed; called Warn accounts.
+    </i>
+</p><img alt="" src="https://miro.medium.com/1*anejceRNWAcdyL8XINvBUQ.png" />
+
+<pre>
+    
+    <code class="language-cpp">contract AdminCostExample {
 
   mapping(address => bool) private authorized;
 
   function addUser(address user) public onlyAdmin {
     authorized[user] = true;
-  }</code></pre><p>The example above will cost us 22,100 gas each time our admin adds a user.</p><p>Due to the high cost of adding access list, reading cost each time from storage, and the reduced refund EIPs a great alternative is authorizing users or whitelist them in our server, and pass the cost to the enduser as follows:</p><pre><code class="language-java">contract UserAuthExample {
+  }
+</code>
+</pre>
+
+<p>The example above will cost us 22,100 gas each time our admin adds a user.</p>
+
+<p>Due to the high cost of adding access list, reading cost each time from storage, and the reduced refund EIPs a great 
+    alternative is authorizing users or whitelist them in our server, and pass the cost to the enduser as follows:
+</p>
+
+<pre>
+    
+    <code class="language-java">contract UserAuthExample {
 
   function mint(uint256 amount, uint8 v, bytes32 r, bytes32 s) public {
     bytes32 hash = keccak256(abi.encodePacked(amount, msg.sender));
     address signer = ecrecover(hash, v, r, s);
     require(signer == user, 'unauthorized user');
-   }</code></pre><p>In the example above gas is waived to enduser instead of piling up gas each time we want to add user.</p><h3 id="1c26">8- Events are cheaper to store data but you should look out for cost</h3><p>Use events to store data on-chain but keep in mind that you can't access or use these data on-chain. Events are great tool for:
- - Decentralized Communication: Logs can act as a communication mechanism between smart contracts and external systems. By emitting events, smart contracts can notify other contracts or off-chain systems about specific occurrences or state changes.
- - Audit Trail: Logs provide a historical record of important events or transactions within a smart contract. They can be used for accountability, transparency, and debugging purposes.
- - Off-chain Analysis: Logs can be retrieved and analyzed off-chain by external systems or tools. This allows for data extraction, monitoring, and reporting without requiring direct access to the smart contract's state.</p><p>Logs do not directly affect the state of the blockchain or consume excessive gas. However, emitting logs incurs a certain gas cost, which is paid by the contract owner. The cost depends on the number of topics and the data size emitted in the log, here is a breakdown for cost incurred by emitting an event:</p><pre><code class="language-scss">event Add(uint256 value);
+   }.
+</code>
+</pre>
+
+<p>
+    
+    In the example above gas is waived to enduser instead of piling up gas each time we want to add user.</p>
+    
+    <h3 id="1c26">8- Events are cheaper to store data but you should look out for cost</h3>
+    
+    <p>
+        Use events to store data on-chain but keep in mind that you can't access or use these data on-chain. Events are great tool for:
+            - Decentralized Communication: Logs can act as a communication mechanism between smart contracts and external systems. 
+            By emitting events, smart contracts can notify other contracts or off-chain systems about specific occurrences or state changes.
+            - Audit Trail: Logs provide a historical record of important events or transactions within a smart contract. 
+            They can be used for accountability, transparency, and debugging purposes.
+            - Off-chain Analysis: Logs can be retrieved and analyzed off-chain by external systems or tools. This allows for data extraction, 
+            monitoring, and reporting without requiring direct access to the smart contract's state.
+    </p>
+    
+    <p>Logs do not directly affect the state of the blockchain or consume excessive gas. However, emitting logs incurs a certain gas cost, 
+        
+        which is paid by the contract owner. The cost depends on the number of topics and the data size emitted in the log, here is a 
+        breakdown for cost incurred by emitting an event:
+    </p>
+    
+    <pre>
+        <code class="language-scss">event Add(uint256 value);
 
 function addValue(uint256 _value) external {
   emit Add(_value);
-}</code></pre><p>— Log Operation Base Gas Cost : 375 gas
+}
+</code>
+</pre>
+
+<p>— Log Operation Base Gas Cost : 375 gas
  - Log Operation Data Byte Gas Cost : 8 gas/ byte x 32 bytes = 2256 gas
  - Log Operation Topic Gas Cost : 375 gas/topic x 1 topic = 375 gas 
- - Memory Expansion Gas Cost : number of bytes x 3 gas/byte</p><p>Worth noting in the example above that we only stored one topic which is <code>value</code>, all costs are approximate and no indexed topic was stored.</p><h3 id="51bf">9- Downsize Your Contract to Fight Size Limitation</h3><p><a href="https://eips.ethereum.org/EIPS/eip-170">EIP-170</a> forced a maximum limit of 24576 bytes for a contract, you may receive a warning indicating that it may not be deployable on the Mainnet. This size limit was introduced to mitigate the risk of denial-of-service attacks, here's how to compact the size limitation:</p><ul><li><b>Consider visibility for functions and variables</b></li></ul><p>Public variables autogenerate getter functions, if you don't need these functions consider making your variables private.</p><p>Public functions when called it copied all its parameters again to memory automatically, while external function's parameters are not copied into memory but are read from calldata directly.</p><p>— If your functions expected to be called from outside the contract, consider making them external. 
+ - Memory Expansion Gas Cost : number of bytes x 3 gas/byte
+</p>
+
+<p>Worth noting in the example above that we only stored one topic which is <code>value</code>, 
+    all costs are approximate and no indexed topic was stored.
+</p>
+
+
+<h3 id="51bf">9- Downsize Your Contract to Fight Size Limitation</h3>
+<p><a href="https://eips.ethereum.org/EIPS/eip-170">EIP-170</a> 
+    forced a maximum limit of 24576 bytes for a contract, you may receive a warning indicating that it may not be deployable on the Mainnet. 
+    This size limit was introduced to mitigate the risk of denial-of-service attacks, here's how to compact the size limitation:
+</p>
+
+<ul>
+    <li><b>Consider visibility for functions and variables</b></li>
+</ul>
+
+<p>Public variables autogenerate getter functions, if you don't need these functions consider making your variables private.</p>
+<p>Public functions when called it copied all its parameters again to memory automatically, while external function's parameters are 
+    not copied into memory but are read from calldata directly.
+</p>
+
+<p>— If your functions expected to be called from outside the contract, consider making them external. 
  - If your functions expected to be called within the contract only, consider making them private. 
- - If your functions expected to be called by inherited contracts, consider making them internal.</p><ul><li><b>Separate your contracts</b></li></ul><p>Separating logic into smaller contracts is considered a good architectural practice. When designing your contracts, it's essential to analyze whether your functions belong together or if you can split the storage and functionality.</p><p>By separating logic into smaller contracts, you can achieve several benefits. First, it enhances code readability and maintainability, making it easier to understand and modify specific functionalities. It also promotes reusability, as smaller contracts with well-defined responsibilities can be reused in different contexts.</p><p>To determine if your functions belong together, you should consider their relatedness and the degree to which they share common state variables or dependencies. If multiple functions consistently operate on the same set of data or require shared resources, it might be appropriate to group them together in a single contract. On the other hand, if there are independent functionalities or functionalities that operate on separate data or dependencies, splitting them into separate contracts can improve modularity and flexibility.</p><ul><li><b>Use Proxy Patterns for mass deployment</b></li></ul><p>is a powerful technique to achieve efficient and scalable mass deployment of contracts. Instead of deploying individual instances of the contract, you deploy a single implementation contract and multiple proxy contracts. The proxy contracts act as intermediaries that delegate their logic to the shared implementation contract. Each proxy contract can have its own set of data, allowing for differentiation while sharing the same underlying logic.</p><ul><li><b>Libraries</b></li></ul><p>A straightforward approach to separate functionality code from storage is by utilizing libraries. You can keep the storage and functionality in separate contracts. It's important to note that if you declare library functions as internal, they will be directly added to the main contract during compilation. However, by declaring them as public functions, they will be implemented in a separate library contract.</p><p>To enhance the convenience of working with libraries, consider utilizing the "using for" keyword. This keyword allows you to extend the functionality of a specific data type by attaching a library to it. This way, you can conveniently access the library functions directly on the data type itself.</p><ul><li><b>Unused functions</b></li></ul><p>Removing unused internal or private functions will have no impact on the contract size, but removing unused public or external functions will result in a smaller contract size. Often times we add a lot of view functions for convenience reasons. That's perfectly fine until you hit the size limit. Then you might want to really think about removing all but absolutely essential ones.</p><ul><li><b>Error Handling</b></li></ul><p>There are four different ways to handle error messages displayed to enduser, and here's the guide of how & when to utilize each:</p><p><i>Assert</i> - S<i>hould only be used to test for internal errors and to check invariants.</i> - T<i>he <code>Assert</code>function creates an error of type P<code>anic(uinut256).</code></i> - The error code supplied with the error data indicates the kind of panic:</p><ol><li>0x00: Used for generic compiler inserted panics.</li><li>0x01: If you call <code>assert</code> with an argument that evaluates to false.</li><li>0x11: If an arithmetic operation results in underflow or overflow outside of an <code>unchecked { ... }</code> block.</li><li>0x12; If you divide or modulo by zero (e.g. <code>5 / 0</code> or <code>23 % 0</code>).</li><li>0x21: If you convert a value that is too big or negative into an enum type.</li><li>0x22: If you access a storage byte array that is incorrectly encoded.</li><li>0x31: If you call <code>.pop()</code> on an empty array.</li><li>0x32: If you access an array, <code>bytesN</code> or an array slice at an out-of-bounds or negative index (i.e. <code>x[i]</code> where <code>i >= x.length</code> or <code>i < 0</code>).</li><li>0x41: If you allocate too much memory or create an array that is too large.</li><li>0x51: If you call a zero-initialized variable of internal function type.</li></ol><p><i>Require</i> - <i>C</i>reates an error without any data or an error of type E<code>rror(string).</code>
+ - If your functions expected to be called by inherited contracts, consider making them internal.
+</p>
+
+<ul>
+    <li><b>Separate your contracts</b></li>
+</ul>
+
+<p>Separating logic into smaller contracts is considered a good architectural practice. When designing your contracts, 
+    it's essential to analyze whether your functions belong together or if you can split the storage and functionality.
+</p>
+
+<p>By separating logic into smaller contracts, you can achieve several benefits. First, it enhances code readability and maintainability, 
+    making it easier to understand and modify specific functionalities. It also promotes reusability, as smaller contracts with 
+    well-defined responsibilities can be reused in different contexts.
+</p>
+
+<p>To determine if your functions belong together, you should consider their relatedness and the degree to which they share common state 
+    variables or dependencies. If multiple functions consistently operate on the same set of data or require shared resources, it might 
+    be appropriate to group them together in a single contract. On the other hand, if there are independent functionalities or 
+    functionalities that operate on separate data or dependencies, splitting them into separate contracts can improve modularity and 
+    flexibility.
+</p>
+
+<ul>
+    <li><b>Use Proxy Patterns for mass deployment</b></li>
+</ul>
+
+<p>is a powerful technique to achieve efficient and scalable mass deployment of contracts. Instead of deploying individual 
+    instances of the contract, you deploy a single implementation contract and multiple proxy contracts.
+    The proxy contracts act as intermediaries that delegate their logic to the shared implementation contract. 
+    Each proxy contract can have its own set of data, allowing for differentiation while sharing the same underlying logic.
+</p>
+
+<ul>
+    <li><b>Libraries</b></li>
+</ul>
+
+<p>A straightforward approach to separate functionality code from storage is by utilizing libraries. 
+    You can keep the storage and functionality in separate contracts. It's important to note that if you declare 
+    library functions as internal, they will be directly added to the main contract during compilation. 
+    However, by declaring them as public functions, they will be implemented in a separate library contract.
+</p>
+
+<p>To enhance the convenience of working with libraries, consider utilizing the "using for" keyword. 
+    This keyword allows you to extend the functionality of a specific data type by attaching a library to it. 
+    This way, you can conveniently access the library functions directly on the data type itself.
+</p>
+
+<ul>
+    
+    <li><b>Unused functions</b></li>
+</ul>
+
+<p>Removing unused internal or private functions will have no impact on the contract size, 
+    but removing unused public or external functions will result in a smaller contract size. 
+    Often times we add a lot of view functions for convenience reasons. 
+    That's perfectly fine until you hit the size limit. Then you might want to really think about 
+    removing all but absolutely essential ones.
+</p>
+
+<ul>
+    <li><b>Error Handling</b></li>
+</ul>
+    
+<p>There are four different ways to handle error messages displayed to enduser, and here's the guide of how & when to utilize each:</p>
+<p><i>Assert</i> - S<i>hould only be used to test for internal errors and to check invariants.</i> - T<i>he <code>Assert</code>function 
+    creates an error of type P<code>anic(uinut256).</code></i> - The error code supplied with the error data indicates the kind of panic:
+</p>
+
+<ol>
+    <li>0x00: Used for generic compiler inserted panics.</li>
+    <li>0x01: If you call <code>assert</code> with an argument that evaluates to false.</li>
+    <li>0x11: If an arithmetic operation results in underflow or overflow outside of an <code>unchecked { ... }</code> block.</li>
+    <li>0x12; If you divide or modulo by zero (e.g. <code>5 / 0</code> or <code>23 % 0</code>).</li>
+    <li>0x21: If you convert a value that is too big or negative into an enum type.</li>
+    <li>0x22: If you access a storage byte array that is incorrectly encoded.</li>
+    <li>0x31: If you call <code>.pop()</code> on an empty array.</li>
+    <li>
+        0x32: If you access an array, <code>bytesN</code> or an array slice at an out-of-bounds or negative index (i.e. <code>x[i]</code> 
+        where <code>i >= x.length</code> or <code>i < 0</code>).
+    </li>
+    <li>0x41: If you allocate too much memory or create an array that is too large.</li>
+    <li>0x51: If you call a zero-initialized variable of internal function type.</li>
+</ol>
+
+<p><i>Require</i> - <i>C</i>reates an error without any data or an error of type E<code>rror(string).</code>
  - It should be used to ensure valid conditions that can't be detected until execution time.
  - This includes conditions on inputs or return values from calls to external contracts.
  - You should shorten your error message so it would fit into 32 bytes or less.
- - You should consider using the same require message in multiple places.</p><pre><code class="language-java">contract AssertAndRequireExample{
+ - You should consider using the same require message in multiple places.
+</p>
+
+<pre>
+    <code class="language-java">contract AssertAndRequireExample{
 
     function sendHalf(address payable addr) public payable returns (uint balance) {
         require(msg.value % 2 == 0, "Even value required.");
@@ -301,7 +748,13 @@ function addValue(uint256 _value) external {
         assert(address(this).balance == balanceBeforeTransfer - msg.value / 2);
         return address(this).balance;
     }
-}</code></pre><p>Example from OZ using the same require in multiple places</p><pre><code class="language-csharp">contract ERC721 {
+}
+
+</code></pre>
+
+<p>Example from OZ using the same require in multiple places</p>
+
+<pre><code class="language-csharp">contract ERC721 {
 
   function tokenURI(uint256 tokenId) public view virtual override returns (string memory) {
         _requireMinted(tokenId);
@@ -320,9 +773,16 @@ function addValue(uint256 _value) external {
         require(_exists(tokenId), "ERC721: invalid token ID");
     }
 }
- </code></pre><p><i>Revert with Custom Error</i> - A direct revert can be triggered using the <code>revert</code> statement.
+ </code></pre>
+ 
+ 
+ <p><i>Revert with Custom Error</i> - A direct revert can be triggered using the <code>revert</code> statement.
  - The revert statement uses a parentheses which can either be empty, or includes a description, or number of arguments.
- - Empty revert and revert with argumnets are more gas efficient if your contract have to check numerous conditions, as require & revert with the error message will cost more gas.</p><pre><code class="language-csharp">
+ - Empty revert and revert with argumnets are more gas efficient if your contract have to check numerous conditions, 
+ as require & revert with the error message will cost more gas.</p>
+ 
+ 
+ <pre><code class="language-csharp">
 contract CustomErrorExample {
 
   // revert with arguments example
@@ -360,7 +820,12 @@ contract CustomErrorExample {
         // Perform the purchase.
     }
   
-}</code></pre><p><i>Try and Catch</i> - A failure in an external call can be caught using a try/catch statement, as follows:</p><pre><code class="language-csharp">interface DataFeed { function getData(address token) external returns (uint value); }
+}</code></pre>
+
+<p><i>Try and Catch</i> - A failure in an external call can be caught using a try/catch statement, as follows:</p>
+
+
+<pre><code class="language-csharp">interface DataFeed { function getData(address token) external returns (uint value); }
 
 contract TryAndCatchExample {
 
@@ -392,4 +857,86 @@ contract TryAndCatchExample {
             return (0, false);
         }
     }
-}  </code></pre><ul><li><b>Function Modifiers</b></li></ul><p>Modifier variables share the same restricted stack with the they are added to and they add to the bytecode size of the contract, so when modifiers are used intensely they could have a significant impact on the contract size.</p><p>Internal functions, on the other hand, are not inlined but called as separate functions. This means they are very slightly more expensive in run time but save a lot of redundant bytecode in deployment. Internal functions can also help avoid the dreaded "Stack too deep Error" as variables created in an internal function don't share the same restricted stack with the original function.</p><ul><li><b>Consider using Mappings than Arrays</b></li></ul><p>Mappings are generally more cost-effective than arrays in Solidity, but there are some important considerations to keep in mind.</p><p>Unlike arrays, mappings in Solidity are stored more efficiently in memory due to how the Ethereum Virtual Machine (EVM) works. Arrays are not stored sequentially, but mappings are, which leads to cost savings. However, it's worth noting that arrays can be packed, allowing for efficient storage of smaller elements like uint8 when they can be grouped together. In such cases, using arrays can be more economical.</p><p>Another aspect to consider is that mappings lack certain functionalities. For instance, you cannot obtain the length of a mapping or iterate through all its elements as you would with an array. Consequently, depending on your specific use case, you might be compelled to use an array despite the potentially higher gas cost.</p><blockquote class="small"><p>In summary, while mappings are generally cheaper to use than arrays in terms of gas consumption, the decision between the two depends on factors such as the size of the elements and the desired functionality. Careful consideration of these factors will help you determine the most efficient choice for your Solidity code.</p></blockquote><h3 id="1fe5">10- Utilize Optimizer</h3><p>To maximize the efficiency of your Solidity smart contracts, it is crucial to leverage the optimizer provided by the solc compiler. The optimizer performs a range of optimizations on your code, such as removing redundant operations and minimizing storage usage.</p><p>By default, the optimizer is enabled, but you can further customize its behavior. One important parameter to consider is the number of optimizer runs. This value reflects the expected frequency of function calls within your contract. For contracts that are used infrequently or expect less function calls, setting the runs value to 1 can result in the smallest bytecode size, although function calls may incur slightly higher gas costs.</p><p>On the other hand, contracts that are heavily utilized, such as transfer in ERC20, can benefit from setting a higher runs value, resulting in slightly larger initial bytecode but reducing gas costs for frequent function calls.</p><blockquote class="small"><p>It is essential to strike the right balance by tailoring the optimizer runs parameter based on your contract's usage patterns to achieve optimal gas efficiency and bytecode size.</p></blockquote><p>Resources</p><ul><li><a href="https://github.com/wolflo/evm-opcodes/blob/main/gas.md">Dynamic Gas Costs</a> by Wolflo</li><li><a href="https://www.evm.codes/?fork=shanghai">Interactive opcodes</a> with examples</li><li><a href="https://jeancvllr.medium.com/solidity-tutorial-all-about-assembly-5acdfefde05c">All about Assembly </a>a solidty tutorial by Jeab Cvllr</li></ul></div></body></html>
+}  </code></pre>
+
+
+<ul>
+    <li><b>Function Modifiers</b></li>
+</ul>
+
+<p>Modifier variables share the same restricted stack with the they are added to and they add to the bytecode size of the contract, 
+    so when modifiers are used intensely they could have a significant impact on the contract size.
+</p>
+
+<p>Internal functions, on the other hand, are not inlined but called as separate functions. This means they are very slightly more 
+    expensive in run time but save a lot of redundant bytecode in deployment. Internal functions can also help avoid the dreaded 
+    "Stack too deep Error" as variables created in an internal function don't share the same restricted stack with the original function.
+</p>
+<ul>
+    <li><b>Consider using Mappings than Arrays</b></li>
+</ul>
+
+<p>Mappings are generally more cost-effective than arrays in Solidity, but there are some important considerations to keep in mind.</p>
+<p>Unlike arrays, mappings in Solidity are stored more efficiently in memory due to how the Ethereum Virtual Machine (EVM) works. 
+    Arrays are not stored sequentially, but mappings are, which leads to cost savings. However, it's worth noting that arrays can be packed, 
+    allowing for efficient storage of smaller elements like uint8 when they can be grouped together. In such cases, using arrays can be more 
+    economical.
+</p>
+
+<p>Another aspect to consider is that mappings lack certain functionalities. For instance, you cannot obtain the length of a mapping or 
+    iterate through all its elements as you would with an array. Consequently, depending on your specific use case, you might be compelled 
+    to use an array despite the potentially higher gas cost.
+</p>
+
+
+<blockquote class="small">
+    
+    <p>In summary, while mappings are generally cheaper to use than arrays in terms of gas consumption, 
+        the decision between the two depends on factors such as the size of the elements and the desired functionality. 
+        Careful consideration of these factors will help you determine the most efficient choice for your Solidity code.
+    </p>
+</blockquote>
+
+<h3 id="1fe5">10- Utilize Optimizer</h3>
+
+
+<p>
+    To maximize the efficiency of your Solidity smart contracts, it is crucial to leverage the optimizer provided by the solc compiler.
+     The optimizer performs a range of optimizations on your code, such as removing redundant operations and minimizing storage usage.
+</p>
+
+<p>
+    By default, the optimizer is enabled, but you can further customize its behavior. One important parameter to consider is 
+    the number of optimizer runs. This value reflects the expected frequency of function calls within your contract. 
+    For contracts that are used infrequently or expect less function calls, setting the runs value to 1 can result in the smallest 
+    bytecode size, although function calls may incur slightly higher gas costs.
+</p>
+
+<p>On the other hand, contracts that are heavily utilized, such as transfer in ERC20, can benefit from setting a higher runs value, 
+    resulting in slightly larger initial bytecode but reducing gas costs for frequent function calls.
+</p>
+
+<blockquote class="small">
+    <p>
+        It is essential to strike the right balance by tailoring the optimizer runs parameter based on your contract's 
+        usage patterns to achieve optimal gas efficiency and bytecode size.
+    </p>
+</blockquote>
+
+<p>Resources</p>
+
+<ul>
+    <li>
+        <a href="https://github.com/wolflo/evm-opcodes/blob/main/gas.md">Dynamic Gas Costs</a> by Wolflo
+    </li>
+    <li>
+        <a href="https://www.evm.codes/?fork=shanghai">Interactive opcodes</a> with examples
+    </li>
+    <li>
+        <a href="https://jeancvllr.medium.com/solidity-tutorial-all-about-assembly-5acdfefde05c">All about Assembly </a>
+        a solidty tutorial by Jeab Cvllr
+    </li>.
+</ul>
+</div>
+</body>
+</html>

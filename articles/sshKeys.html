@@ -1,0 +1,207 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <!-- meta tags -->
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+  <title>How to Manage Multiple SSH Keys with Separate GitHub Accounts</title>
+  <meta name="keywords" content="git-bash, ssh-keys, github, multiple-ssh-keys">
+  <meta name="author" content="Sasha Flores">
+  <meta property="og:type" content="website">
+
+  <!-- Bootstrap CSS -->
+  <link href="../css/bootstrap.min.css" rel="stylesheet">
+  <link href="../css/aos.css" rel="stylesheet">
+  <link href="../css/navbar.css" rel="stylesheet">
+  <link href="../css/articles-common.css" rel="stylesheet">
+
+
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-MXTX916K7T"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
+
+    gtag('config', 'G-MXTX916K7T');
+  </script>
+</head>
+
+<body>
+
+  <i class="bi bi-list mobile-nav-toggle d-xl-none"></i>
+  <header>
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+      <div class="container-fluid px-md-5">
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+          aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0" data-aos="fade-down" data-aos-duration="1000">
+            <li class="nav-item">
+              <a class="nav-link" aria-current="page" href="../index.html">HOME</a>
+            </li>
+
+            <li class="nav-item dropdown"><a class="nav-link dropdown-toggle" href="#" id="aboutDropdown" role="button"
+                data-bs-toggle="dropdown" aria-expanded="false">ABOUT ME</a>
+              <ul class="dropdown-menu" aria-labelledby="aboutDropdown">
+                <li><a class="dropdown-item" href="../background.html">Background</a></li>
+                <li><a class="dropdown-item" href="../skills.html">Skills</a></li>
+                <li><a class="dropdown-item" href="../experience.html">Experience</a></li>
+              </ul>
+            </li>
+            <li class="nav-item"><a class="nav-link" href="../portfolio.html">PORTFOLIO</a></li>
+            <li class="nav-item"> <a class="nav-link active" href="../blog.html">BLOG</a></li>
+            <li class="nav-item"><a class="nav-link" href="../contact.html">CONTACT</a></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <div class="article-container">
+    <h1 id="title">How to Manage Multiple SSH Keys <br> with Separate GitHub Accounts.</h1>
+    <figure class="meta">
+      <img alt="Time Square" src="https://miro.medium.com/1*lkALRpeH2vwbKtORiEzCFQ.png" />
+    </figure>
+    <p>
+      In order to securely manage multiple SSH keys and authenticate them with GitHub, it's important to follow the
+      correct steps.
+      <br>
+      Having multiple SSH keys is useful when you're using different machines or need to access different GitHub
+      accounts.
+      <br>
+      Here's a step-by-step guide on managing multiple SSH keys and authenticating them with GitHub:
+    </p>
+    <h3 class="article-list">Step 1- Check for existing SSH Keys</h3>
+    <ul>
+      <li>Before you generate a new SSH key, you should check your local machine for existing keys</li>
+      <li>to list existing keys open Git Bash and run the following command line:</li>
+    </ul>
+    <p><code>$ ls -al ~/.ssh</code></p>
+    <p>If keys exist, it will be listed in the .ssh directory. Most of the time, the directory path will be
+      (C:/Users/YOU)</p>
+    <p><code>-rw-r--r-- 1 user 197121 419 Nov 29  2022 id_ed25519  // private key</code></p>
+    <p><code>-rw-r--r-- 1 user 197121 106 Nov 29  2022 id_ed25519.pub  // public key</code></p>
+    <p>If your machine doesn't support Ed25519 algorithm, your keys might have been generated with RSA or ECDSA
+      algorithm:</p>
+    <ul>
+      <li>id_rsa.pub</li>
+      <li>id_ecdsa.pub</li>
+    </ul>
+    <h3 class="article-list">Step 2- Generate a new SSH Key</h3>
+    <p>
+      Depending on which algorithm is supported by your local machine, you should generate a new key with your desired
+      email,
+      which can be different from the initial email used with the existing key.
+    </p>
+    <ul>
+      <li>In git bash, you need to navigate to where your .ssh directory is located.</li>
+    </ul>
+    <p><code>$ cd ~/.ssh</code></p>
+    <ul>
+      <li>If Ed25519 is supported, run the command line below:</li>
+    </ul>
+    <p><code>$ ssh-keygen -t ed25519 -C "your_email@example.com"</code></p>
+    <ul>
+      <li>If you are using a legacy system that doesn't support Ed25519 algorithm:</li>
+    </ul>
+    <p><code>$ ssh-keygen -t rsa -b 4096 -C "your_email@example.com"</code></p>
+    <ul>
+      <li>
+        You will be asked to save the key in a specific file; usually will be the same .ssh directory,
+        think about giving the key a unique name to differentiate between various keys, workspaces, or GitHub accounts:
+      </li>
+    </ul>
+    <p><code>$ Enter file in which to save the key(c/users/you/.ssh/id_ed25519: "unique-key-name")</code></p>
+    <p>The last step is to enter a passphrase of your choice, or press enter to leave it blank.</p>
+    <ul>
+      <li>To ensure that the new key pair are generated successfully, run:</li>
+    </ul>
+    <p><code>$ ls -al ~/.ssh</code></p>
+    <p>You should be able to see the old & new keys as follows:</p>
+    <p><code>-rw-r--r-- 1 user 197121 419 Nov 29  2022 id_ed25519  // OLD private key</code></p>
+    <p><code>-rw-r--r-- 1 user 197121 106 Nov 29  2022 id_ed25519.pub  // OLD public key</code></p>
+    <p><code>-rw-r--r-- 1 user 197121 419 Jul 23  2023 unique-key-name  // NEW private key</code></p>
+    <p><code>-rw-r--r-- 1 user 197121 106 Jul 23  2023 unique-key-name.pub  // NEW public key</code></p>
+
+    <h3 class="article-list">Step 3- Create a Config file</h3>
+    <p>
+      If you have more than one pair of keys, you will have to create a config file in your
+      .ssh directory to specify which key to use for each account, as the ssh-agent can't handle multiple keys:
+    </p>
+    <ul>
+      <li>Create a <code>config</code> file at .ssh directory path by running:</li>
+    </ul>
+    <p><code>$ notepad config</code></p>
+    <ul>
+      <li>Copy, paste, customize, and save the file below in your <code>config</code> file.</li>
+    </ul>
+    <ul>
+      <li>Please note that the <code>personal account</code>is the previously existed account with <code>id_ed25519</li></ul>
+    <ul>
+      <li>
+        While the work account is the second account with newly generated key, you will need to
+        distinguish Host by adding any word that stands out for you; I added work.
+      </li>
+    </ul>
+    <p>#personal account</p>
+    <p>Host github.com</p>
+    <ul><i>HostName github.com</i></ul>
+    <ul><i>User git</i></ul>
+    <ul><i>IdentityFile ~/.ssh/id_ed25519</i></ul>
+    <ul><i>IdentitiesOnly yes</i></ul>
+    <p>#work account</p>
+    <p>Host github.com-work</p>
+    <ul><i>User git</i></ul>
+    <ul><i>IdentityFile ~/.ssh/unique-key-name</i></ul>
+    <ul><i>IdentitiesOnly yes</i></ul>
+    <p>Double-check the <code>config</code> is created properly by running:</p>
+        <p><code>$ ls -al ~/.ssh</code></p>
+        <p>In case you find the <code>config</code> file saved as text file, run:</p>
+        <p><code>$ mv config.txt config</code></p>
+
+        <h3 class="article-list">Step 4- Add SSH keys to your GitHub account</h3>
+        <p>To authenticate your SSH keys, you need to add them to your GitHub account. Follow these steps:</p>
+        <ul>
+          <li>Run this command <code>cat <unique-key-name>.pub</code> in git bash to display the public key, which you
+            will then copy.</li>
+          <li>Go to GitHub and log in to the account associated with the SSH key you want to add.</li>
+          <li>Go to Settings > SSH and GPG keys.</li>
+          <li>Click on New SSH key.</li>
+          <li>Give your key a meaningful name.</li>
+          <li>Paste the contents into the key field on GitHub and click on Add SSH key to save.</li>
+        </ul>
+        <h3 class="article-list">Step 5- Time to test SSH keys</h3>
+        <p>
+          Now that your SSH keys are set up and connected to your GitHub account, you can clone or update repositories
+          without having to enter your credentials each time. Simply use the appropriate host alias and repository URL
+          in your terminal. For example:
+        </p>
+        <p># Clone a repository using the default SSH key</p>
+        <p><code>$ git clone <a href="mailto:git@github.com">git@github.com/username/repository.git</a></code></p>
+
+        <p># Clone a repository using the second SSH key</p>
+        <p><code>$ git clone <a href="mailto:git@github.com">git@github.com-work/username/repository.git</a></code></p>
+
+        <p>Note in the second cloned repository, we added the key word <code>work</code> to
+          <code>git@github.com-work</code>
+          which was customized in the
+          <code>config</code> file to the
+          <code>Host.</code>
+        </p>
+
+  </div>
+
+  <script src="../js/bootstrap.bundle.min.js"></script>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+  <script src="../js/aos.js"></script>
+  <script src="../js/custom.js"></script>
+</body>
+
+</html>

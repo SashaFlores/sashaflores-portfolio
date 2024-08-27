@@ -1,191 +1,198 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <!-- meta tags -->
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-    <title>Unlock the Power of Inline Assembly: A Smart Contract Developer's Guide</title>
-    <meta name="description" content="Yul is a low-level language that can be used in-line in Solidity via…">
-    <meta name="keywords" content="assembly, ethereum, solidity, smart-contracts, blockchain">
-    <meta name="author" content="Sasha Flores">
-    <meta property="og:type" content="website">
+<head>
+  <!-- meta tags -->
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-    <!-- Bootstrap CSS -->
-    <link href="../css/bootstrap.min.css" rel="stylesheet">
-    <link href="../css/aos.css" rel="stylesheet">
-    <link href="../css/navbar.css" rel="stylesheet">
-    <link href="../css/articles-common.css" rel="stylesheet">
+  <title>Unlock the Power of Inline Assembly: A Smart Contract Developer's Guide</title>
+  <meta name="keywords" content="assembly, ethereum, solidity, smart-contracts, blockchain, inline-assembly, Yul">
+  <meta name="author" content="Sasha Flores">
+  <meta property="og:type" content="website">
+
+  <!-- Bootstrap CSS -->
+  <link href="../css/bootstrap.min.css" rel="stylesheet">
+  <link href="../css/aos.css" rel="stylesheet">
+  <link href="../css/navbar.css" rel="stylesheet">
+  <link href="../css/articles-common.css" rel="stylesheet">
 
 
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-MXTX916K7T"></script>
-    <script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-MXTX916K7T"></script>
+  <script>
     window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
+    function gtag() { dataLayer.push(arguments); }
     gtag('js', new Date());
 
     gtag('config', 'G-MXTX916K7T');
-    </script>
-  </head>
+  </script>
+</head>
 
 
-  <body>
-    <i class="bi bi-list mobile-nav-toggle d-xl-none"></i>
-    <header>
-      <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
-        <div class="container-fluid px-md-5">
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-            data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
-            aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-          </button>
+<body>
+  <i class="bi bi-list mobile-nav-toggle d-xl-none"></i>
+  <header>
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+      <div class="container-fluid px-md-5">
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+          aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
 
-          <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0" data-aos="fade-down" data-aos-duration="1000">
-              <li class="nav-item">
-                <a class="nav-link" aria-current="page" href="../index.html">HOME</a>
-              </li>
-              
-              <li class="nav-item dropdown"><a class="nav-link dropdown-toggle" href="#" id="aboutDropdown" role="button"
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0" data-aos="fade-down" data-aos-duration="1000">
+            <li class="nav-item">
+              <a class="nav-link" aria-current="page" href="../index.html">HOME</a>
+            </li>
+
+            <li class="nav-item dropdown"><a class="nav-link dropdown-toggle" href="#" id="aboutDropdown" role="button"
                 data-bs-toggle="dropdown" aria-expanded="false">ABOUT ME</a>
-                <ul class="dropdown-menu" aria-labelledby="aboutDropdown">
-                  <li><a class="dropdown-item" href="../background.html">Background</a></li>
-                  <li><a class="dropdown-item" href="../skills.html">Skills</a></li>
-                  <li><a class="dropdown-item" href="../experience.html">Experience</a></li>
-                </ul>
-              </li>
-              <li class="nav-item"><a class="nav-link" href="../portfolio.html">PORTFOLIO</a></li>
-              <li class="nav-item"> <a class="nav-link active" href="../blog.html">BLOG</a></li>
-              <li class="nav-item"><a class="nav-link" href="../contact.html">CONTACT</a></li>
-            </ul>
-          </div>
+              <ul class="dropdown-menu" aria-labelledby="aboutDropdown">
+                <li><a class="dropdown-item" href="../background.html">Background</a></li>
+                <li><a class="dropdown-item" href="../skills.html">Skills</a></li>
+                <li><a class="dropdown-item" href="../experience.html">Experience</a></li>
+              </ul>
+            </li>
+            <li class="nav-item"><a class="nav-link" href="../portfolio.html">PORTFOLIO</a></li>
+            <li class="nav-item"> <a class="nav-link active" href="../blog.html">BLOG</a></li>
+            <li class="nav-item"><a class="nav-link" href="../contact.html">CONTACT</a></li>
+          </ul>
         </div>
-      </nav>
-    </header>
+      </div>
+    </nav>
+  </header>
 
 
-    <div class="article-container">
-      <h1 id="title">Unlock the Power of Inline Assembly:<br>a Smart Contract Developer's Guide.</h1>
-      <figure class="meta">
-        <img alt="Time Square" src="https://miro.medium.com/1*nZyaG--DHPiAvd7qb2tDBg.jpeg" />
-        <p class="caption">Time Square (1903 Vs. 2020)</p>
-      </figure>
-      <p>Yul is a low-level language that can be used in-line in Solidity via an assembly block, as a standalone language, 
-        and as a compilation target. Currently, the default dialect of Yul is the EVM dialect, 
-        so to harness this power, you must first gain a deep understanding of how the EVM works and second master the 
-        abstraction of standards Solidity imposed.
-      </p>
-      <p>Since the EVM is a stack-based virtual machine, it operates by a set of instructions that can be categorized to:</p>
-      <p>1- Stack Instructions</p>
-      <ul>
-        <li>is the set of instructions that manipulate the position of values on the stack.</li>
-        <li>Since Yul manages local variables and control flow, stack opcodes that interfere with 
-          these features are not available in Yul, except for a built-in <code>pop</code>function to drop variables.
-        </li>
-        <li>
-          <i>Examples of Stack Opcode:</i><code>pushN</code>, <code>dupN</code>, <code>swapN</code>, and <code>jumpN.</code>
-        </li>
-      </ul>
-      <p>2- Arithmetic Instructions</p>
-      <ul>
-        <li>pops two or more values from the stack, performs an arithmetic operation with, and then pushes the result.</li>
-        <li>
-          <i>Examples of Arithmetic Opcode:</i>
-          <code>add</code><i>,</i> 
-          <code>div</code><i>,</i> 
-          <code>mul</code><i>, and</i>
-          <code>mod.</code>
-        </li>
-      </ul>
-      <p>3- Comparison Instructions</p>
-      <ul>
-        <li>pops one or two values from the stack, performs a comparison, and pushes the result; either False (0) or True (1).</li>
-        <li>
-          <i>Examples of Comparison Opcode:</i> 
-          <code>lt</code><i>,</i> 
-          <code>gt</code><i>,</i> 
-          <code>eq</code><i>, and</i>
-          <code>iszero.</code>
-        </li>
-      </ul>
-      <p>4- Bitwise Instructions</p>
-      <ul>
-        <li>pops one or two values from the stack and performs a bitwise operation on them.</li>
-        <li><i>Examples of Bitwise Opcode:</i> 
-          <code>and</code><i>,</i> 
-          <code>or</code><i>,</i> 
-          <code>xor</code><i>, and</i> 
-          <code>not.</code>
-        </li>
-      </ul>
-      <p>5- Memory Instructions</p>
-      <ul>
-        <li>it read from and writes to the memory.</li>
-        <li><i>Examples of Memory Opcode:</i> 
-          <code>mstore</code><i>,</i> 
-          <code>mload</code><i>, and</i> 
-          <code>mstore8.</code>
-        </li>
-      </ul>
-      <p>6- Read Context Instructions</p>
-      <ul>
-        <li>it reads from the global state and the execution context.</li>
-        <li><i>Examples of Read Context Opcode:</i> 
-          <code>caller</code><i>,</i> 
-          <code>sload</code><i>, and</i> 
-          <code>chainid.</code>
-        </li>
-      </ul>
-      <p>7- Write Context Instructions</p>
-      <ul>
-        <li>it writes to the global state and the execution context.</li>
-        <li><i>Examples of Write Context Opcode:</i> 
-          <code>call</code><i>,</i> 
-          <code>create</code><i>, and</i> 
-          <code>sstore.</code>
-        </li>
-      </ul>
-      <p>You can find a list of all opcodes used in <code>Yul</code> 
-        <a href="https://github.com/SashaFlores/all-about-yul/blob/main/EVM-Dialect.md">here</a>.
-      </p>
-      <p>Note: please note that we will toggle between EVM instructions and Solidity layout a lot in this article.</p>
-      
-      <h3 class="article-list"><b>Master Solidity Layout for Efficient Assembly Coding</b></h3>
-      
-      <p>As per Solidity documentation, there are five standard layouts that every developer must be aware of. 
-        The crucial aspects of layouts are:
-      </p>
-      
-      <h3 class="article-item"><b>1- Storage Layout</b></h3>
-      
-      <p>Storage is persistent between function calls, writing to and reading from the storage is the most expensive in terms of gas.</p>
-      <p>Contract storage is simply a key mapping to a value, it maps a 32-byte key which represents the position of a variable in 
-        storage to a 32-byte value at that given position <code>sstore(key, value)</code>
-      </p>
-      <p>
-        <b>1–1. Layout of Statically-Sized Variables in Storage:</b>
-      </p>
-      <ul>
-        <li>
-          The EVM operates on 32 bytes in each slot, the first state variable is stored in slot zero.
-        </li>
-        <li>
-          If the second variable can fit into the same slot; it will be right-aligned in that slot, otherwise 
-          it will be stored in the next slot.
-        </li>
-        <li>
-          Immutable and constant variables are compile-time variables that don't occupy a slot in the storage.
-        </li>
-        <li>
-          Struct with static-sized variables follow the same rules, and it can compact to save gas as long as it fits 32 bytes. 
-          The declaration of the struct type doesn't occupy any slot in the storage, as it is considered as a blueprint for the 
-          struct instances.
-        </li>
-      </ul>
+  <div class="article-container">
+    <h1 id="title">Unlock the Power of Inline Assembly:<br>a Smart Contract Developer's Guide.</h1>
+    <figure class="meta">
+      <img alt="Time Square" src="https://miro.medium.com/1*nZyaG--DHPiAvd7qb2tDBg.jpeg" />
+      <p class="caption">Time Square (1903 Vs. 2020)</p>
+    </figure>
+    <p>Yul is a low-level language that can be used in-line in Solidity via an assembly block, as a standalone language,
+      and as a compilation target. Currently, the default dialect of Yul is the EVM dialect,
+      so to harness this power, you must first gain a deep understanding of how the EVM works and second master the
+      abstraction of standards Solidity imposed.
+    </p>
+    <p>Since the EVM is a stack-based virtual machine, it operates by a set of instructions that can be categorized to:
+    </p>
+    <p>1- Stack Instructions</p>
+    <ul>
+      <li>is the set of instructions that manipulate the position of values on the stack.</li>
+      <li>Since Yul manages local variables and control flow, stack opcodes that interfere with
+        these features are not available in Yul, except for a built-in <code>pop</code>function to drop variables.
+      </li>
+      <li>
+        <i>Examples of Stack Opcode:</i><code>pushN</code>, <code>dupN</code>, <code>swapN</code>, and
+        <code>jumpN.</code>
+      </li>
+    </ul>
+    <p>2- Arithmetic Instructions</p>
+    <ul>
+      <li>pops two or more values from the stack, performs an arithmetic operation with, and then pushes the result.
+      </li>
+      <li>
+        <i>Examples of Arithmetic Opcode:</i>
+        <code>add</code><i>,</i>
+        <code>div</code><i>,</i>
+        <code>mul</code><i>, and</i>
+        <code>mod.</code>
+      </li>
+    </ul>
+    <p>3- Comparison Instructions</p>
+    <ul>
+      <li>pops one or two values from the stack, performs a comparison, and pushes the result; either False (0) or True
+        (1).</li>
+      <li>
+        <i>Examples of Comparison Opcode:</i>
+        <code>lt</code><i>,</i>
+        <code>gt</code><i>,</i>
+        <code>eq</code><i>, and</i>
+        <code>iszero.</code>
+      </li>
+    </ul>
+    <p>4- Bitwise Instructions</p>
+    <ul>
+      <li>pops one or two values from the stack and performs a bitwise operation on them.</li>
+      <li><i>Examples of Bitwise Opcode:</i>
+        <code>and</code><i>,</i>
+        <code>or</code><i>,</i>
+        <code>xor</code><i>, and</i>
+        <code>not.</code>
+      </li>
+    </ul>
+    <p>5- Memory Instructions</p>
+    <ul>
+      <li>it read from and writes to the memory.</li>
+      <li><i>Examples of Memory Opcode:</i>
+        <code>mstore</code><i>,</i>
+        <code>mload</code><i>, and</i>
+        <code>mstore8.</code>
+      </li>
+    </ul>
+    <p>6- Read Context Instructions</p>
+    <ul>
+      <li>it reads from the global state and the execution context.</li>
+      <li><i>Examples of Read Context Opcode:</i>
+        <code>caller</code><i>,</i>
+        <code>sload</code><i>, and</i>
+        <code>chainid.</code>
+      </li>
+    </ul>
+    <p>7- Write Context Instructions</p>
+    <ul>
+      <li>it writes to the global state and the execution context.</li>
+      <li><i>Examples of Write Context Opcode:</i>
+        <code>call</code><i>,</i>
+        <code>create</code><i>, and</i>
+        <code>sstore.</code>
+      </li>
+    </ul>
+    <p>You can find a list of all opcodes used in <code>Yul</code>
+      <a href="https://github.com/SashaFlores/all-about-yul/blob/main/EVM-Dialect.md">here</a>.
+    </p>
+    <p>Note: please note that we will toggle between EVM instructions and Solidity layout a lot in this article.</p>
+
+    <h3 class="article-list"><b>Master Solidity Layout for Efficient Assembly Coding</b></h3>
+
+    <p>As per Solidity documentation, there are five standard layouts that every developer must be aware of.
+      The crucial aspects of layouts are:
+    </p>
+
+    <h3 class="article-item"><b>1- Storage Layout</b></h3>
+
+    <p>Storage is persistent between function calls, writing to and reading from the storage is the most expensive in
+      terms of gas.</p>
+    <p>Contract storage is simply a key mapping to a value, it maps a 32-byte key which represents the position of a
+      variable in
+      storage to a 32-byte value at that given position <code>sstore(key, value)</code>
+    </p>
+    <p>
+      <b>1–1. Layout of Statically-Sized Variables in Storage:</b>
+    </p>
+    <ul>
+      <li>
+        The EVM operates on 32 bytes in each slot, the first state variable is stored in slot zero.
+      </li>
+      <li>
+        If the second variable can fit into the same slot; it will be right-aligned in that slot, otherwise
+        it will be stored in the next slot.
+      </li>
+      <li>
+        Immutable and constant variables are compile-time variables that don't occupy a slot in the storage.
+      </li>
+      <li>
+        Struct with static-sized variables follow the same rules, and it can compact to save gas as long as it fits 32
+        bytes.
+        The declaration of the struct type doesn't occupy any slot in the storage, as it is considered as a blueprint
+        for the
+        struct instances.
+      </li>
+    </ul>
 
 
-      <pre class="code-block">
+    <pre class="code-block">
         <code class="language-typescript">contract FixedSizeVariables {
           uint256 private value1;                  // value1 = 1 in slot 0
           uint256[2] private value2;               // value2[0] = 2 & value2[1] = 3 in slot 1 & 2
@@ -203,63 +210,63 @@
         // 0x004: 0x0000000000000000000000000000000000000000000000000000000000000706
         </code>
       </pre>
-      
-      <p>Let's assume the value of each variable as stated above in the comments:</p>
-      <ul>
-        <li>State variable <code>value1</code> is 1, since the EVM operates on bytes only we have to 
-          pad 1 to bytes32 and add the hexadecimal which will occupy slot 0.
-        </li>
-        <li>A fixed-size array of 2 elements each of <code>uint256</code> will occupy 2 slots; slot 
-          1 and slot 2.
-        </li>
-        <li>State variables <code>value3</code> and <code>value4</code> are both of <code>uint128</code> 
-          type so EVM will compact them in one slot, which is slot number 3. <code>value3</code> 
-          which is equal to 4 will be right aligned to the next variable, and so on. The value type Sizes are:
-          
-          - uint256: 32 bytes. 
-          - uint128: 16 bytes.
-          - uint64: 8 bytes.
-          - uint32: 4 bytes
-          - uint16: 2 bytes.
-          - uint8: 1 byte.
-          - bytes32: 32 bytes.
-          - address: 20 bytes.
-          - bool: 1 byte.
-        </li>
-      </ul>
-      
-      <p>
-        <b>1–2. Layout of Dynamically-Sized Variables in Storage:</b>
-      </p>
-      
-      <p>Using reserved slots doesn't work for dynamically-sized arrays and mapping because there is no way 
-        of knowing how many slots to reserve, instead:
-      </p>
 
-      <ul>
-        <li>
-          Mapping is stored by concatenating the key value and the storage slot, then hashing both of them together.
-        </li>
-        <li>
-          Array's length is stored in the slot they were declared in; array elements are stored sequentially somewhere
-          else in the storage, starting at the hash of the slot number where the array is declared.
-        </li>
-        <li>
-          Bytes and strings that occupy less than 31 bytes are packed in one slot, and the right-most byte represents 
-          its length multiplied by two otherwise, they are stored the same way as arrays.
-        </li>
-        <li>
-          Using elements smaller than 32 bytes in dynamic-sized variables may increase your contract's gas usage. 
-          This is due to the fact the EVM operates on 32 bytes, which means that the EVM will consume more gas to reduce 
-          the size of any element from 32 bytes to the desired size.
-        </li>
-        <li>
-          Structs with dynamic-sized variables will follow the same rules of storage and expensive gas cost 
-          for elements less than 32 bytes.
-        </li>
-      </ul>
-      
-      <pre class="code-block">
+    <p>Let's assume the value of each variable as stated above in the comments:</p>
+    <ul>
+      <li>State variable <code>value1</code> is 1, since the EVM operates on bytes only we have to
+        pad 1 to bytes32 and add the hexadecimal which will occupy slot 0.
+      </li>
+      <li>A fixed-size array of 2 elements each of <code>uint256</code> will occupy 2 slots; slot
+        1 and slot 2.
+      </li>
+      <li>State variables <code>value3</code> and <code>value4</code> are both of <code>uint128</code>
+        type so EVM will compact them in one slot, which is slot number 3. <code>value3</code>
+        which is equal to 4 will be right aligned to the next variable, and so on. The value type Sizes are:
+
+        - uint256: 32 bytes.
+        - uint128: 16 bytes.
+        - uint64: 8 bytes.
+        - uint32: 4 bytes
+        - uint16: 2 bytes.
+        - uint8: 1 byte.
+        - bytes32: 32 bytes.
+        - address: 20 bytes.
+        - bool: 1 byte.
+      </li>
+    </ul>
+
+    <p>
+      <b>1–2. Layout of Dynamically-Sized Variables in Storage:</b>
+    </p>
+
+    <p>Using reserved slots doesn't work for dynamically-sized arrays and mapping because there is no way
+      of knowing how many slots to reserve, instead:
+    </p>
+
+    <ul>
+      <li>
+        Mapping is stored by concatenating the key value and the storage slot, then hashing both of them together.
+      </li>
+      <li>
+        Array's length is stored in the slot they were declared in; array elements are stored sequentially somewhere
+        else in the storage, starting at the hash of the slot number where the array is declared.
+      </li>
+      <li>
+        Bytes and strings that occupy less than 31 bytes are packed in one slot, and the right-most byte represents
+        its length multiplied by two otherwise, they are stored the same way as arrays.
+      </li>
+      <li>
+        Using elements smaller than 32 bytes in dynamic-sized variables may increase your contract's gas usage.
+        This is due to the fact the EVM operates on 32 bytes, which means that the EVM will consume more gas to reduce
+        the size of any element from 32 bytes to the desired size.
+      </li>
+      <li>
+        Structs with dynamic-sized variables will follow the same rules of storage and expensive gas cost
+        for elements less than 32 bytes.
+      </li>
+    </ul>
+
+    <pre class="code-block">
         <code class="language-typescript">
           contract DyanmicSizeVariables {
             mapping(address => uint256) private _balances;    // account -> balance slot 0
@@ -278,44 +285,60 @@
           
           // array elements [50, 60]:
           // 0xb10e2d527612073b26eecdfd717e6a320cf44b4afac2b0732d9fcbe2b7fa0cf6: 0x0000000000000000000000000000000000000000000000000000000000000032
-          // 0xb10e2d527612073b26eecdfd717e6a320cf44b4afac2b0732d9fcbe2b7fa0cf7: 0x000000000000000000000000000000000000000000000000000000000000003c</code></pre><p><i><b>Mapping in Slot 0 :</b></i></p><ul><li>In mapping, the slot it occupies stays empty since <code>_balances</code> are the first state variable it occupies slot 0 with empty bytes32 as follows:</li></ul>
-          <pre class="code-block"><code class="language-makefile">0x00: 0x0000000000000000000000000000000000000000000000000000000000000000</code></pre><ul><li>Let's assume that the <b>key</b> address in <code>_balances</code> mapping is `0x266626BC2bb7C645ce958DA731E2C3F4705E8d87` as the address occupies 20 bytes, so we have to pad it to 32 bytes by adding 12 more bytes to the left-most side to be 24 more zeros as follows:</li></ul>
-          <pre class="code-block"><code>//Please note that address has to be all lowercased
+          // 0xb10e2d527612073b26eecdfd717e6a320cf44b4afac2b0732d9fcbe2b7fa0cf7: 0x000000000000000000000000000000000000000000000000000000000000003c</code></pre>
+    <p><i><b>Mapping in Slot 0 :</b></i></p>
+    <ul>
+      <li>In mapping, the slot it occupies stays empty since <code>_balances</code> are the first state variable it
+        occupies slot 0 with empty bytes32 as follows:</li>
+    </ul>
+    <pre
+      class="code-block"><code class="language-makefile">0x00: 0x0000000000000000000000000000000000000000000000000000000000000000</code></pre>
+    <ul>
+      <li>Let's assume that the <b>key</b> address in <code>_balances</code> mapping is
+        `0x266626BC2bb7C645ce958DA731E2C3F4705E8d87` as the address occupies 20 bytes, so we have to pad it to 32 bytes
+        by adding 12 more bytes to the left-most side to be 24 more zeros as follows:</li>
+    </ul>
+    <pre class="code-block"><code>//Please note that address has to be all lowercased
           000000000000000000000000266626bc2bb7c645ce958cc731e2c34705e8d87
         </code>
       </pre>
-      
-      <ul>
-        <li>since the mapping occupies slot 0, so the representation of the 
-          <b>slot index</b> is:
-        </li>
-      </ul>
-      
-      <pre class="code-block">
+
+    <ul>
+      <li>since the mapping occupies slot 0, so the representation of the
+        <b>slot index</b> is:
+      </li>
+    </ul>
+
+    <pre class="code-block">
         <code class="language-typescript">0000000000000000000000000000000000000000000000000000000000000000</code>
       </pre>
-      <ul>
-        <li>Concatenate <b>key</b> plus <b>slot index</b> of mapping to be:</li>
-      </ul>
-      <pre class="code-block">
+    <ul>
+      <li>Concatenate <b>key</b> plus <b>slot index</b> of mapping to be:</li>
+    </ul>
+    <pre class="code-block">
         <code class="language-typescript">000000000000000000000000266626bc2bb7c645ce958cc731e2c34705e8d870000000000000000000000000000000000000000000000000000000000000000</code>
       </pre>
-      <ul>
-        <li>Hash the sum of both to get the element storage location keccak256(000000000000000000000000266626bc2bb7c645ce958cc731e2c34705e8d870000000000000000000000000000000000000000000000000000000000000000) to be:</li>
-      </ul>
-      <pre class="code-block">
+    <ul>
+      <li>Hash the sum of both to get the element storage location
+        keccak256(000000000000000000000000266626bc2bb7c645ce958cc731e2c34705e8d870000000000000000000000000000000000000000000000000000000000000000)
+        to be:</li>
+    </ul>
+    <pre class="code-block">
         <code class="language-typescript">3ddcac31351e0705625963ec259851464733fec321375bc6bada6a59752ea7c4</code>
       </pre>
-      <ul>
-        <li>let's assume that the <code>balance</code> of <code>address</code> `0x266626BC2bb7C645ce958DA731E2C3F4705E8d87` in <code>_balances</code>mapping is 1200, so we will pad it to bytes32 to be:</li></ul>
-        
-        <pre class="code-block">
+    <ul>
+      <li>let's assume that the <code>balance</code> of <code>address</code>
+        `0x266626BC2bb7C645ce958DA731E2C3F4705E8d87` in <code>_balances</code>mapping is 1200, so we will pad it to
+        bytes32 to be:</li>
+    </ul>
+
+    <pre class="code-block">
           <code class="language-typescript">00000000000000000000000000000000000000000000000000000000000004b0</code>
         </pre>
-        <ul>
-          <li>Let's take a second key in <code>_balances</code> mapping to sum up all the steps:</li>
-        </ul>
-        <pre class="code-block">
+    <ul>
+      <li>Let's take a second key in <code>_balances</code> mapping to sum up all the steps:</li>
+    </ul>
+    <pre class="code-block">
           <code class="language-cpp">
             // address of the second account is
             0x266626bc2bb7c645cc958cc731e2c34705e7f87
@@ -331,44 +354,68 @@
             0000000000000000000000000000000000000000000000000000000000000171
           </code>
         </pre>
-        <p>
-          <i><b>Array in Slot 1:</b></i>
-        </p>
-        <ul>
-          <li>The length of <code>_values</code> array [50, 60] is 2, and it is declared in slot 1 so the slot of declaration will store the array's length in the right-most side.</li></ul>
-          
-          <pre class="code-block">
+    <p>
+      <i><b>Array in Slot 1:</b></i>
+    </p>
+    <ul>
+      <li>The length of <code>_values</code> array [50, 60] is 2, and it is declared in slot 1 so the slot of
+        declaration will store the array's length in the right-most side.</li>
+    </ul>
+
+    <pre class="code-block">
             <code class="language-typescript">
               // declared in slot 1 with 2 elements in length 
               0x01: 0x0000000000000000000000000000000000000000000000000000000000000002
             </code>
           </pre>
-          
-          <ul>
-            <li> 
-              The array elements representation will be stored sequentially at the hash of the slot index of 
-              the array declaration which is slot 1, as follows:
-            </li>
-          </ul>
-          <p>Keccak256(0000000000000000000000000000000000000000000000000000000000000001) = b10e2d527612073b26eecdfd717e6a320cf44b4afac2b0732d9fcbe2b7fa0cf6</p><p>so this the where the array element of index 0 will be stored, now it's time to store the element itself which has the value 50 as follows:</p>
-          <p>0000000000000000000000000000000000000000000000000000000000000032</p>
-          <ul>
-            <li>
-              The second element with a value of 60 will be stored right after the first element by incrementing the hash of the 
-              declaration slot, as follows:
-            </li>
-          </ul>
-          <p>storage location of the first element with index 0 was:</p>
-          <p>b10e2d527612073b26eecdfd717e6a320cf44b4afac2b0732d9fcbe2b7fa0cf<b>6</b></p>
-          <p>storage location of the second element with index 1 will increment the hash to be: b10e2d527612073b26eecdfd717e6a320cf44b4afac2b0732d9fcbe2b7fa0cf<b>7</b></p><p>and bytes32 representation of 60 is:</p><p>000000000000000000000000000000000000000000000000000000000000003c</p><p><i><b>String in Slot 2:</b></i></p><ul><li>Bytes32 representation of the <code>_name</code> Jerome is</li></ul>
-          
-          
-          
-          <pre class="code-block">
+
+    <ul>
+      <li>
+        The array elements representation will be stored sequentially at the hash of the slot index of
+        the array declaration which is slot 1, as follows:
+      </li>
+    </ul>
+    <p>Keccak256(0000000000000000000000000000000000000000000000000000000000000001) =
+      b10e2d527612073b26eecdfd717e6a320cf44b4afac2b0732d9fcbe2b7fa0cf6</p>
+    <p>so this the where the array element of index 0 will be stored, now it's time to store the element itself which
+      has the value 50 as follows:</p>
+    <p>0000000000000000000000000000000000000000000000000000000000000032</p>
+    <ul>
+      <li>
+        The second element with a value of 60 will be stored right after the first element by incrementing the hash of
+        the
+        declaration slot, as follows:
+      </li>
+    </ul>
+    <p>storage location of the first element with index 0 was:</p>
+    <p>b10e2d527612073b26eecdfd717e6a320cf44b4afac2b0732d9fcbe2b7fa0cf<b>6</b></p>
+    <p>storage location of the second element with index 1 will increment the hash to be:
+      b10e2d527612073b26eecdfd717e6a320cf44b4afac2b0732d9fcbe2b7fa0cf<b>7</b></p>
+    <p>and bytes32 representation of 60 is:</p>
+    <p>000000000000000000000000000000000000000000000000000000000000003c</p>
+    <p><i><b>String in Slot 2:</b></i></p>
+    <ul>
+      <li>Bytes32 representation of the <code>_name</code> Jerome is</li>
+    </ul>
+
+
+
+    <pre class="code-block">
             <code class="language-typescript">4a65726f6d650000000000000000000000000000000000000000000000000000</code>
-          </pre><p>then multiplying its length of 6 characters by 2 which equals 12 that is added at the most right side as displayed in slot 2 and add hexadecimal.</p>
-          <pre class="code-block"><code class="language-typescript">0x4a65726f6d650000000000000000000000000000000000000000000000000012</code></pre><p><b>1–3. Layout of Inherited State Variables in Storage:</b></p><ul><li>For contracts that use inheritance, the order of storage is determined by C3 linearization, starting with the parent contract and then the child contract.</li><li>If a child contract has multiple parents, the order of storage starts with the most base-ward contract and proceeds by the order of inheritance.</li><li>State variables from different inherited contracts share the same storage slot.</li></ul>
-          <pre class="code-block"><code class="language-typescript">contract First {
+          </pre>
+    <p>then multiplying its length of 6 characters by 2 which equals 12 that is added at the most right side as
+      displayed in slot 2 and add hexadecimal.</p>
+    <pre
+      class="code-block"><code class="language-typescript">0x4a65726f6d650000000000000000000000000000000000000000000000000012</code></pre>
+    <p><b>1–3. Layout of Inherited State Variables in Storage:</b></p>
+    <ul>
+      <li>For contracts that use inheritance, the order of storage is determined by C3 linearization, starting with the
+        parent contract and then the child contract.</li>
+      <li>If a child contract has multiple parents, the order of storage starts with the most base-ward contract and
+        proceeds by the order of inheritance.</li>
+      <li>State variables from different inherited contracts share the same storage slot.</li>
+    </ul>
+    <pre class="code-block"><code class="language-typescript">contract First {
       uint256 private x;    // x = 0
   }
   
@@ -386,11 +433,13 @@
   // 0x00: 0x0000000000000000000000000000000000000000000000000000000000000000
   // 0x01: 0x0000000000000000000000000000000000000000000000000000000000000001
   // 0x02 : 0x0000000000000000000000000000000000000000000000000000000000000002</code></pre>
-  
-  <h3 class="article-item">2- Errors Layout</h3>
-  
-  <p>Solidity has a set of predefined errors but starting from v0.8.4 it allowed developers to define custom errors by name and argument type. A general rule is that errors are stored by the first 4 bytes of the hashing the error and any error data if any.</p>
-  <pre class="code-block"><code class="language-csharp">// bytes4(keccak256('InsufficientBalance(uint256,uint256)')    
+
+    <h3 class="article-item">2- Errors Layout</h3>
+
+    <p>Solidity has a set of predefined errors but starting from v0.8.4 it allowed developers to define custom errors by
+      name and argument type. A general rule is that errors are stored by the first 4 bytes of the hashing the error and
+      any error data if any.</p>
+    <pre class="code-block"><code class="language-csharp">// bytes4(keccak256('InsufficientBalance(uint256,uint256)')    
   bytes32 constant insufficientBalanceSelector = 0xcf47918100000000000000000000000000000000000000000000000000000000;
   
   // bytes4(keccak256('UnauthorizedCaller()')
@@ -412,88 +461,192 @@
         revert(0x00, 0x04)
         }
       }
-  }</code></pre><ul><li>Kindly focus on error handling and disregard the details of the assembly code, as it will be explained later; but if you have any questions, feel free to post them in the issues tab in <a href="https://github.com/SashaFlores/all-about-yul/issues">GitHub Repo</a>.</li><li>Hash error <code>InsuffiecientBalance(uint256,uint256)</code> is cf4791818fba6e019216eb4864093b4947f674afada5d305e57d598b641dad1d</li><li>Taking the 4 left-most bytes as a selector: cf479181</li><li>padding to bytes32 and adding the hexadecimal: 0xcf47918100000000000000000000000000000000000000000000000000000000</li><li>Hash error <code>UnauthorizedCaller()</code> is 5c427cd9530cc2f15c24eb9ab95a0c7157bdefd597f18e0b4b4ed82a60681983</li><li>Taking the 4 left-most bytes as a selector: cf479181</li><li>padding to bytes32 and adding the hexadecimal: 0x5c427cd900000000000000000000000000000000000000000000000000000000</li><li>First sanity check, if the caller's address equals the destination's address in the code block <code>if eq(caller(), to)</code> we are storing at slot 0 the error selector <code>mstore(0x00, unauthorizedCallerSelector)</code> and revert the function execution with the message displayed to end user of the error of the 4 bytes.</li><li>Second sanity check, if the caller's balance is less than the amount to be transferred, the function will revert with an error message of <code>InsufficientBalance</code> and data of the <code>available</code> and <code>required</code> amounts to the end user.</li></ul>
-  
-  <h3 class="article-item">3- Memory Layout</h3>
-  
-  <p>
-    While reading from and writing to memory is cheaper than storage, you still have to consider cost 
-    carefully when writing to memory as it's cost quadratically; you can read more about gas in this 
-    <a href="https://medium.com/coinmonks/optimization-of-gas-and-bytecode-limitation-af818efc7a2e">guide</a>.
-  </p>
-  <p>
-    Reading from memory is limited to a width of 256 bits, while writing can be either 8 bits or 256 bits wide, 
-    in the case of writing Solidity reserved 4 slots as follows:
-  </p>
-  <ul>
-    <li><code>0x00</code> (32 bytes) scratch space</li><li><code>0x20</code> (32 bytes) scratch space</li><li><code>0x40</code> (32 bytes) free memory pointer</li><li><code>0x60</code> (32 bytes) zero slot</li></ul><p>The 64 bytes scratch spaces are used for hashing methods and shouldn't be touched or written to. When coding in inline assembly, writing to memory should always start after the free pointer, and that's why we load from memory the first 2 slots as reserved <code>mload(0x40)</code>.</p><p>Worth to note that variables are stored differently in memory than in storage:</p><ul><li>Arrays always occupy multiples of 32 bytes; one slot points to the value in memory, one slot indicates the length, then one slot for each element sequentially, and this is even true for bytes1[].</li><li>String and bytes occupy 3 consecutive 32 bytes, one slot points to the string, one slot stores the length, and then one slot stores the actual data tightly packed and aligned to the left.</li></ul><p>Example of how variables are stored differently in memory:</p>
+  }</code></pre>
+    <ul>
+      <li>Kindly focus on error handling and disregard the details of the assembly code, as it will be explained later;
+        but if you have any questions, feel free to post them in the issues tab in <a
+          href="https://github.com/SashaFlores/all-about-yul/issues">GitHub Repo</a>.</li>
+      <li>Hash error <code>InsuffiecientBalance(uint256,uint256)</code> is
+        cf4791818fba6e019216eb4864093b4947f674afada5d305e57d598b641dad1d</li>
+      <li>Taking the 4 left-most bytes as a selector: cf479181</li>
+      <li>padding to bytes32 and adding the hexadecimal:
+        0xcf47918100000000000000000000000000000000000000000000000000000000</li>
+      <li>Hash error <code>UnauthorizedCaller()</code> is
+        5c427cd9530cc2f15c24eb9ab95a0c7157bdefd597f18e0b4b4ed82a60681983</li>
+      <li>Taking the 4 left-most bytes as a selector: cf479181</li>
+      <li>padding to bytes32 and adding the hexadecimal:
+        0x5c427cd900000000000000000000000000000000000000000000000000000000</li>
+      <li>First sanity check, if the caller's address equals the destination's address in the code block
+        <code>if eq(caller(), to)</code> we are storing at slot 0 the error selector
+        <code>mstore(0x00, unauthorizedCallerSelector)</code> and revert the function execution with the message
+        displayed to end user of the error of the 4 bytes.
+      </li>
+      <li>Second sanity check, if the caller's balance is less than the amount to be transferred, the function will
+        revert with an error message of <code>InsufficientBalance</code> and data of the <code>available</code> and
+        <code>required</code> amounts to the end user.
+      </li>
+    </ul>
+
+    <h3 class="article-item">3- Memory Layout</h3>
+
+    <p>
+      While reading from and writing to memory is cheaper than storage, you still have to consider cost
+      carefully when writing to memory as it's cost quadratically; you can read more about gas in this
+      <a href="https://medium.com/coinmonks/optimization-of-gas-and-bytecode-limitation-af818efc7a2e">guide</a>.
+    </p>
+    <p>
+      Reading from memory is limited to a width of 256 bits, while writing can be either 8 bits or 256 bits wide,
+      in the case of writing Solidity reserved 4 slots as follows:
+    </p>
+    <ul>
+      <li><code>0x00</code> (32 bytes) scratch space</li>
+      <li><code>0x20</code> (32 bytes) scratch space</li>
+      <li><code>0x40</code> (32 bytes) free memory pointer</li>
+      <li><code>0x60</code> (32 bytes) zero slot</li>
+    </ul>
+    <p>The 64 bytes scratch spaces are used for hashing methods and shouldn't be touched or written to. When coding in
+      inline assembly, writing to memory should always start after the free pointer, and that's why we load from memory
+      the first 2 slots as reserved <code>mload(0x40)</code>.</p>
+    <p>Worth to note that variables are stored differently in memory than in storage:</p>
+    <ul>
+      <li>Arrays always occupy multiples of 32 bytes; one slot points to the value in memory, one slot indicates the
+        length, then one slot for each element sequentially, and this is even true for bytes1[].</li>
+      <li>String and bytes occupy 3 consecutive 32 bytes, one slot points to the string, one slot stores the length, and
+        then one slot stores the actual data tightly packed and aligned to the left.</li>
+    </ul>
+    <p>Example of how variables are stored differently in memory:</p>
     <pre class="code-block">
-      <code class="language-typescript">uint8[4] public ids;</code></pre><p>In storage: the above array occupies 1 slot (8 *4 = 32 bytes)</p><p>In memory: the same array occupies 4 slots ( 4 * 32 = 128 bytes)</p>
-      
-      <pre class="code-block">
+      <code class="language-typescript">uint8[4] public ids;</code></pre>
+    <p>In storage: the above array occupies 1 slot (8 *4 = 32 bytes)</p>
+    <p>In memory: the same array occupies 4 slots ( 4 * 32 = 128 bytes)</p>
+
+    <pre class="code-block">
         <code class="language-go">struct Person {
     uint256 amount;
     uint256 id;
     uint8 rank;
     uint8 deposit;
-  }</code></pre><p>In storage: 2 slots for uint256 each and 1 slot for uint8 combined</p><p>In memory: 1 slot for each variable, 4 slots in total.</p>
-  <h3 class="article-item">4- Calldata Layout</h3>
-  <p>
-    As per the ABI standards, the calldata is the first four bytes of the Keccak-256 hash of the signature of the function; 
-    it's the function name with the parenthesizes list of parameter types and the return type of a function is not part of this signature.
-  </p>
-  <p>
-    Parameter types are split by a single comma - no spaces are used and each argument is padded to 32 bytes. If an argument is of 
-    dynamic size, the 32-byte slot will be a pointer to the dynamic value.
-  </p>
-  <p>
-    Solidity supports all the types with the exception of tuples, on the other hand, some Solidity types are not supported 
-    by the ABI but are represented with alternative types as follows:
-  </p>
-  <ul>
-    <li>address payable: represented as address</li>
-    <li>contract: represented as address</li>
-    <li>enum: represented as uint8</li>
-    <li>struct: represented as a tuple</li>
-  </ul>
-  <p>How to Encode Different Argument Types and Hash the Function Selector</p>
-  <pre class="code-block"><code class="language-php">function baz(uint32 x, bool y) public pure returns (bool r) { 
+  }</code></pre>
+    <p>In storage: 2 slots for uint256 each and 1 slot for uint8 combined</p>
+    <p>In memory: 1 slot for each variable, 4 slots in total.</p>
+    <h3 class="article-item">4- Calldata Layout</h3>
+    <p>
+      As per the ABI standards, the calldata is the first four bytes of the Keccak-256 hash of the signature of the
+      function;
+      it's the function name with the parenthesizes list of parameter types and the return type of a function is not
+      part of this signature.
+    </p>
+    <p>
+      Parameter types are split by a single comma - no spaces are used and each argument is padded to 32 bytes. If an
+      argument is of
+      dynamic size, the 32-byte slot will be a pointer to the dynamic value.
+    </p>
+    <p>
+      Solidity supports all the types with the exception of tuples, on the other hand, some Solidity types are not
+      supported
+      by the ABI but are represented with alternative types as follows:
+    </p>
+    <ul>
+      <li>address payable: represented as address</li>
+      <li>contract: represented as address</li>
+      <li>enum: represented as uint8</li>
+      <li>struct: represented as a tuple</li>
+    </ul>
+    <p>How to Encode Different Argument Types and Hash the Function Selector</p>
+    <pre class="code-block"><code class="language-php">function baz(uint32 x, bool y) public pure returns (bool r) { 
       r = x > 32 || y; 
-  }</code></pre><ul><li>The 32 bytes hash of the function above is:
-  <code>keccak256('baz(uint32,bool)')</code> equals to 0xcdcd77c0992ec5bbfc459984220f8c45084cc24d9b6efed1fae540db8de801d2
-  Taking the first left-most bytes as function selector or Id <code>0xcdcd77c0</code></li><li>Encode the first parameter, let's say it has a value of <code>69</code> and is padded to 32 bytes <code>0x000000000000000000000000000000000000000000000000000000045</code></li><li>The secondparameter is <code>true</code> which always has the value of <code>1</code> and is padded to 32 bytes <code>0x000000000000000000000000000000000000000000000000000000001</code></li></ul>
-  <pre class="code-block"><code class="language-cpp">function bar(bytes3[2] memory) public pure {}</code></pre><ul><li><code>keccak256('bar(bytes3[2])')</code> is fce353f601a3db60cb33e4b6ef4f91e4465eaf93c292b64fcde1bf4ba6819b6a
-  function selector: <code>0xfce353f6</code></li><li>The first parameter of value <code>abc</code> encoding is <code>0x6162630000000000000000000000000000000000000000000000000000000000</code></li><li>The second parameter of value <code>def</code> encoding is <code>0x6465660000000000000000000000000000000000000000000000000000000000</code></li></ul>
-  <pre class="code-block"><code class="language-csharp">function sam(bytes memory, bool, uint[] memory) public pure {}</code></pre><p>If we wanted to call <code>sam</code> with the arguments <code>"dave"</code>, <code>false</code>, and <code>[1,2,3]</code></p><ul><li><code>keccak256('sam(bytes,bool,uint256[])')</code> is 0xa5643bf27e2786816613d3eeb0b62650200b5a98766dfcfd4428f296fb56d043 
-  noting that type <code>uint[]</code> is encoded as type <code>uint256[]</code>
-  The function selector: <code>0xa5643bf2</code></li><li>The first argument is dynamic so it's a pointer to the dynamic parameter measured in bytes from the start of the arguments block <code>0x000000000000000000000000000000000000000000000000000000060</code></li><li>The second argument is false which is always zero <code>0x0000000000000000000000000000000000000000000000000000000000</code></li><li>The third argument is of a dynamic type pointing to the location of the dynamic data <code>0x0000000000000000000000000000000000000000000000000000000a0</code></li><li>Then first argument's length of <code>dave</code> which is 4 <code>0x000000000000000000000000000000000000000000000000000000004</code></li><li>Then the bytes32 representation of <code>dave</code> is <code>0x646176650000000000000000000000000000000000000000000000000</code></li><li>The third argument's length of 3 is <code>0x000000000000000000000000000000000000000000000000000000003</code></li><li>Then the first value of the array <code>1</code> is <code>0x000000000000000000000000000000000000000000000000000000001</code></li><li>The second value of array <code>2</code> is <code>0x000000000000000000000000000000000000000000000000000000002</code></li><li>The last value of array <code>3</code> is <code>0x000000000000000000000000000000000000000000000000000000003</code></li></ul>
-  
-  <h3 class="article-item">5- Events Layout</h3>
-  
-  <p>
-    As per the ABI standards, events are stored in the logs entries which include the contract's address, series of topics, 
-    and some arbitrary binary data. Note that the address of the contract is provided internally and needs no manual encoding.
-  </p>
-  <p>
-    An event has a name and a series of event parameters; indexed parameters are called topics and non-indexed parameters 
-    are called the data.
-  </p>
-  <p>
-    An event can have up to four topics, the first topic is the keccak256 hash of the event signature, and the rest is 
-    based on actual event parameters.
-  </p>
-  <p>
-    Non-indexed parameters or arbitrary data are stored in memory and then passed to the log instructions a pointer 
-    to the start of the data and the length of the data.
-  </p>
-  <pre class="code-block">
+  }</code></pre>
+    <ul>
+      <li>The 32 bytes hash of the function above is:
+        <code>keccak256('baz(uint32,bool)')</code> equals to
+        0xcdcd77c0992ec5bbfc459984220f8c45084cc24d9b6efed1fae540db8de801d2
+        Taking the first left-most bytes as function selector or Id <code>0xcdcd77c0</code>
+      </li>
+      <li>Encode the first parameter, let's say it has a value of <code>69</code> and is padded to 32 bytes
+        <code>0x000000000000000000000000000000000000000000000000000000045</code>
+      </li>
+      <li>The secondparameter is <code>true</code> which always has the value of <code>1</code> and is padded to 32
+        bytes <code>0x000000000000000000000000000000000000000000000000000000001</code></li>
+    </ul>
+    <pre class="code-block"><code class="language-cpp">function bar(bytes3[2] memory) public pure {}</code></pre>
+    <ul>
+      <li><code>keccak256('bar(bytes3[2])')</code> is fce353f601a3db60cb33e4b6ef4f91e4465eaf93c292b64fcde1bf4ba6819b6a
+        function selector: <code>0xfce353f6</code></li>
+      <li>The first parameter of value <code>abc</code> encoding is
+        <code>0x6162630000000000000000000000000000000000000000000000000000000000</code>
+      </li>
+      <li>The second parameter of value <code>def</code> encoding is
+        <code>0x6465660000000000000000000000000000000000000000000000000000000000</code>
+      </li>
+    </ul>
+    <pre
+      class="code-block"><code class="language-csharp">function sam(bytes memory, bool, uint[] memory) public pure {}</code></pre>
+    <p>If we wanted to call <code>sam</code> with the arguments <code>"dave"</code>, <code>false</code>, and
+      <code>[1,2,3]</code>
+    </p>
+    <ul>
+      <li><code>keccak256('sam(bytes,bool,uint256[])')</code> is
+        0xa5643bf27e2786816613d3eeb0b62650200b5a98766dfcfd4428f296fb56d043
+        noting that type <code>uint[]</code> is encoded as type <code>uint256[]</code>
+        The function selector: <code>0xa5643bf2</code></li>
+      <li>The first argument is dynamic so it's a pointer to the dynamic parameter measured in bytes from the start of
+        the arguments block <code>0x000000000000000000000000000000000000000000000000000000060</code></li>
+      <li>The second argument is false which is always zero
+        <code>0x0000000000000000000000000000000000000000000000000000000000</code>
+      </li>
+      <li>The third argument is of a dynamic type pointing to the location of the dynamic data
+        <code>0x0000000000000000000000000000000000000000000000000000000a0</code>
+      </li>
+      <li>Then first argument's length of <code>dave</code> which is 4
+        <code>0x000000000000000000000000000000000000000000000000000000004</code>
+      </li>
+      <li>Then the bytes32 representation of <code>dave</code> is
+        <code>0x646176650000000000000000000000000000000000000000000000000</code>
+      </li>
+      <li>The third argument's length of 3 is <code>0x000000000000000000000000000000000000000000000000000000003</code>
+      </li>
+      <li>Then the first value of the array <code>1</code> is
+        <code>0x000000000000000000000000000000000000000000000000000000001</code>
+      </li>
+      <li>The second value of array <code>2</code> is
+        <code>0x000000000000000000000000000000000000000000000000000000002</code>
+      </li>
+      <li>The last value of array <code>3</code> is
+        <code>0x000000000000000000000000000000000000000000000000000000003</code>
+      </li>
+    </ul>
+
+    <h3 class="article-item">5- Events Layout</h3>
+
+    <p>
+      As per the ABI standards, events are stored in the logs entries which include the contract's address, series of
+      topics,
+      and some arbitrary binary data. Note that the address of the contract is provided internally and needs no manual
+      encoding.
+    </p>
+    <p>
+      An event has a name and a series of event parameters; indexed parameters are called topics and non-indexed
+      parameters
+      are called the data.
+    </p>
+    <p>
+      An event can have up to four topics, the first topic is the keccak256 hash of the event signature, and the rest is
+      based on actual event parameters.
+    </p>
+    <p>
+      Non-indexed parameters or arbitrary data are stored in memory and then passed to the log instructions a pointer
+      to the start of the data and the length of the data.
+    </p>
+    <pre class="code-block">
     <code class="language-typescript">event Transfer(address indexed sender, address indexed receiver, uint256 amount);
   
   function transfer(address to, uint256 amount) public returns(bool) {
     _transfer(msg.sender, to, amount);
     emit Transfer(msg.sender, to, amount)
-  }</code></pre><p>That's the <code>transfer</code> function from ERC20 in Solidity, to code the event in inline assembly as follows:</p>
-  <pre class="code-block"><code class="language-typescript">event Transfer(address indexed sender, address indexed receiver, uint256 amount);
+  }</code></pre>
+    <p>That's the <code>transfer</code> function from ERC20 in Solidity, to code the event in inline assembly as
+      follows:</p>
+    <pre class="code-block"><code class="language-typescript">event Transfer(address indexed sender, address indexed receiver, uint256 amount);
   
   function transfer(address to, uint256 amount) public returns(bool) {
   
@@ -506,64 +659,189 @@
     // `0x20` the 32 bytes length of amount
     log3(0x00, 0x20, transferHash, caller(), receiver)
   }
-  </code></pre><ul><li>Dynamically and statistically-sized arrays as indexed parameters are the concatenation of the encoding of its elements, always padded to 32 bytes without any length prefix.</li><li><code>bytes</code> and <code>string</code> endings are just the string contents without padding or length prefixes.</li><li><code>struct</code> encoding is the concatenation of its members, always padded to 32 bytes even <code>bytes</code> and <code>string</code>.</li></ul><p><b>Now let's overview everything we learned so far in the access storage contract, link to the source code in GitHub:</b></p><div class="embed-link"><a href="https://github.com/SashaFlores/all-about-yul/blob/main/contracts/assembly/AccessStorage.sol">all-about-yul/contracts/assembly/AccessStorage.sol at main · SashaFlores/all-about-yul</a></div><hr><img alt="" src="https://miro.medium.com/1*DOwtGGUs_EHBXQeyl20b0w.png" /><ul><li>Storage layout: we got 4 slots in storage as follows:
-  - <code>MAX_DONATION</code> is a compile-time variable and doesn't occupy any slot.
-  - slot 0 => mapping donor's address to balance.
-  - <code>_owner</code> is a deployment-time variable and doesn't occupy any slot.
-  - slot 1 => a static variable of total donations received.
-  - slot 2 => a dynamic array of donors' addresses.
-  - slot 3 => a static variable of the total number of donors.
-  - slot 4 => a dynamic variable <code>string</code> that stores the donation cause.</li><li>Errors layout: the first 4 bytes of the hash keccak256 and the type of each parameter with no space. <a href="https://emn178.github.io/online-tools/keccak_256.html">A useful online tool to get the hash</a></li><li>Logs layout: the hash keccak256 of the event name with the type of each parameter with no space.</li></ul><img alt="" src="https://miro.medium.com/1*Sjza_h2l2rQnJgsaSvkyvw.png" /><p>1- Constructor</p><p>remember we are reading from memory <code>mload</code>and writing to storage <code>sstore</code>, so memory and storage layout standards are applied here.</p><ul><li>In the first line, we declared a variable <code>nameData</code> which is the actual data of whatever string value as input by assigning the value of:
-  - The bytes32 of <code>purpose,</code> as EVM operates on 32 bytes, loaded from memory.
-  - Adding an offset of 32 bytes <code>0x20</code>, the size of one slot, as the pointer from where the string starts in memory.</li><li>In the second line, we're reading from memory the <code>length</code> of string.</li><li>In the third line, we're using the bitwise operator <code>shl</code> to shift the <code>length</code> to the left by 1 Bit which effectively multiplies the <code>length</code> by 2.</li><li>In the last line, we're storing in slot 4 <code>0x04</code> the combination of the actual data <code>nameData</code> and the length times 2 <code>valueToStore.</code></li><li><code>_owner</code> because it is an immutable variable, the assembly code block doesn't have access to so we set it as we do in Solidity.</li></ul><p>we applied the memory layout when we loaded the <code>length</code>, the string pointer, and the actual data <code>nameData.</code></p><p>we applied the storage layout of a string with 31 or less length which is packed in one slot and the right-most byte is the length multiplied by 2.</p><p>2- Read Function <code>getCause()</code></p><ul><li><code>ptr := mlaod(0x40)</code>loading the free memory pointer.</li><li><code>mstore(ptr, 0x20)</code> storing the string pointer in one slot after the free memory pointer.</li><li><code>storedCause := sload(0x04)</code>loading the string from slot 4.</li><li><code>length := and(storedCause, 0xFFFF)</code> using the bitwise operator <code>and</code> to extract the last right-most 2 bytes from <code>storedCause</code> and <code>OxFFFF.</code></li><li><code>mstore(add(ptr, 0x20), length)</code>we're storing the <code>length</code> right after <code>ptr</code> and the string pointer.</li><li><code>mstore(add(ptr, 0x40), sub(storedCause, length))</code>we're storing the actual data of the string which is the subtraction of <code>storedCause</code> remember it's the actual data and length times 2 aligned to the right-most bytes right, right after the memory pointer and the slots <code>0x40</code> that contain the string pointer in one slot and the length is the other slot.</li><li><code>return(ptr, 0x60)</code> we're returning the result of the 3 slots starting from the position of <code>ptr</code></li></ul><img alt="" src="https://miro.medium.com/1*AaVrFtLtUt7RjJip8BeDuQ.png" /><p>3- Write Function <code>donate()</code></p><ul><li>First <code>if</code> statement is to check if <code>caller()</code> is the zero address <code>isZero</code> then we store the error <code>AddressZero()</code> selector and revert the function with the first 4 bytes of the error to the frontend.</li><li>Second <code>if</code> statement is to check if the <code>callvalue()</code> which is equal to <code>msg.sender</code> in Solidity is <code>gt</code> greater than <code>MAX_DONATION</code> then we store the error <code>ExceedsDonations()</code> selector and revert the function with the first 4 bytes of the error to the frontend.</li><li>Third <code>if</code> statement is to check if the <code>callvalue()</code> is zero then we follow the same steps as in the first two statements.</li><li>Mapping in slot 0: remember slot of declaration is left empty and values are stored at the keccak256 hash of the key and slot concatenated.
-  - <code>ptr := mlaod(0x40)</code> laod the free memory pointer.
-  - <code>mstore(ptr, caller())</code> store the caller after the memory pointer.
-  - <code>mstore(add(ptr, 0x20), 0x00)</code> stores the slot <code>0x00</code> right after the offset of the memory pointer and the slot occupied by the caller.
-  - <code>callerBalanceSlot := keccak256(ptr, 0x40)</code> hashing the 2 slots after the memory pointer to get the slot of the key <code>address</code>where the value <code>balance</code>is stored.
-  - <code>callerBalance := sload(callerBalanceSlot)</code> loading from storage the <code>balance</code> of the caller.
-  - <code>sstore(callerBalanceSlot, add(callerBalance, callvalue()))</code> if the caller donated before, then we add his existing balance to the new donation in the slot correspondent to the hash of his address and the slot of declaration.</li><li><code>_totalDonations</code> in slot 1: storing in slot <code>0x01</code> the sum of what exists in the slot <code>sload(0x01)</code> and the donation amount made.</li><li>Addresses Array <code>_donors</code> in slot 2 and <code>_totalDonors</code> ins lot 3: here we want to increment the total number of donors only if the donor address doesn't exist in the array. Remember false is always zero and true is one.
-  - <code>donorsArray := sload(0x02)</code> loading the array from slot 2.
-  - <code>arrayLength := sload(0x03)</code> laoding <code>_totalDonors</code> from slot 3.
-  - <code>found := 0</code> sets found to false.
-  - we're using for loop, iterating over <code>donorsArray</code> to check if the caller exists then we exit the loop and do nothing. If the caller doesn't exist then we add his address to the array and increment total donors.
-  - in logs, there are 2 parameters so: <code>mstore(0x00, callvalue())</code> storing the non-indexed parameter in memory. <code>log2(0x00, 0x20, donationHash, caller())</code> reserving the first 32 bytes<code>0x00</code> as a pointer, followed by the 32 bytes of donation stored earlier in memory, then the 2 topics stored in the stack.</li></ul><img alt="" src="https://miro.medium.com/1*KkmsxcfgRE75NPQII1cAPw.png" /><p>4- Read Function <code>totalDonations()</code></p><p>we're loading what is in slot 1 <code>sload(0x01)</code> , storing it in memory, and returning the 32 bytes from memory at index zero. The same goes for the next read function <code>totalDonors.</code></p><p>5- Read Function <code>owner()</code></p><p>which is the deployer address but since it is a compile-time variable, we can't use assembly code to read it.</p><img alt="" src="https://miro.medium.com/1*9WOkh9ibpcBO2YVXN6Ej8A.png" /><p>6- Read Function <code>getAllDonors()</code></p><p>it reads from storage all addresses in the array <code>_donors</code>
-  - outside the assembly code, we initiate 2 local variables to copy the array and its length.
-  - <code>sload(0x03)</code> we load from slot 3 <code>_totalDonors</code> as it truly reflects how many addresses are in the array <code>_donors</code> in slot 2 since we prevent duplications.
-  - <code>mload(0x40)</code> we allocate memory for the local array <code>allDonors</code>|
-  - <code>mstore(allDonors, arrayLength)</code> set the local array and its length in memory, I didn't forget about the free memory pointer which I'm going to offset down the line in the code but according to Solc docs:</p><blockquote class="small"><p>Scratch space can be used between statements (i.e. within inline assembly). The zero slot is used as the initial value for dynamic memory arrays and should never be written to.</p></blockquote><ul><li>we loop over the original array to copy each address to the local array.
-  - inside the loop, the <code>donorAddress</code> is loaded from the <code>_donors</code> array using <code>sload(add(sload(0x02), mul(0x20, i)))</code>. The <code>sload(0x02)</code> is used to get the starting memory slot of the <code>_donors</code> array.
-  - the <code>donorAddress</code> is then stored in the appropriate slot within the <code>allDonors</code> array in memory using <code>mstore(add(allDonors, mul(0x20, add(i, 1))), donorAddress)</code>.
-  - the loop continues until all donor addresses are copied to the new memory array.
-  - <code>mul(0x20, add(arrayLength, 1))</code> calculates the total size in bytes needed to store the entire <code>allDonors</code> array along with the length value at the beginning. Each element of the array occupies 32 bytes (<code>0x20</code> in hexadecimal), and there's also the length stored at the beginning, so <code>mul(0x20, arrayLength)</code> calculates the space needed for the addresses, and <code>mul(0x20, add(arrayLength, 1))</code> adds the space for the addresses and an additional 32 bytes for the length value.
-  - <code>mstore(0x40, add(allDonors, mul(0x20, add(arrayLength, 1))))</code> 
-  store the memory pointer offset and then the memory slot that corresponds to the end of the
-    <code>allDonors</code> 
-    array in memory. It adds the starting memory slot of the 
-    <code>allDonors</code> array to the total size calculated in the previous step..
-  </li>
-  </ul>
-  <p>7- Read Function 
-    <code>donorAmout()</code>
-  </p>
-  <p>pardon me for the typo I didn't notice it until I was testing the contract.</p>
-  <img alt="" src="https://miro.medium.com/1*jsJ_NaxMdjwuKFXrAfdjsQ.png" />
-  <ul>
-    <li>we're reading from the <code>_balances</code> 
-      mapping in slot 0, so the <code>balance</code> value of the <code>address</code>
+  </code></pre>
+    <ul>
+      <li>Dynamically and statistically-sized arrays as indexed parameters are the concatenation of the encoding of its
+        elements, always padded to 32 bytes without any length prefix.</li>
+      <li><code>bytes</code> and <code>string</code> endings are just the string contents without padding or length
+        prefixes.</li>
+      <li><code>struct</code> encoding is the concatenation of its members, always padded to 32 bytes even
+        <code>bytes</code> and <code>string</code>.
+      </li>
+    </ul>
+    <p><b>Now let's overview everything we learned so far in the access storage contract, link to the source code in
+        GitHub:</b></p>
+    <div class="embed-link"><a
+        href="https://github.com/SashaFlores/all-about-yul/blob/main/contracts/assembly/AccessStorage.sol">all-about-yul/contracts/assembly/AccessStorage.sol
+        at main · SashaFlores/all-about-yul</a></div>
+    <hr><img alt="" src="https://miro.medium.com/1*DOwtGGUs_EHBXQeyl20b0w.png" />
+    <ul>
+      <li>Storage layout: we got 4 slots in storage as follows:
+        - <code>MAX_DONATION</code> is a compile-time variable and doesn't occupy any slot.
+        - slot 0 => mapping donor's address to balance.
+        - <code>_owner</code> is a deployment-time variable and doesn't occupy any slot.
+        - slot 1 => a static variable of total donations received.
+        - slot 2 => a dynamic array of donors' addresses.
+        - slot 3 => a static variable of the total number of donors.
+        - slot 4 => a dynamic variable <code>string</code> that stores the donation cause.</li>
+      <li>Errors layout: the first 4 bytes of the hash keccak256 and the type of each parameter with no space. <a
+          href="https://emn178.github.io/online-tools/keccak_256.html">A useful online tool to get the hash</a></li>
+      <li>Logs layout: the hash keccak256 of the event name with the type of each parameter with no space.</li>
+    </ul><img alt="" src="https://miro.medium.com/1*Sjza_h2l2rQnJgsaSvkyvw.png" />
+    <p>1- Constructor</p>
+    <p>remember we are reading from memory <code>mload</code>and writing to storage <code>sstore</code>, so memory and
+      storage layout standards are applied here.</p>
+    <ul>
+      <li>In the first line, we declared a variable <code>nameData</code> which is the actual data of whatever string
+        value as input by assigning the value of:
+        - The bytes32 of <code>purpose,</code> as EVM operates on 32 bytes, loaded from memory.
+        - Adding an offset of 32 bytes <code>0x20</code>, the size of one slot, as the pointer from where the string
+        starts in memory.</li>
+      <li>In the second line, we're reading from memory the <code>length</code> of string.</li>
+      <li>In the third line, we're using the bitwise operator <code>shl</code> to shift the <code>length</code> to the
+        left by 1 Bit which effectively multiplies the <code>length</code> by 2.</li>
+      <li>In the last line, we're storing in slot 4 <code>0x04</code> the combination of the actual data
+        <code>nameData</code> and the length times 2 <code>valueToStore.</code>
+      </li>
+      <li><code>_owner</code> because it is an immutable variable, the assembly code block doesn't have access to so we
+        set it as we do in Solidity.</li>
+    </ul>
+    <p>we applied the memory layout when we loaded the <code>length</code>, the string pointer, and the actual data
+      <code>nameData.</code>
+    </p>
+    <p>we applied the storage layout of a string with 31 or less length which is packed in one slot and the right-most
+      byte is the length multiplied by 2.</p>
+    <p>2- Read Function <code>getCause()</code></p>
+    <ul>
+      <li><code>ptr := mlaod(0x40)</code>loading the free memory pointer.</li>
+      <li><code>mstore(ptr, 0x20)</code> storing the string pointer in one slot after the free memory pointer.</li>
+      <li><code>storedCause := sload(0x04)</code>loading the string from slot 4.</li>
+      <li><code>length := and(storedCause, 0xFFFF)</code> using the bitwise operator <code>and</code> to extract the
+        last right-most 2 bytes from <code>storedCause</code> and <code>OxFFFF.</code></li>
+      <li><code>mstore(add(ptr, 0x20), length)</code>we're storing the <code>length</code> right after <code>ptr</code>
+        and the string pointer.</li>
+      <li><code>mstore(add(ptr, 0x40), sub(storedCause, length))</code>we're storing the actual data of the string which
+        is the subtraction of <code>storedCause</code> remember it's the actual data and length times 2 aligned to the
+        right-most bytes right, right after the memory pointer and the slots <code>0x40</code> that contain the string
+        pointer in one slot and the length is the other slot.</li>
+      <li><code>return(ptr, 0x60)</code> we're returning the result of the 3 slots starting from the position of
+        <code>ptr</code>
+      </li>
+    </ul><img alt="" src="https://miro.medium.com/1*AaVrFtLtUt7RjJip8BeDuQ.png" />
+    <p>3- Write Function <code>donate()</code></p>
+    <ul>
+      <li>First <code>if</code> statement is to check if <code>caller()</code> is the zero address <code>isZero</code>
+        then we store the error <code>AddressZero()</code> selector and revert the function with the first 4 bytes of
+        the error to the frontend.</li>
+      <li>Second <code>if</code> statement is to check if the <code>callvalue()</code> which is equal to
+        <code>msg.sender</code> in Solidity is <code>gt</code> greater than <code>MAX_DONATION</code> then we store the
+        error <code>ExceedsDonations()</code> selector and revert the function with the first 4 bytes of the error to
+        the frontend.
+      </li>
+      <li>Third <code>if</code> statement is to check if the <code>callvalue()</code> is zero then we follow the same
+        steps as in the first two statements.</li>
+      <li>Mapping in slot 0: remember slot of declaration is left empty and values are stored at the keccak256 hash of
+        the key and slot concatenated.
+        - <code>ptr := mlaod(0x40)</code> laod the free memory pointer.
+        - <code>mstore(ptr, caller())</code> store the caller after the memory pointer.
+        - <code>mstore(add(ptr, 0x20), 0x00)</code> stores the slot <code>0x00</code> right after the offset of the
+        memory pointer and the slot occupied by the caller.
+        - <code>callerBalanceSlot := keccak256(ptr, 0x40)</code> hashing the 2 slots after the memory pointer to get the
+        slot of the key <code>address</code>where the value <code>balance</code>is stored.
+        - <code>callerBalance := sload(callerBalanceSlot)</code> loading from storage the <code>balance</code> of the
+        caller.
+        - <code>sstore(callerBalanceSlot, add(callerBalance, callvalue()))</code> if the caller donated before, then we
+        add his existing balance to the new donation in the slot correspondent to the hash of his address and the slot
+        of declaration.</li>
+      <li><code>_totalDonations</code> in slot 1: storing in slot <code>0x01</code> the sum of what exists in the slot
+        <code>sload(0x01)</code> and the donation amount made.
+      </li>
+      <li>Addresses Array <code>_donors</code> in slot 2 and <code>_totalDonors</code> ins lot 3: here we want to
+        increment the total number of donors only if the donor address doesn't exist in the array. Remember false is
+        always zero and true is one.
+        - <code>donorsArray := sload(0x02)</code> loading the array from slot 2.
+        - <code>arrayLength := sload(0x03)</code> laoding <code>_totalDonors</code> from slot 3.
+        - <code>found := 0</code> sets found to false.
+        - we're using for loop, iterating over <code>donorsArray</code> to check if the caller exists then we exit the
+        loop and do nothing. If the caller doesn't exist then we add his address to the array and increment total
+        donors.
+        - in logs, there are 2 parameters so: <code>mstore(0x00, callvalue())</code> storing the non-indexed parameter
+        in memory. <code>log2(0x00, 0x20, donationHash, caller())</code> reserving the first 32 bytes<code>0x00</code>
+        as a pointer, followed by the 32 bytes of donation stored earlier in memory, then the 2 topics stored in the
+        stack.</li>
+    </ul><img alt="" src="https://miro.medium.com/1*KkmsxcfgRE75NPQII1cAPw.png" />
+    <p>4- Read Function <code>totalDonations()</code></p>
+    <p>we're loading what is in slot 1 <code>sload(0x01)</code> , storing it in memory, and returning the 32 bytes from
+      memory at index zero. The same goes for the next read function <code>totalDonors.</code></p>
+    <p>5- Read Function <code>owner()</code></p>
+    <p>which is the deployer address but since it is a compile-time variable, we can't use assembly code to read it.</p>
+    <img alt="" src="https://miro.medium.com/1*9WOkh9ibpcBO2YVXN6Ej8A.png" />
+    <p>6- Read Function <code>getAllDonors()</code></p>
+    <p>it reads from storage all addresses in the array <code>_donors</code>
+      - outside the assembly code, we initiate 2 local variables to copy the array and its length.
+      - <code>sload(0x03)</code> we load from slot 3 <code>_totalDonors</code> as it truly reflects how many addresses
+      are in the array <code>_donors</code> in slot 2 since we prevent duplications.
+      - <code>mload(0x40)</code> we allocate memory for the local array <code>allDonors</code>|
+      - <code>mstore(allDonors, arrayLength)</code> set the local array and its length in memory, I didn't forget about
+      the free memory pointer which I'm going to offset down the line in the code but according to Solc docs:</p>
+    <blockquote class="small">
+      <p>Scratch space can be used between statements (i.e. within inline assembly). The zero slot is used as the
+        initial value for dynamic memory arrays and should never be written to.</p>
+    </blockquote>
+    <ul>
+      <li>we loop over the original array to copy each address to the local array.
+        - inside the loop, the <code>donorAddress</code> is loaded from the <code>_donors</code> array using
+        <code>sload(add(sload(0x02), mul(0x20, i)))</code>. The <code>sload(0x02)</code> is used to get the starting
+        memory slot of the <code>_donors</code> array.
+        - the <code>donorAddress</code> is then stored in the appropriate slot within the <code>allDonors</code> array
+        in memory using <code>mstore(add(allDonors, mul(0x20, add(i, 1))), donorAddress)</code>.
+        - the loop continues until all donor addresses are copied to the new memory array.
+        - <code>mul(0x20, add(arrayLength, 1))</code> calculates the total size in bytes needed to store the entire
+        <code>allDonors</code> array along with the length value at the beginning. Each element of the array occupies 32
+        bytes (<code>0x20</code> in hexadecimal), and there's also the length stored at the beginning, so
+        <code>mul(0x20, arrayLength)</code> calculates the space needed for the addresses, and
+        <code>mul(0x20, add(arrayLength, 1))</code> adds the space for the addresses and an additional 32 bytes for the
+        length value.
+        - <code>mstore(0x40, add(allDonors, mul(0x20, add(arrayLength, 1))))</code>
+        store the memory pointer offset and then the memory slot that corresponds to the end of the
+        <code>allDonors</code>
+        array in memory. It adds the starting memory slot of the
+        <code>allDonors</code> array to the total size calculated in the previous step..
+      </li>
+    </ul>
+    <p>7- Read Function
+      <code>donorAmout()</code>
+    </p>
+    <p>pardon me for the typo I didn't notice it until I was testing the contract.</p>
+    <img alt="" src="https://miro.medium.com/1*jsJ_NaxMdjwuKFXrAfdjsQ.png" />
+    <ul>
+      <li>we're reading from the <code>_balances</code>
+        mapping in slot 0, so the <code>balance</code> value of the <code>address</code>
         key is stored at the keccak256 hash of the concatenation of key and slot index.
-    </li>
-    <li><code>mstore(0x00, account)</code> 
-      slot of declaration is slot 0 and the account stored in memory.
-    </li>
-    <li><code>mstore(0x20, 0x00)</code> the next 32 bytes <code>0x20</code> will store the declaration slot of index 0 in memory.</li><li><code>keccak256(0x00,0x40)</code> now we get the key and the slot index, we're hashing the 2 bytes <code>0x40</code> starting from index <code>0x00.</code></li><li><code>donorBalance := sload(hash)</code>we allocated the slot, so it's time to load the <code>balance</code> stored in this slot.</li><li><code>mstore(0x00, donorBalance)</code> storing in memory at index <code>0x00</code> the <code>donorBalance</code> we just loaded.</li><li>finally returning the 32 bytes of <code>donorBalance.</code></li></ul>
-  
-    </div>
-  
-    <script src="../js/bootstrap.bundle.min.js"></script>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
-    <script src="../js/aos.js"></script>
-    <script src="../js/custom.js"></script>
-  </body>
+      </li>
+      <li><code>mstore(0x00, account)</code>
+        slot of declaration is slot 0 and the account stored in memory.
+      </li>
+      <li><code>mstore(0x20, 0x00)</code> the next 32 bytes <code>0x20</code> will store the declaration slot of index 0
+        in memory.</li>
+      <li><code>keccak256(0x00,0x40)</code> now we get the key and the slot index, we're hashing the 2 bytes
+        <code>0x40</code> starting from index <code>0x00.</code>
+      </li>
+      <li><code>donorBalance := sload(hash)</code>we allocated the slot, so it's time to load the <code>balance</code>
+        stored in this slot.</li>
+      <li><code>mstore(0x00, donorBalance)</code> storing in memory at index <code>0x00</code> the
+        <code>donorBalance</code> we just loaded.
+      </li>
+      <li>finally returning the 32 bytes of <code>donorBalance.</code></li>
+    </ul>
+
+  </div>
+
+  <script src="../js/bootstrap.bundle.min.js"></script>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+  <script src="../js/aos.js"></script>
+  <script src="../js/custom.js"></script>
+</body>
+
 </html>
-    
