@@ -193,7 +193,8 @@
 
 
     <pre class="code-block">
-        <code class="language-typescript">contract FixedSizeVariables {
+      <code class="language-typescript">
+        contract FixedSizeVariables {
           uint256 private value1;                  // value1 = 1 in slot 0
           uint256[2] private value2;               // value2[0] = 2 & value2[1] = 3 in slot 1 & 2
           uint128 private value3;                  // value3 = 4 in slot 3
@@ -208,8 +209,8 @@
         // 0x002: 0x0000000000000000000000000000000000000000000000000000000000000003
         // 0x003: 0x0000000000000000000000000000000500000000000000000000000000000004
         // 0x004: 0x0000000000000000000000000000000000000000000000000000000000000706
-        </code>
-      </pre>
+      </code>
+    </pre>
 
     <p>Let's assume the value of each variable as stated above in the comments:</p>
     <ul>
