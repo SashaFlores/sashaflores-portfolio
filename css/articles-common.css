@@ -43,33 +43,6 @@ h2 {
     text-align: center;
 }
 
-pre {
-    display: inline-block;
-    background-color: #533e3e;
-    padding: 10px;
-    border-radius: 5px;
-    white-space: pre-wrap; /* Ensures long lines wrap to fit container */
-    max-width: 100%; /* Limits the width of the pre element */
-    overflow-x: auto; /* Adds scroll if content overflows */
-}
-
-/* Style for the Copy button */
-.copy-btn {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    background-color: #656b72;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    padding: 5px 10px;
-    cursor: pointer;
-    font-size: 12px;
-}
-
-.copy-btn:hover {
-    background-color: #0056b3;
-}
 
 
 p { color: #e9eef2;}
