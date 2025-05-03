@@ -44,7 +44,7 @@ h3.anim_subheading {
 }
 .social-links ion-icon {
     background-color: hsl(0, 1%, 13%);
-    color: hsl(40, 14%, 92%);
+    color: hsl(40, 14%, 92%) !important;
     border-radius: 30pc;
     padding: 15px;    
     transition: 0.30s ease; 
