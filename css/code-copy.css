@@ -1,0 +1,52 @@
+/* Dark code block with a GitHub-style copy button */
+.article-container .codebox{
+  position: relative;
+  background: #0f0f10;
+  border: 1px solid #262626;
+  max-width: 80ch;
+  border-radius: 12px;
+  padding: 16px 48px 16px 16px; /* room for button */
+  margin: 16px 0;
+  overflow: hidden;
+}
+
+/* Code text */
+.article-container .codebox pre{ margin: 0; overflow-x: auto; }
+.article-container .codebox code{
+  display: block;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
+  color: #e6f1ff;
+  line-height: 1.55;
+  font-size: .96rem;
+  white-space: pre;              /* keep formatting */
+}
+
+/* Copy button */
+.article-container .copy-btn{
+  position: absolute; top: 8px; right: 8px;
+  width: 36px; height: 36px;
+  display: inline-grid; place-content: center;
+  border: 1px solid #2a2a2a;
+  border-radius: 8px;
+  background: #171717;
+  color: #d5d0d0;
+  cursor: pointer;
+  transition: background .15s, border-color .15s, transform .06s, color .15s;
+}
+.article-container .copy-btn:hover{
+  background: #1f1f1f; border-color: #3a3a3a; color: #ffe08a;
+}
+.article-container .copy-btn:active{ transform: scale(.98); }
+.article-container .copy-btn:focus-visible{ outline: 2px solid #ffe08a; outline-offset: 2px; }
+
+/* Ionicon inside button */
+.article-container .copy-btn ion-icon{ font-size: 18px; }
+
+/* Temporary success state */
+.article-container .copy-btn.copied{
+  background: #1a1400; border-color: #5a4700; color: #ffe08a;
+}
+
+/* Optional: nicer selection in code */
+.article-container .codebox code::selection{ background: rgba(255,224,138,.2); }
+

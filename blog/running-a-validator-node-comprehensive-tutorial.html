@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- meta tags -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+    <title>Running a Validator Node Comprehensive Tutorial</title>
+    <meta name="description"
+        content="Everything you need to know to run a validator node successfully.">
+    <meta name="keywords"
+        content="Node, Nodes, Validator Node, Ethereum, Sepolia, Mainnet, Testnet, Local Node, Developer Node, PoS Consensus">
+    <meta name="author" content="Sasha Flores">
+    <meta property="og:type" content="website">
+
+    <!-- Bootstrap CSS -->
+    <link href="../css/bootstrap.min.css" rel="stylesheet">
+    <link href="../css/aos.css" rel="stylesheet">
+    <link href="../css/navbar.css" rel="stylesheet">
+    <link href="../css/articles-common.css" rel="stylesheet">
+    <link href="../css/footer.css" rel="stylesheet">
+    
+
+    
+
+
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-MXTX916K7T"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+
+        gtag('config', 'G-MXTX916K7T');
+    </script>
+</head>
+
+<body class="page-offset">
+    <i class="bi bi-list mobile-nav-toggle d-xl-none"></i>
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+            <div class="container-fluid px-md-5">
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                    aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0" data-aos="fade-down" data-aos-duration="1000">
+                        <li class="nav-item">
+                            <a class="nav-link" aria-current="page" href="../index.html">HOME</a>
+                        </li>
+
+                        <li class="nav-item dropdown"><a class="nav-link dropdown-toggle" href="#" id="aboutDropdown"
+                                role="button" data-bs-toggle="dropdown" aria-expanded="false">ABOUT ME</a>
+                            <ul class="dropdown-menu" aria-labelledby="aboutDropdown">
+                                <li><a class="dropdown-item" href="../background.html">Background</a></li>
+                                <li><a class="dropdown-item" href="../skills.html">Skills</a></li>
+                                <li><a class="dropdown-item" href="../experience.html">Experience</a></li>
+                            </ul>
+                        </li>
+                        <li class="nav-item"><a class="nav-link" href="../portfolio.html">PORTFOLIO</a></li>
+                        <li class="nav-item"> <a class="nav-link active" href="../blog.html">BLOG</a></li>
+                        <li class="nav-item"><a class="nav-link" href="../contact.html">CONTACT</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <div class="article-container">
+        <h1 id="title">Running a Validator Node Comprehensive Tutorial</h1>
+        <figure class="meta">
+            <img alt="" src="../images/blog/node.png" />
+        </figure>
+
+        <h3 class="article-list">What is a validator?</h3>
+        <p>
+            On a Proof-of-Stake (PoS) network like Ethereum, a validator is the entity that advances the chain: proposing blocks and 
+            voting (attesting) on other blocks. Instead of expending hashpower as in PoW, a validator locks stake (e.g., 32 ETH per 
+            validator key) and earns rewards for correct participation, with the stake at risk for faults or misbehavior (slashing). 
+            Because rewards and penalties are tied to the staked balance, the protocol economically incentives honest, online 
+            behavior.
+        </p>
+
+        <h3 class="article-list">How a validator works?</h3>
+        <ol>
+            <li>
+                Transactions land in the mempool. When users submit transactions, the execution client (e.g., Geth) gossips 
+                them and holds them in its mempool.
+            </li>
+            <li>
+                Slot & role selection. The consensus layer randomly assigns duties per slot. If your validator is the proposer 
+                for a slot, it must build a block; otherwise it will attest to the block another validator proposes.
+            </li>
+            <li>
+                Block proposal. As proposer, your validator asks the execution client for a payload 
+                (a set of valid mempool txs that produce a valid state transition), wraps it in a beacon block, signs it, 
+                and gossips it to peers. (Many operators optionally use MEV-Boost/builders, but a local payload works fine.)
+            </li>
+            <li>
+                Attestations & fork choice. Other validators verify signatures, the execution payload, and state transition, 
+                then publish attestations (votes). The chain head is chosen via fork-choice (LMD-GHOST) and checkpoints are 
+                finalized by Casper FFG once enough attestations accumulate.
+            </li>
+            <li>
+                Rewards & penalties. Proposers and attesters earn rewards for timely, correct work. Going offline triggers 
+                inactivity penalties; equivocations (e.g., double proposals/votes or surround votes) are slashable.
+            </li>
+        </ol>
+
+        <h3 class="article-list">Minimal components & baseline hardware</h3>
+        <ul>
+            <li>Execution client: <a href="https://geth.ethereum.org/docs/getting-started/installing-geth" target="_blank" rel="noopener noreferrer">Geth</a></li>
+            <li>Consensus client: <a href="https://prysm.offchainlabs.com/docs/" target="_blank" rel="noopener noreferrer">Prysm</a></li>
+            <li>OS: 64-bit Linux/macOS 10.14+/Windows 10+</li>
+            <li>RAM: 8–16 GB</li>
+            <li>Storage: ~2 TB SSD for a full (non-archive) execution node + consensus DB</li>
+            <li>Network: ~8 Mbps reliable broadband</li>
+        </ul>
+
+        <h3 class="article-list">Do I need to run everything myself?</h3>
+        <p>
+            Some may think you can only run a validator if you have 32 ETH and a 24/7 independent machine for running a full node. 
+            However, you can run a validator without the need to run a full node on your own by using staking-as-a-service (SaaS) 
+            or other managed options. Trade-offs:
+        </p>
+
+        <p><strong>Solo / Home staking</strong></p>
+        <ul>
+            <li>Run your own hardware & clients (execution + consensus + validator)</li>
+            <li>Full control of keys and configuration</li>
+            <li>Highest net rewards (no service fee)</li>
+            <li>Must maintain 24/7 uptime and handle ops/security yourself</li>
+            <li>Penalties are solely your responsibility</li>
+        </ul>
+
+        <p><strong>Staking-as-a-Service</strong></p>
+        <ul>
+            <li>No hardware/DevOps to run</li>
+            <li>Lower operational risk for you, but keys or signing may be delegated (varies by provider)</li>
+            <li>Service fees reduce net yield</li>
+            <li>Same protocol penalties apply, plus counter-party risk (mismanagement by provider could impact you)</li>
+        </ul>
+
+        <p><strong>List of SaaS Providers:</strong></p>
+        <ul>
+            <li><a href="https://www.kiln.fi/" target="_blank" rel="noopener noreferrer">Kiln</a></li>
+            <li><a href="https://p2p.org/networks/ethereum" target="_blank" rel="noopener noreferrer">P2P Org</a></li>
+            <li><a href="https://www.rockx.com/staking/ethereum" target="_blank" rel="noopener noreferrer">RockX Stacking</a></li>
+            <li><a href="https://consensys.io/staking" target="_blank" rel="noopener noreferrer">Consensys Staking</a></li>
+            <li><a href="https://stake.fish/ethereum/" target="_blank" rel="noopener noreferrer">Stake Fish</a></li>
+            <li><a href="https://ethpool.org/" target="_blank" rel="noopener noreferrer">Eth Pool</a></li>
+            <li><a href="https://figment.io/" target="_blank" rel="noopener noreferrer">Figment</a></li>
+            <li><a href="https://www.senseinode.com/" target="_blank" rel="noopener noreferrer">Sensi Node</a></li>
+            <li><a href="https://abyss.finance/hosting" target="_blank" rel="noopener noreferrer">Abyss Finance</a></li>
+            <li><a href="https://eth.everstake.one/" target="_blank" rel="noopener noreferrer">Ever Stake Institutional</a></li>
+            <li><a href="https://www.chainlabo.com/" target="_blank" rel="noopener noreferrer">Chain Labo</a></li>
+            <li><a href="https://www.allnodes.com/eth2/staking" target="_blank" rel="noopener noreferrer">All Nodes</a></li>
+            <li><a href="https://www.ohsquid.com/" target="_blank" rel="noopener noreferrer">Squid</a></li>
+        </ul>
+
+        <h3 class="article-list">Before you run a validator (prep checklist)</h3>
+        <ol>
+            <li>Pick network: Ethereum (Sepolia/mainnet). Validators use PoS with an Execution Client (e.g., Geth) + Consensus Client (e.g., Prysm).</li>
+            <li>Provision host: 64-bit Linux, 8–16 GB RAM, fast SSD (~2 TB for EL+CL), stable broadband, NTP time sync, firewall.</li>
+            <li>Install clients: set up Geth (EL) and Prysm (CL). Connect EL↔CL via Engine API + JWT secret. Let both fully sync.</li>
+            <li>Keys & deposit: generate BLS validator keys, enable slashing protection, set fee recipient, make the 32 ETH (or
+                Sepolia ETH) deposit, wait for activation.</li>
+            <li>Ops: systemd auto-restart, logs/backup of keystores + slashing DB, monitor uptime/attestations, stay current on client releases.</li>
+            <li>Security: least-privilege users, closed ports, off-box backups. Downtime costs rewards; bad ops risks slashing.</li>
+        </ol>
+
+        <p>
+            <a href="https://github.com/SashaFlores/running-sepolia-node-tutorial" target="_blank" rel="noopener noreferrer">
+                A Step by Step Guide on How to Run an Ethereum RPC Validator Node Node on Sepolia Testnet in Virtual Machine 
+            </a>.
+        </p>
+
+
+    </div>
+
+    <footer>
+        <div class="footer-content">
+            <p>&copy; 2025 Sasha Flores. All Rights Reserved.</p>
+            <div class="social-links">
+                <a href="https://www.linkedin.com/in/sflores369/" target="_blank"><ion-icon
+                        name="logo-linkedin"></ion-icon></a>
+                <a href="https://discord.com/users/827160247428710422" target="_blank"><ion-icon
+                        name="logo-discord"></ion-icon></a>
+                <a href="https://github.com/SashaFlores" target="_blank"><ion-icon name="logo-github"></ion-icon></a>
+                <a href="https://www.youtube.com/@web3securityengineer" target="_blank"><ion-icon
+                        name="videocam-sharp"></ion-icon><span class="tooltip"></span></a>
+                <!-- <a href="https://drive.google.com/file/d/126pcD_XZmZIKTWTNyxdWUUqjOIYt7uWk/view?usp=sharing" target="_blank"><ion-icon name="cloud-download-outline"></ion-icon></a> -->
+            </div>
+        </div>
+    </footer>
+
+    <script src="../js/bootstrap.bundle.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="../js/aos.js"></script>
+    <script src="../js/custom.js"></script>
+
+    <script type="module" src="https://unpkg.com/ionicons@latest/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule="" src="https://unpkg.com/ionicons@latest/dist/ionicons/ionicons.js"></script>
+
+</body>
+</html>

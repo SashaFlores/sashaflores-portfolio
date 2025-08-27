@@ -35,6 +35,12 @@ h2 {
     line-height: 1.5;
 }
 
+h5 {
+    text-align: left;
+    margin-top: 1rem;   /* space before */
+    margin-bottom: 1rem;
+}
+
 .caption {
     color: #737070;
     font-size: 14px;
@@ -49,8 +55,32 @@ p { color: #e9eef2;}
 
 ul { color: rgb(147, 174, 174);} 
 
+ol { color: rgb(210, 210, 181)}
+
 .article-list { color: whitesmoke}
 
 .article-item { color: antiquewhite;}
 
 .code-block { font-size: medium; color: blanchedalmond;}
+
+/* Article page spacing */
+.article-container h1 { margin: 0 0 1rem; }
+
+.article-container figure.meta {
+  margin: 1rem 0 1.5rem;   /* space below the image */
+}
+
+.article-container figure.meta img {
+  display: block;          /* removes image’s inline gap */
+  width: 100%;
+  height: auto;
+  border-radius: 8px;      /* optional */
+}
+
+.article-container p + p {
+  margin-top: 1rem;        /* space between paragraphs */
+}
+
+.article-container .meta {
+  margin: 24px 0 62px !important;     /* creates the gap below the image */
+}

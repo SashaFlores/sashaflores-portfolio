@@ -1,37 +1,49 @@
+/* FULL-WIDTH FOOTER BAR + CENTERED CONTENT */
 footer {
-    margin-top: 20px 0;
-    background-color: hsl(0, 0%, 9%);
-    padding: 20px;
+  width: 100vw;
+  background-color: hsl(0, 0%, 9%); 
+  margin-top: 40px;  /* keep your dark bar */
+  margin-left: calc(50% - 50vw);
+  margin-right: calc(50% - 50vw);                    /* fix invalid margin-top */
+  padding: 20px 0;                     /* vertical padding only */
 }
 
 .footer-content {
-    display: flex;
-    justify-content: flex-start;
-    padding: 0px 20%;
-    align-items: center;
-    flex-wrap: wrap;
+  display: flex;
+  align-items: center;
+  justify-content: center;             /* or space-between if you prefer */
+  gap: 10px;
+
+  max-width: 1200px;                   /* keeps content nicely centered */
+  margin: 0 auto;                      /* center inside full-width footer */
+  padding: 0 24px;       
+  flex-wrap: wrap;              /* was 0 20% -> caused the “narrow” look */
+  /* no background here */
 }
 
 footer p {
-    flex: 1; 
-    text-align: center;
-    margin: 0; 
-    color: hsl(0, 0%, 84%); 
+  margin: 0;
+  color: hsl(0, 0%, 84%);
+  text-align: center;
+  flex: 0 0 auto;                      /* don’t let it stretch weirdly */
 }
 
 footer .social-links {
-    display: flex;
-    gap: 10px;
+  display: flex;
+  gap: 10px;
 }
 
 footer ion-icon {
-    font-size: 24px; 
-    color: hsl(0, 0%, 84%); 
-    transition: color 0.2s ease; 
+  font-size: 24px;
+  color: hsl(0, 0%, 84%);
+  transition: color 0.2s ease;
 }
 
-footer ion-icon:hover {
-    color: hsl(45, 100%, 72%); /* Change icon color on hover */
-}
+footer ion-icon:hover { color: hsl(45, 100%, 72%); }
+.social-links > a:hover ion-icon { transform: scale(1.5); }
 
-.social-links > a:hover ion-icon { transform: scale(1.5);}
+html, body { height: 100%; }
+body.page-offset { min-height: 100vh; display: flex; flex-direction: column; }
+article, .articles, main { flex: 1 0 auto; }
+footer { flex-shrink: 0; }
+

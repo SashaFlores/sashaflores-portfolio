@@ -161,114 +161,145 @@ document.addEventListener('DOMContentLoaded', function () {
 
 /* -----blog filtering ----------------------*/
 document.addEventListener('DOMContentLoaded', function () {
-    // Function to handle blog filtering
-    function initBlogFiltering() {
-        const blogFilterButtons = document.querySelectorAll('[data-filter-btn]');
-        const blogItems = document.querySelectorAll('.blog-item');
+  // Function to handle blog filtering
+  function initBlogFiltering() {
+    // Scope to the blog page only
+    const blogRoot = document.querySelector('article.blog');
+    if (!blogRoot) return;
 
-        blogFilterButtons.forEach(button => {
-            button.addEventListener('click', () => {
-                const selectedCategory = button.textContent.toLowerCase();
+    const blogFilterButtons = blogRoot.querySelectorAll('[data-filter-btn]');
+    const blogItems = blogRoot.querySelectorAll('.blog-item');
 
-                blogFilterButtons.forEach(btn => btn.classList.remove('active'));
-                button.classList.add('active');
+    // Apply filter (uses the visible button text, as your HTML already does)
+    function applyFilter(selectedCategory) {
+      const sel = (selectedCategory || 'all').trim().toLowerCase();
 
-                blogItems.forEach(item => {
-                    const itemCategory = item.dataset.category.toLowerCase();
-                    if (selectedCategory === 'all' || itemCategory === selectedCategory) {
-                        item.style.display = "block";
-                    } else {
-                        item.style.display = "none";
-                    }
-                });
-            });
-        });
+      // Button active state
+      blogFilterButtons.forEach(btn => {
+        const label = btn.textContent.trim().toLowerCase();
+        btn.classList.toggle('active', label === sel || (sel === 'all' && label === 'all'));
+      });
+
+      // Show/hide items
+      blogItems.forEach(item => {
+        const itemCategory = (item.dataset.category || '').trim().toLowerCase();
+        item.style.display = (sel === 'all' || itemCategory === sel) ? 'block' : 'none';
+      });
     }
 
-    // Function to handle the popup window
-    function initPopup() {
-        const myButton = document.getElementById("myButton");
-        const myPopup = document.getElementById("myPopup");
-        const closePopup = document.getElementById("closePopup");
-        const emailInput = document.querySelector(".popup-input");
-        const subscribeButton = document.getElementById("popup-subscribe-btn");
-        const errorMessageElement = document.querySelector(".error-message");
-        const successMessageElement = document.querySelector(".success-message");
+    // Update the URL query param (?category=...) without reloading
+    function setURL(selectedCategory, replaceOnly = false) {
+      const params = new URLSearchParams(window.location.search);
+      const sel = (selectedCategory || 'all').trim().toLowerCase();
 
-        // Function to validate an email address
-        function validateEmail(email) {
-            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-            return emailRegex.test(email);
-        }
+      if (sel === 'all') {
+        params.delete('category');                   // keep clean URL for "All"
+      } else {
+        params.set('category', sel);                 // URLSearchParams will encode spaces
+      }
 
-        // Event listeners for the popup
-        myButton.addEventListener("click", function () {
-            myPopup.classList.add("show");
-        });
+      const newUrl = params.toString()
+        ? `${window.location.pathname}?${params.toString()}`
+        : window.location.pathname;
 
-        closePopup.addEventListener("click", function () {
-            myPopup.classList.remove("show");
-        });
-
-        window.addEventListener("click", function (event) {
-            if (event.target === myPopup) {
-                myPopup.classList.remove("show");
-            }
-        });
-
-        // Listen for the input field's blur event (losing focus)
-        emailInput.addEventListener("blur", function () {
-            const email = emailInput.value;
-            const isValid = validateEmail(email);
-            updateErrorMessage(isValid);
-        });
-
-        // Function to update the error message
-        function updateErrorMessage(isValid) {
-            if (isValid) {
-                subscribeButton.removeAttribute("disabled");
-                errorMessageElement.textContent = "";
-            } else {
-                subscribeButton.setAttribute("disabled", "true");
-                errorMessageElement.textContent = "Please enter a valid email !";
-            }
-        }
-
-        // Form submission event listener
-        const subscribeForm = document.querySelector("form[name='subscribe-form']");
-        subscribeForm.addEventListener("submit", function (e) {
-            e.preventDefault();
-
-            const email = emailInput.value;
-            const isValid = validateEmail(email);
-
-            if (!isValid) {
-                errorMessageElement.textContent = "Please enter a valid email!";
-            } else {
-                // Fetch code here to submit the form data
-                const formData = new FormData(subscribeForm);
-                fetch("/", {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/x-www-form-urlencoded"
-                    },
-                    body: new URLSearchParams(formData).toString()
-                })
-                .then(response => {
-                    if (response.ok) {
-                        successMessageElement.textContent = "Thank you for subscribing!";
-                    } else {
-                        errorMessageElement.textContent = "An error occurred. Please try again later.";
-                    }
-                })
-            }
-        });
+      window.history[replaceOnly ? 'replaceState' : 'pushState'](null, '', newUrl);
     }
 
-    // Initialize blog filtering and popup after DOM is loaded
-    initBlogFiltering();
-    initPopup();
+    // Wire clicks
+    blogFilterButtons.forEach(button => {
+      button.addEventListener('click', () => {
+        const selectedCategory = button.textContent; // keep your current source of truth
+        applyFilter(selectedCategory);
+        setURL(selectedCategory);
+      });
+    });
+
+    // On load: apply from ?category=... if present
+    const qs = new URLSearchParams(window.location.search);
+    const qCat = qs.get('category');
+    if (qCat) {
+      applyFilter(decodeURIComponent(qCat));
+      setURL(qCat, true); // normalize without adding to history
+    }
+  }
+
+  // Function to handle the popup window (unchanged)
+  function initPopup() {
+    const myButton = document.getElementById("myButton");
+    const myPopup = document.getElementById("myPopup");
+    const closePopup = document.getElementById("closePopup");
+    const emailInput = document.querySelector(".popup-input");
+    const subscribeButton = document.getElementById("popup-subscribe-btn");
+    const errorMessageElement = document.querySelector(".error-message");
+    const successMessageElement = document.querySelector(".success-message");
+
+    function validateEmail(email) {
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      return emailRegex.test(email);
+    }
+
+    myButton.addEventListener("click", function () {
+      myPopup.classList.add("show");
+    });
+
+    closePopup.addEventListener("click", function () {
+      myPopup.classList.remove("show");
+    });
+
+    window.addEventListener("click", function (event) {
+      if (event.target === myPopup) {
+        myPopup.classList.remove("show");
+      }
+    });
+
+    emailInput.addEventListener("blur", function () {
+      const email = emailInput.value;
+      const isValid = validateEmail(email);
+      updateErrorMessage(isValid);
+    });
+
+    function updateErrorMessage(isValid) {
+      if (isValid) {
+        subscribeButton.removeAttribute("disabled");
+        errorMessageElement.textContent = "";
+      } else {
+        subscribeButton.setAttribute("disabled", "true");
+        errorMessageElement.textContent = "Please enter a valid email !";
+      }
+    }
+
+    const subscribeForm = document.querySelector("form[name='subscribe-form']");
+    subscribeForm.addEventListener("submit", function (e) {
+      e.preventDefault();
+
+      const email = emailInput.value;
+      const isValid = validateEmail(email);
+
+      if (!isValid) {
+        errorMessageElement.textContent = "Please enter a valid email!";
+      } else {
+        const formData = new FormData(subscribeForm);
+        fetch("/", {
+          method: "POST",
+          headers: { "Content-Type": "application/x-www-form-urlencoded" },
+          body: new URLSearchParams(formData).toString()
+        })
+        .then(response => {
+          if (response.ok) {
+            successMessageElement.textContent = "Thank you for subscribing!";
+          } else {
+            errorMessageElement.textContent = "An error occurred. Please try again later.";
+          }
+        })
+      }
+    });
+  }
+
+  // Initialize blog filtering and popup after DOM is loaded
+  initBlogFiltering();
+  initPopup();
 });
+
 
 /* ------------------Send Mail ---------- */
 /* contact form customize response as per netlify docs */

@@ -110,9 +110,19 @@
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 20px;
-  margin: 0 auto; 
-  max-width: 1500px; 
-  /* padding-bottom: 100px; */
+  /* center the grid within the page */
+  max-width: 1500px;
+  margin-left: auto;
+  margin-right: auto;
+
+  /* center the grid and give both sides equal breathing room */
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 24px;   /* horizontal page gutter */
+  padding-right: 24px;
+
+  /* kill bullet indent so nothing shifts right */
+  list-style: none;
 }
 
 .blog-item > a {
@@ -189,6 +199,33 @@ a { text-decoration: none; }
 .blog-item > a:hover .blog-item-title { 
   color: hsl(45, 100%, 72%); 
 }
+
+/* Toolbar just under the navbar on blog page */
+.blog-toolbar{
+  display:flex;
+  justify-content:flex-end;   /* right aligned */
+  align-items:center;
+  gap: 24px;
+  margin: 8px 0 24px;         /* sits nicely under your fixed navbar */
+}
+
+.blog-toolbar .connect-link,
+.blog-toolbar .subscribe-link{
+  background: none;
+  border: 0;
+  text-transform: uppercase;
+  font-size: large;
+  font-weight: 400;
+  color: #d5d0d0;
+  cursor: pointer;
+  padding: 0;
+}
+
+.blog-toolbar .connect-link:hover,
+.blog-toolbar .subscribe-link:hover{
+  color: hsl(45, 100%, 72%);
+}
+
 
 
 

@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- meta tags -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+    <title>Subgraphs and Substreams-powered Subgraphs: Real-time Indexing for All Chains</title>
+    <meta name="description"
+        content="Detailed Explanation of Subgraphs & Substreams & Substreams-powered Subgraphs with Code Snippets and Examples">
+    <meta name="keywords"
+        content="The Graph, Subgraphs, Substreams, Substreams-powered Subgraphs,  Blockchain Data Indexing, Query Blockchain Data">
+    <meta name="author" content="Sasha Flores">
+    <meta property="og:type" content="website">
+
+    <!-- Bootstrap CSS -->
+    <link href="../css/bootstrap.min.css" rel="stylesheet">
+    <link href="../css/aos.css" rel="stylesheet">
+    <link href="../css/navbar.css" rel="stylesheet">
+    <link href="../css/new-common-articles.css" rel="stylesheet">
+    <link href="../css//code-copy.css" rel="stylesheet">
+    <link href="../css/footer.css" rel="stylesheet">
+
+    
+
+
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-MXTX916K7T"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+
+        gtag('config', 'G-MXTX916K7T');
+    </script>
+</head>
+
+<body class="page-offset">
+    <i class="bi bi-list mobile-nav-toggle d-xl-none"></i>
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+            <div class="container-fluid px-md-5">
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                    aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0" data-aos="fade-down" data-aos-duration="1000">
+                        <li class="nav-item">
+                            <a class="nav-link" aria-current="page" href="../index.html">HOME</a>
+                        </li>
+
+                        <li class="nav-item dropdown"><a class="nav-link dropdown-toggle" href="#" id="aboutDropdown"
+                                role="button" data-bs-toggle="dropdown" aria-expanded="false">ABOUT ME</a>
+                            <ul class="dropdown-menu" aria-labelledby="aboutDropdown">
+                                <li><a class="dropdown-item" href="../background.html">Background</a></li>
+                                <li><a class="dropdown-item" href="../skills.html">Skills</a></li>
+                                <li><a class="dropdown-item" href="../experience.html">Experience</a></li>
+                            </ul>
+                        </li>
+                        <li class="nav-item"><a class="nav-link" href="../portfolio.html">PORTFOLIO</a></li>
+                        <li class="nav-item"> <a class="nav-link active" href="../blog.html">BLOG</a></li>
+                        <li class="nav-item"><a class="nav-link" href="../contact.html">CONTACT</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <div class="article-container">
+        <h1 id="title">Subgraphs and Substreams-powered Subgraphs: Real-time Indexing for All Chains</h1>
+        <figure class="meta">
+            <img alt="" src="../images/blog/subgraphs.png" />
+        </figure>
+
+        <p>
+            Blockchain data is notoriously difficult to work with directly. It’s raw, nested, lacks structure, 
+            and it’s expensive to query repeatedly. For decentralized applications (dApps) to deliver real-time, 
+            user-facing features—like transaction histories, portfolio analytics, or protocol metrics—they need fast 
+            and flexible access to structured data.
+        </p>
+
+        <p>
+            That’s where The Graph ecosystem comes in. It offers tools to index blockchain data and make it available 
+            in an efficient, queryable format. But there’s a lot of confusion around the core components—<strong>Subgraphs</strong>, 
+            <strong>Substreams</strong>, and the newer hybrid model, <strong>Substreams-Powered Subgraphs</strong>. 
+            What exactly are they? How do they differ? And which should you use?
+        </p>
+
+        <p>
+            This post walks through each concept, explains its architecture, and shows where each shines (and where it doesn’t). 
+            Whether you’re building a DeFi dashboard, a GameFi leaderboard, or data infrastructure at scale—this is the practical 
+            deep dive.
+        </p>
+
+        <h2 class="title t-2">Subgraphs: The Original Standard</h2>
+        <h3 class="title t-3">Concept</h3>
+        <p> 
+            A <strong>Subgraph</strong> is essentially a data indexing recipe for The Graph Node. 
+            It tells the system which smart contract events to watch, how to process the data from those events, 
+            and how to store the results in a PostgreSQL database that can be queried via GraphQL.
+        </p>
+        <p> 
+            Subgraphs are declarative and powered by <strong>AssemblyScript</strong>, which is a subset of TypeScript that compiles 
+            to WebAssembly. This makes it approachable for frontend and smart contract developers, 
+            but limited in performance and expressiveness.
+        </p>
+
+
+        <h3 class="title t-3">How It Works</h3>
+        <p>
+            The Graph Node connects to an Ethereum-compatible chain and listens for the on-chain events you've specified. 
+            Every time such an event is emitted, your AssemblyScript mappings process the data and save it into defined entities. 
+            These entities are stored in PostgreSQL and exposed as a GraphQL API.
+        </p>
+        <p>
+            Each entity is defined in a GraphQL schema, and each mapping is a function that processes event data and writes to those entities. 
+            All mapping logic runs in a single-threaded, per-block execution.
+        </p>
+
+ 
+        <h3 class="title t-3">When to Use</h3>
+        <h5 class="subtitle s-5">Subgraphs are a solid choice for:</h5>
+        <ul>
+            <li>UIs and dashboards needing live data from smart contracts.</li>
+            <li>Projects with low to moderate indexing complexity.</li>
+            <li>Teams who want fast iteration with a low barrier to entry.</li>
+        </ul>
+
+        <h5 class="subtitle s-5">They aren't great for:</h5>
+        <ul>
+            <li>Re-indexing large chains.</li>
+            <li>Deep analytics with heavy computation.</li>
+            <li>Complex multi-contract data flows.</li>
+        </ul>
+
+        <h3 class="title t-3">Sample Flow</h3>
+        <ol>
+            <li>You define a `Transfer` entity in `schema.graphql`.</li>
+            <li>You configure an event handler for `Transfer` events in `subgraph.yaml`.</li>
+            <li>You write an AssemblyScript function that creates a `Transfer` record every time an event is emitted.</li>
+            <li>The Graph Node saves that to PostgreSQL.</li>
+        </ol>
+        <p>Once deployed, your frontend queries that data instantly using GraphQL.</p>
+
+        
+        <h3 class="title t-3">Installation & Example</h3>
+        <div class="codebox">
+            <button class="copy-btn" data-copy-target="#code-install" aria-label="Copy code">
+                <ion-icon name="copy-outline"></ion-icon>
+            </button>
+        
+            <pre><code id="code-install">
+                npm install -g @graphprotocol/graph-cli
+                graph init --from-contract `CONTRACT_ADDRESS` --network mainnet
+                cd 'subgraph-name'
+            </code></pre>
+        </div>
+        <ul>
+            <li>
+                `subgraph.yaml` defines the data source and mappings:
+            </li>
+        </ul>
+        <div class="codebox">
+            <button class="copy-btn" data-copy-target="#code-install" aria-label="Copy code">
+                <ion-icon name="copy-outline"></ion-icon>
+            </button>
+            <pre><code id="code-install">
+                dataSources:
+                  - kind: ethereum/contract
+                    name: Token
+                    source:
+                      address: "0x..."
+                      abi: Token
+                    mapping:
+                      kind: ethereum/events
+                      language: wasm/assemblyscript
+                      entities:
+                        - Transfer
+                    eventHandlers:
+                        - event: Transfer(indexed address, indexed address, uint256)
+                          handler: handleTransfer
+                    file: ./src/mapping.ts
+            </code></pre>
+        </div>
+
+        <p>This sets up a pipeline from Ethereum logs → AssemblyScript mapping → PostgreSQL → GraphQL.</p>
+
+        
+        <h2 class="title t-2">Substreams: A Modular, High-Performance Engine</h2>
+        <p>
+            <strong>Substreams</strong> is a Rust-based framework for high-performance, modular blockchain data processing. 
+            Built by StreamingFast, Substreams gives you full control over how blockchain data is extracted, processed, 
+            and outputted. Unlike Subgraphs, Substreams <strong>do not rely on The Graph Node at all</strong>and do not store data by default.
+        </p>
+        <p>
+            Instead, Substreams use <strong>Protobuf-based modules</strong> that stream data directly from a chain firehose. 
+            You build your own data pipelines with Rust functions—called `map` or `store` modules—and chain them together.
+        </p>
+        <p>
+            Substreams are composable, replayable, and parallelize. You can process blocks thousands of times faster 
+            than a Graph Node and output the result to a <strong>Sink</strong> of your choosing: a file, a database, a metrics system, or a Subgraph.
+        </p>
+        <p>Data flows:</p>
+        <ul><li>Chain → Substreams (Rust) → Protobuf Output → Sink</li></ul>
+
+        <h3 class="title t-3">Sink Options</h3>
+        <p>This is the key: Substreams <strong>needs a sink</strong> to do anything useful. Sinks are where your processed data goes.</p>
+        <p><strong>Examples include:</strong></p>
+        <ul>
+            <li>substreams-sink-postgres: Store output in PostgreSQL (your own DB).</li>
+            <li>substreams-sink-prometheus: Expose metrics.</li>
+            <li>substreams-sink-kv: Write to a key-value store.</li>
+            <li>substreams-sink-graph: Feed output to a Subgraph.</li>
+            <li>substreams-sink-files: Output JSON or binary data to files or stdout.</li>
+        </ul>
+     
+        <h3 class="title t-3">When to Use</h3>
+        <h5 class="subtitle s-5">Substreams is ideal for:</h5>
+        <ul>
+            <li>High-throughput protocols (DeFi, NFTs, gaming).</li>
+            <li>Backends or data pipelines.</li>
+            <li>Data analytics and off-chain metrics.</li>
+            <li>Re-indexing from genesis at high speed.</li>
+        </ul>
+        <h5 class="subtitle s-5">They aren't great for:</h5>
+        <ul>
+            <li>You need a plug-and-play GraphQL API and don’t want to manage sinks.</li>
+            <li>Your team isn’t comfortable with Rust and Protobufs.</li>
+        </ul>
+        <h3 class="title t-3">Sample Flow</h3>
+        <ol>
+            <li>Write a Rust function to extract transfers from a block.</li>
+            <li>Chain multiple map modules to transform or filter data.</li>
+            <li>Output as Protobuf.</li>
+            <li>Use a sink to send the data where you need it.</li>
+        </ol>
+        <p>
+            This design gives you <strong>complete flexibility and raw power</strong>, but it’s not a turnkey solution. 
+            You build the backend, and you choose what happens to the data.
+        </p>
+        <h3 class="title t-3">Installation & Example</h3>
+        <ul><li>Install CLI:</li></ul>
+        <div class="codebox">
+            <button class="copy-btn" data-copy-target="#code-install" aria-label="Copy code">
+                <ion-icon name="copy-outline"></ion-icon>
+            </button>
+            <pre><code id="code-install">
+                curl -s https://substreams.streamingfast.io/install.sh | bash
+            </code></pre>
+        </div>
+        
+        <ul><li>Create new Substreams project:</li></ul>
+        <div class="codebox">
+            <button class="copy-btn" data-copy-target="#code-install" aria-label="Copy code">
+                <ion-icon name="copy-outline"></ion-icon>
+            </button>
+        
+            <pre><code id="code-install">
+                substreams new my_project
+                cd my_project
+            </code></pre>
+        </div>
+        <ul><li>Sample Rust module:</li></ul>
+        <div class="codebox">
+            <button class="copy-btn" data-copy-target="#code-install" aria-label="Copy code">
+                <ion-icon name="copy-outline"></ion-icon>
+            </button>
+            <pre><code id="code-install">
+                #[substreams::handlers::map]
+                fn map_transfers(params: String) -> Result<Transfers, substreams::errors::Error> {
+                    // process raw block data and output transfers
+                }
+            </code></pre>
+        </div>
+        <ul><li>Run it locally:</li></ul>
+        <div class="codebox">
+            <button class="copy-btn" data-copy-target="#code-install" aria-label="Copy code">
+                <ion-icon name="copy-outline"></ion-icon>
+            </button>
+            <pre><code id="code-install">
+                substreams run map_transfers \
+                    --start-block 0 \
+                    --stop-block +1000 \
+                    --package substreams.yaml \
+                    --output json
+            </code></pre>
+        </div>
+        <ul><li>To write to a Postgres sink:</li></ul>
+        <div class="codebox">
+            <button class="copy-btn" data-copy-target="#code-install" aria-label="Copy code">
+                <ion-icon name="copy-outline"></ion-icon>
+            </button>
+            <pre><code id="code-install">
+                substreams-sink-postgres \
+                    --config config.yaml \
+                    --endpoint https://mainnet.eth.streamingfast.io \
+                    --manifest substreams.yaml \
+                    map_transfers
+            </code></pre>
+        </div>
+
+        <h2 class="title t-2">Substreams-Powered Subgraphs: The Hybrid Model</h2>
+        <h3 class="title t-3">Concept</h3>
+        <p><strong>Substreams-powered Subgraphs</strong> combine the high-performance data extraction of Substreams with the 
+            convenient GraphQL querying interface of Subgraphs.
+        </p>
+        <p>
+            This hybrid approach lets you use Substreams to handle the heavy lifting—parallel block processing, filtering, 
+            transforming, deduping—and then pass the result into a Graph Node using a special sink.
+        </p>
+        <h5 class="subtitle s-5">From there, you get the best of both worlds:</h5>
+        <ul>
+            <li>Performance of Substreams</li>
+            <li>GraphQL API of Subgraphs</li>
+        </ul>
+        <p>Your data flows is:</p>
+        <ul><li>Chain → Substreams → Protobuf → Substreams Sink (Graph) → Graph Node → PostgreSQL → GraphQL</li></ul>
+
+        <h3 class="title t-3">How It Works</h3>
+        <ol>
+            <li>You write and compile your Substreams modules in Rust.</li>
+            <li>You package the Protobuf definitions into a `.spkg` file.</li>
+            <li>In your Subgraph’s `subgraph.yaml`, you reference that `.spkg` file and specify which module to consume.</li>
+            <li>The Graph Node listens to the Substreams output and stores it like any other entity.</li>
+            <li>You can still use AssemblyScript to apply last-mile transformations, or map Protobufs directly to entities.</li>
+        </ol>
+
+        <h3 class="title t-3">When to Use</h3>
+        <h5 class="subtitle s-5">Substreams is ideal for:</h5>
+        <ul>
+            <li>Teams who need both speed and a queryable API.</li>
+            <li>DApps with large or complex indexing needs.</li>
+            <li>Hybrid dev teams (Rust + TypeScript).</li>
+            <li>Replacing multiple Subgraphs with one scalable Substreams pipeline.</li>
+        </ul>
+
+        <h3 class="title t-3">Sample Flow</h3>
+        <ol>
+            <li>`map_transfers.rs` in Rust emits a structured list of token transfers.</li>
+            <li>`substreams.spkg` is built and referenced in your Subgraph.</li>
+            <li>Entities like `Transfer` are created based on that data.</li>
+            <li>Graph Node stores everything in PostgreSQL and serves via GraphQL.</li>
+        </ol>
+        <p>The end result: you get a fast, scalable indexing engine backed by a developer-friendly API layer.</p>
+
+        <h3 class="title t-3">Installation & Example</h3>
+        <ul><li>Write your Substreams in Rust: same as in substreams</li></ul>
+        <ul><li>Build your package:</li></ul>
+        <div class="codebox">
+            <button class="copy-btn" data-copy-target="#code-install" aria-label="Copy code">
+                <ion-icon name="copy-outline"></ion-icon>
+            </button>
+            <pre><code id="code-install">
+                substreams build
+            </code></pre>
+        </div>
+        <ul><li>Reference Substreams in `subgraph.yaml`</li></ul>
+        <div class="codebox">
+            <button class="copy-btn" data-copy-target="#code-install" aria-label="Copy code">
+                <ion-icon name="copy-outline"></ion-icon>
+            </button>
+            <pre><code id="code-install">
+                specVersion: 0.0.5
+                features:
+                    - substreams
+
+                substreams:
+                    package: "./substreams.spkg"
+                    module: map_transfers
+            </code></pre>
+        </div>
+        <ul>
+            <li>Write mappings in AssemblyScript (optional):</li>
+            If needed, to transform incoming data before storing.
+        </ul>
+        <ul><li>Deploy to The Graph:</li></ul>
+        <div class="codebox">
+            <button class="copy-btn" data-copy-target="#code-install" aria-label="Copy code">
+                <ion-icon name="copy-outline"></ion-icon>
+            </button>
+            <pre><code id="code-install">
+                graph deploy --product hosted-service 'GITHUB_USER'/'SUBGRAPH_NAME'
+            </code></pre>
+        </div>
+        <p>Now your data flows like this:</p>
+        <ul><li>Chain → Substreams (Rust) → Subgraph → PostgreSQL → GraphQL</li></ul>
+
+        <h2 class="title t-2">Final Comparison</h2>
+        <div class="table-responsive">
+            <table class="table table-dark table-striped table-bordered w-auto mx-auto">
+                <thead>
+                    <tr>
+                        <th>Feature</th>
+                        <th>Subgraph</th>
+                        <th>Substreams</th>
+                        <th>Substreams-Powered Subgraph</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Language</td>
+                        <td>AssemblyScript</td>
+                        <td>Rust</td>
+                        <td>Rust + AssemblyScript (optional)</td>
+                    </tr>
+                    <tr>
+                        <td>Performance</td>
+                        <td>Low</td>
+                        <td>High</td>
+                        <td>Very High</td>
+                    </tr>
+                    <tr>
+                        <td>Data Flow</td>
+                        <td>Graph Node</td>
+                        <td>Rust pipeline + Sink</td>
+                        <td>Rust pipeline + Graph Node</td>
+                    </tr>
+                    <tr>
+                        <td>Storage</td>
+                        <td>PostgreSQL</td>
+                        <td>Sink-defined (PostgreSQL, files, etc.)</td>
+                        <td>PostgreSQL via Graph Node</td>
+                    </tr>
+                    <tr>
+                        <td>Output API</td>
+                        <td>GraphQL</td>
+                        <td>Custom (DB, file, metrics)</td>
+                        <td>GraphQL</td>
+                    </tr>
+                    <tr>
+                        <td>Use Case</td>
+                        <td>Simple dApps</td>
+                        <td>Analytics / Infra / Pipelines</td>
+                        <td>Scalable dApps with frontend APIs</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <h2 class="title t-2">Which Should You Use?</h2>
+        <ul>
+            <li>If you need a quick, queryable data source for a smart contract—start with a <strong>Subgraph</strong>.</li>
+            <li>If you’re building data infrastructure, analytics, or custom pipelines—go with <strong>Substreams</strong>.</li>
+            <li>If you need both, or you’ve hit the performance ceiling of a Subgraph—switch to a <strong>Substreams-powered Subgraph</strong>.</li>
+        </ul>
+        <p>Think of it like this:</p>
+        <ul>
+            <li><strong>Subgraph</strong> are the fastest to build.</li>
+            <li><strong>Substreams</strong> are the fastest to run.</li>
+            <li><strong>Substreams-powered Subgraph</strong> scale like crazy *and* give you an API.</li>
+        </ul>
+
+        
+        
+           
+        
+    
+
+    </div>
+
+    <footer>
+        <div class="footer-content">
+            <p>&copy; 2025 Sasha Flores. All Rights Reserved.</p>
+            <div class="social-links">
+                <a href="https://www.linkedin.com/in/sflores369/" target="_blank"><ion-icon
+                        name="logo-linkedin"></ion-icon></a>
+                <a href="https://discord.com/users/827160247428710422" target="_blank"><ion-icon
+                        name="logo-discord"></ion-icon></a>
+                <a href="https://github.com/SashaFlores" target="_blank"><ion-icon name="logo-github"></ion-icon></a>
+                <a href="https://www.youtube.com/@web3securityengineer" target="_blank"><ion-icon name="videocam-sharp"></ion-icon><span class="tooltip"></span></a>
+            </div>
+        </div>
+    </footer>
+    
+    
+    
+    <script src="../js/bootstrap.bundle.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="../js/aos.js"></script>
+    <script src="../js/custom.js"></script>
+    <script src="../js//code-copy.js"> </script>
+    
+    <script type="module" src="https://unpkg.com/ionicons@latest/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule="" src="https://unpkg.com/ionicons@latest/dist/ionicons/ionicons.js"></script>
+</body>
+</html>

@@ -1,24 +1,25 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap');
 @import url("https://fonts.googleapis.com/css?family=Raleway:900&display=swap");
 
+/* Base */
 body {
     font-family: 'Poppins', sans-serif;
-    background-color: #000;
+    background-color: #252222;
 }
 
-
+/* Navbar links */
 .navbar-dark .navbar-nav .nav-link {
     color: #d5d0d0;
-    font-weight: 300;
     font-size: large;
     font-weight: 400;
     text-transform: uppercase;
 }
 
 .navbar-dark .navbar-nav .nav-link.active {
-    color:hsl(45, 100%, 71%);
+    color: hsl(45, 100%, 71%);
 }
 
+/* Navbar sizing & on-scroll style */
 nav.navbar {
     padding-top: 40px;
     transition: all .3s;
@@ -26,7 +27,7 @@ nav.navbar {
 }
 
 body.scrolled nav.navbar {
-    background: black;
+    background: hsl(0, 0%, 9%); 
     padding-top: .5em;
 }
 
@@ -34,41 +35,122 @@ body.scrolled .navbar-dark .navbar-nav .nav-link {
     color: #d5d0d0;
 }
 
+body.scrolled .navbar-dark .navbar-nav .nav-link.active {
+    color: hsl(45, 100%, 71%);
+}
 
+/* Default dropdown look (dark) */
 .navbar-dark .navbar-nav .dropdown-menu {
-    background-color: black; 
+    background-color: hsl(0, 0%, 9%); 
     border: none;
     border-radius: 10px;
 }
 
 .navbar-dark .navbar-nav .dropdown-item {
     color: #d5d0d0;
-    font-weight: 300;
     font-size: large;
+    font-weight: 300;
 }
 
 .navbar-dark .navbar-nav .dropdown-item:hover {
-    background-color: black;
+    background-color: hsl(0, 0%, 9%); 
     color: hsl(45, 100%, 71%);
 }
+
 .navbar-dark .navbar-nav .nav-item.dropdown .nav-link.active,
 .navbar-dark .navbar-nav .nav-item.dropdown .nav-link.active:focus,
 .navbar-dark .navbar-nav .nav-item.dropdown .nav-link.active:hover {
-    background-color: black;
+    background-color: hsl(0, 0%, 9%); 
     color: hsl(45, 100%, 71%);
-    
 }
 
-body.scrolled .navbar-dark .navbar-nav .nav-link.active {
-    color:hsl(45, 100%, 71%);
+/* === Fix anchor & width so submenu spans the page container === */
+
+@media (max-width: 991.98px) { /* mobile/tablet */
+  body.page-offset { padding-top: 80px; }  /* tune 60–90px */
 }
 
+@media (min-width: 992px) { /* desktop */
 
+    body.page-offset { padding-top: 120px; }
 
+    /* 1) Make the nav list fill the container width (critical) */
+    .navbar .navbar-nav {
+        width: 100% !important;
+    }
 
+    /* 2) Ensure the container is the positioning context */
+    .navbar .container-fluid {
+        position: relative !important;
+    }
 
+    /* 3) Stop Bootstrap from capturing the menu on the li */
+    .navbar .dropdown,
+    .navbar .dropup,
+    .navbar .dropend,
+    .navbar .dropstart {
+        position: static !important;
+    }
 
+    /* 4) Stretch the submenu across the container, then lay it out in thirds */
+    #aboutDropdown+.dropdown-menu {
+        position: absolute !important;
+        top: 100% !important;
+        left: 0 !important;
+        right: 0 !important;
+        margin-top: 0 !important;
+        display: none !important;
+        background: transparent !important;
+        border: 0 !important;
+        box-shadow: none !important;
+        min-width: 0 !important;
+        white-space: normal !important;
+    }
 
+    .navbar .dropdown:hover>#aboutDropdown+.dropdown-menu {
+        display: grid !important;
+        grid-template-columns: 1fr 1fr 1fr !important;
+        /* three equal slots */
+        align-items: center !important;
+    }
 
+    #aboutDropdown+.dropdown-menu>li {
+        display: flex !important;
+    }
 
+    #aboutDropdown+.dropdown-menu>li:nth-child(1) {
+        justify-content: flex-start !important;
+    }
 
+    /* Background (left) */
+    #aboutDropdown+.dropdown-menu>li:nth-child(2) {
+        justify-content: center !important;
+    }
+
+    /* Skills (center) */
+    #aboutDropdown+.dropdown-menu>li:nth-child(3) {
+        justify-content: flex-end !important;
+    }
+
+    /* Experience (right) */
+
+    #aboutDropdown+.dropdown-menu .dropdown-item {
+        display: inline-block !important;
+        padding: .5rem 0 !important;
+        margin: 0 !important;
+        background: transparent !important;
+        color: #d5d0d0 !important;
+        border-bottom: 3px solid transparent !important;
+        text-align: center !important;
+    }
+
+    #aboutDropdown+.dropdown-menu .dropdown-item:hover {
+        color: hsl(45, 100%, 71%) !important;
+        border-bottom-color: hsl(45, 100%, 71%) !important;
+    }
+}
+
+/* hide caret everywhere */
+#aboutDropdown::after {
+    display: none !important;
+}

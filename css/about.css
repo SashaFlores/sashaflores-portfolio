@@ -38,6 +38,13 @@
 #background .col-md-4 .download-button a {
     color: white;
 }
+
+/* Background page: special color just for the first lede line */
+#background #details h6.intro-lede {
+  color: hsl(45, 100%, 71%);  /* your gold accent */
+  font-weight: 600;
+}
+
 /*about-me*/
 
 #details h5, #details h6 { margin-top: 30px;}
@@ -95,6 +102,42 @@
 .service-icon-box { margin-bottom: 10px; display: flex;  align-items: center; }
 
 .service-icon-box img { margin-right: 20px; }
+
+/* --- About sub-nav (ONLY on About pages) --- */
+header .about-subnav { 
+  margin-top: 100px;            /* shows below fixed navbar */
+  margin-bottom: 30px;
+}
+
+header .about-subnav-list {
+  display: flex;
+  list-style: none !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  border-bottom: 1px solid #2a2a2a;
+}
+
+header .about-subnav-item { flex: 1; text-align: center; }
+
+header .about-subnav-link {
+  display: block;
+  padding: 12px 8px;
+  text-decoration: none !important;
+  color: #d5d0d0 !important;
+  font-weight: 500;
+}
+
+header .about-subnav-link:hover { color: hsl(45, 100%, 71%) !important; }
+
+header .about-subnav-link.active {
+  color: hsl(45, 100%, 71%) !important;
+  border-bottom: 3px solid hsl(45, 100%, 71%);
+}
+
+@media (max-width: 576px) {
+  header .about-subnav-link { padding: 10px 4px; font-size: 0.95rem; }
+}
+
 
 
 
