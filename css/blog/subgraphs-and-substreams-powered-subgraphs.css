@@ -1,0 +1,75 @@
+/* h1 Article Title
+* h2, h3, h4 main titles
+* h5, h6 subtitles
+*/
+/* text style */
+.article-container h1 { 
+    color: #38a3a5;
+    text-align: left;
+    line-height: 1.5;
+} 
+
+.article-container .title.t-2 {
+    color: #168aad;
+    text-align: left;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.article-container .title.t-3 {
+    color: #577590;
+    text-align: left;
+    margin-bottom: 10px;
+}
+.article-container .title.t-4 {
+    color: #023e8a;
+    text-align: left;
+    margin-bottom: 10px;
+    font-size: 30px;
+}
+
+.article-container .subtitle.s-5 {
+    color: #ffe5d9;
+    letter-spacing: 0.6px;
+    font-size: 20px;
+    margin-left: 5px;
+    margin-bottom: 10px;
+}
+
+.article-container ul {
+    color: #ffe5d9;
+    letter-spacing: 0.9px;
+    margin: 0 0 1rem;      /* space below the list */
+    padding-left: 2rem; /* indent bullets */
+    /* list-style: disc; */
+}
+
+.article-container ul li + li {
+  margin-top: .4rem;     /* space between items */
+}
+
+.article-container ol {
+    color: #ffe5d9;
+    letter-spacing: 0.9px;
+    margin: 0 0 1rem;      /* space below the list */
+    padding-left: 2rem; /* indent bullets */
+}
+
+.article-container ol li + li {
+    margin-top: .4rem;     /* space between items */
+}
+
+
+p { 
+    color: #ffe5d9;
+    letter-spacing: 0.6px;
+    line-height: 1.7;
+}
+
+/* ul { color: rgb(147, 174, 174);}  */
+
+ol { color: rgb(210, 210, 181)}
+
+/* .article-list { color: whitesmoke}
+
+.article-item { color: antiquewhite;} */

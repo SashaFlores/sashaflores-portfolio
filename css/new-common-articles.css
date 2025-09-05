@@ -1,7 +1,7 @@
 body {
     margin: 15% 10%;
 }
-
+ /* image */
 .meta { text-align: center;}
 
 .meta img {
@@ -50,80 +50,26 @@ img {
   margin: 24px 0 62px !important;     /* creates the gap below the image */
 }
 
-.article-container h1 { 
-    color: #38a3a5;
-    text-align: left;
-    line-height: 1.5;
-} 
-
-.article-container .title.t-2 {
-    color: #168aad;
-    text-align: left;
-    margin-top: 20px;
-    margin-bottom: 20px;
+/* video */
+/* Hero video aligned like the image in .meta */
+.article-container .meta-video { 
+  text-align: center; 
+  margin: 1rem 0 1.5rem;   /* same rhythm you use for image figure */
 }
 
-.article-container .title.t-3 {
-    color: #577590;
-    text-align: left;
-    margin-bottom: 10px;
-}
-.article-container .title.t-4 {
-    color: #023e8a;
-    text-align: left;
-    margin-bottom: 10px;
-    font-size: 30px;
+.article-container .meta-video .article-hero-video {
+  display: inline-block;   /* match your image's inline-block centering */
+  width: 70%;
+  height: 400px;
+  object-fit: cover;       /* crop like the image’s fixed-height look */
+  border-radius: 8px;      /* same rounded corners as image */
 }
 
-.article-container .subtitle.s-5 {
-    color: #ffe5d9;
-    letter-spacing: 0.6px;
-    font-size: 20px;
-    margin-left: 5px;
-    margin-bottom: 10px;
+/* (Optional) make it friendlier on small screens */
+@media (max-width: 576px) {
+  .article-container .meta-video .article-hero-video {
+    width: 100%;
+    height: auto;
+  }
 }
-
-.article-container ul {
-    color: #ffe5d9;
-    letter-spacing: 0.9px;
-    margin: 0 0 1rem;      /* space below the list */
-    padding-left: 2rem; /* indent bullets */
-    /* list-style: disc; */
-}
-
-.article-container ul li + li {
-  margin-top: .4rem;     /* space between items */
-}
-
-.article-container ol {
-    color: #ffe5d9;
-    letter-spacing: 0.9px;
-    margin: 0 0 1rem;      /* space below the list */
-    padding-left: 2rem; /* indent bullets */
-}
-
-.article-container ol li + li {
-    margin-top: .4rem;     /* space between items */
-}
-
-
-p { 
-    color: #ffe5d9;
-    letter-spacing: 0.6px;
-    line-height: 1.7;
-}
-
-/* ul { color: rgb(147, 174, 174);}  */
-
-ol { color: rgb(210, 210, 181)}
-
-/* .article-list { color: whitesmoke}
-
-.article-item { color: antiquewhite;} */
-
-
-
-
-
-
 
