@@ -1,11 +1,13 @@
 /* FULL-WIDTH FOOTER BAR + CENTERED CONTENT */
 footer {
-  width: 100vw;
-  background-color: hsl(0, 0%, 9%); 
-  margin-top: 40px;  /* keep your dark bar */
-  margin-left: calc(50% - 50vw);
-  margin-right: calc(50% - 50vw);                    /* fix invalid margin-top */
-  padding: 20px 0;                     /* vertical padding only */
+  width: 100%;
+  background-color: hsl(0, 0%, 9%);
+  margin-top: auto !important;         /* push footer to bottom in flex layout */
+  padding: 40px 0 20px;                /* keep breathing room above */
+  clear: both;                         /* avoid wrapping around floated elements */
+  position: static !important;         /* ensure it is not fixed/sticky from elsewhere */
+  inset: auto !important;              /* reset any top/right/bottom/left */
+  z-index: auto !important;            /* avoid overlaying content */
 }
 
 .footer-content {
@@ -43,7 +45,9 @@ footer ion-icon:hover { color: hsl(45, 100%, 72%); }
 .social-links > a:hover ion-icon { transform: scale(1.5); }
 
 html, body { height: 100%; }
+/* Make the page a column flex container so the footer sits at the end. */
 body.page-offset { min-height: 100vh; display: flex; flex-direction: column; }
-article, .articles, main { flex: 1 0 auto; }
+/* Ensure the main content grows to fill the available space across all page types. */
+article, .articles, main, .article-container { flex: 1 0 auto; }
 footer { flex-shrink: 0; }
 

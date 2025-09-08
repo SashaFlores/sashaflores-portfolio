@@ -1,0 +1,98 @@
+<p><b>1- Hash Struct</b></p><p>— 
+ -
+<code>hashStruct = keccak256(typeHash ‖ encodeData(s))</code></p><ul><li><code>typeHash</code> : 
+- is the process of hashing the encoded type of struct where each member is written as type & name.
+- is a constant for a given struct type & doesn't need to be runtime computed.
+<code>typeHash = keccak256(encodeType(typeOf(s)))</code></li></ul><pre><code>/**
+ * Hashing the struct name, where each memeber has a type & name in 
+ * a constant variable `_PERMIT_TYPEHASH` which is fixed at compile-time
+ * - `Permit` struct identifier name.
+ * - `address` is the type of `owner` name.
+ * - `address` is the type of `spender` name.
+ * - `uint256` is the type of `value` name.
+ * - `uint256` is the type of `nonce` name.
+ * - `uint256` is the type of `deadline` name.
+ */
+bytes32 private constant _PERMIT_TYPEHASH = keccak256("Permit(address owner,address spender,uint256 value,uint256 nonce,uint256 deadline)")</code></pre><ul><li><code>encodeData</code> : 
+- is the process of encoding the struct instance.
+- it concatenates all encoded member values in the order they appear in the type, where each member value is 32 bytes long.</li></ul><pre><code>// `permit` function which instantiate `Permit` struct.
+function permit(
+        address owner,
+        address spender,
+        uint256 value,
+        uint256 deadline,
+        uint8 v,
+        bytes32 r,
+        bytes32 s
+    ) public virtual override {
+        require(block.timestamp <= deadline, "ERC20Permit: expired deadline");
+        /**
+         * encode the type of struct Hash `_PERMIT_TYPEHASH'
+         * enode the struct instance in the order they appear as follows:
+         * - `owner`, `spender`, `value`, `nonce`, & `deadline`
+         * finally hash the set of structurced typed data containing all 
+         * the instances of all the strcut types 
+         */
+        bytes32 structHash = keccak256(abi.encode(_PERMIT_TYPEHASH, owner, spender, value, _useNonce(owner), deadline));
+
+   
+        bytes32 hash = _hashTypedDataV4(structHash);
+
+        address signer = ECDSA.recover(hash, v, r, s);
+        require(signer == owner, "ERC20Permit: invalid signature");
+
+        _approve(owner, spender, value);
+    }</code></pre><p>Q: How different types are encoded in the EVM?</p>
+    <script src="https://gist.github.com/SashaFlores/fd7619c744ad28f678e0b80c7eee8494.js"></script>
+    <p><b>2- Domain Separator</b></p><p><code>domainSperator = hashStruct(eip712Domain)</code></p>
+    <ul><li>is the process of hashing domain information to be used as a domain separator.</li>
+        <li>it's designed to separate between two different domains that may have identical data structure to avoid validating 
+            same signatures for both.</li>
+            <li>where the type of <code>eip712Domain</code> is a struct named <code>EIP712Domain.</code></li>
+            <li>by default in OZ, all fields below are included but developers can include or skip only the fields that make 
+                sense for their signing domain.</li>
+                <li>It's important to preserve the order as shown below, skipping any absent fields if any.</li></ul>
+                <pre><code class="language-csharp">struct EIP712Domain {
+    string name;    // name of the DApp 
+    string version; // current version of the signing domain
+    uint256 chainId; // EIP-155 chain id
+    address verifyingContract;  // address of contract verifying signature
+    bytes32 salt;   // domain separtor
+}</code></pre>
+
+
+<p><i><b>First:</b></i></p><p>we will hash all type values in struct and make it constant to be computed at compile-time as follows:</p><pre><code>bytes32 private constant _TYPE_HASH = keccak256("EIP712Domain(string name,string version,uint256 chainId,address verifyingContract)")</code></pre><blockquote class="small"><p>Note: be careful with the order of the types to be exactly the same as struct & no spaces after each comma.</p></blockquote><p><i><b>Second:</b></i></p><p>In your contract constructor you will input your DApp or Protocol name and version, but under the hood the following is happening:</p><ul><li>the name will be hashed: <code>keccak256(bytes(name))</code></li><li>the version will be hashed: <code>keccak256(bytes(version))</code></li><li>and the domain separator will be equal to: <code>function domainSeparator() public view returns(bytes32) {
+return keccak256(abi.encode(_TYPE_HASH, hashedName, hashedVersion, block.chainid, address(this)))</code></li></ul><p><b>Customize Signing Domain Example:</b></p><p>In case you want to customize the EIP-712 and code it yourself, as an example we will have the name of the protocol as a constant since it will not change during it's life time:</p><pre><code>// optional 
+string public constant NAME = 'dapp name';
+
+
+bytes32 private constant DOMAIN_SEPARATOR_TYPEHASH = keccak256(EIP712Domain(string version,uint256 chainId,address verifyingContract));
+
+
+/**
+ * domainSeparator = hashStruct(eip712Domain).
+ * - `DOMAIN_SEPARATOR_TYPEHASH`: keccack256 hashing `typeHash`
+ * - `keccak256(bytes(version))`: Dynamic data type hashing of string
+ * - `block.chainid` & `address(this)`: Atomic data type hashing of uint256 & address.
+ */
+function domainSeparator() public view returns(bytes32) {
+    return keccak256(abi.encode(DOMAIN_SEPARATOR_TYPEHASH, keccak256(bytes(version)), block.chainid, address(this)))
+}</code></pre><p><b>Signing Typed Structured Data</b></p><p><code>eth_signTypedData</code> is similar to <code>eth_sign</code> method with 2 parameters:</p><ul><li>Address of the account signing transaction.</li><li>Typed structured data to sign.</li></ul><p>Typed data is a JSON object that contains type information, domain separator, and the message object which will be displayed to signer as:</p>
+
+
+
+<img alt="" src="https://miro.medium.com/1*Dw0MU2IC9ZgjsJ2EoWs8PQ.png" />
+<p>
+    which will returns a 65 bytes signature as in <code>eth_sign</code> with the same parameters of r & s each equals 
+    32 bytes and v of 1 byte that includes the chain id.
+</p>
+<p>
+    If the signing address is an Externally Owned Account (EOA) then <code>ecrecover</code>is used to verify that the public key matches 
+    the key that generates the signature. Further restrictions can be specified like the signer is the owner of the contract as in ERC20Permit.
+</p>
+<p>
+    That will lead us to the next article that will answer the question, what if the signing account isn't an EOA but another smart contract.
+</p>
+
+
+</div></body></html>

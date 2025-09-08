@@ -1,5 +1,10 @@
-body {
-    margin: 10% 20%;
+/* Move page gutters from body to the article wrapper so the sticky-footer flex math works reliably */
+body { margin: 0; }
+
+.article-container {
+    padding: 10% 20%;
+    padding-bottom: calc(10% + 80px); /* reserve space for footer overlap */
+    box-sizing: border-box;
 }
 
 .meta { text-align: center;}
