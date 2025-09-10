@@ -1,73 +1,49 @@
 body { margin: 0; }
 
 
-.article-container{ padding: 15% 10%; padding-bottom: calc(15% + 80px); box-sizing: border-box; }
- /* image */
-.meta { text-align: center;}
-
-.meta img {
-    position: relative;
-    margin: 30px 5px auto;
-    height: 400px;
-    width: 70%;
-    align-items: center;
-    display: inline-block;
-}
-
-img {
-  position: relative;
-  margin: 30px auto;
-  display: block;
-  height: 5%;
-  width: 70%;
+.article-container {
+  padding: 10% 20%;
+  padding-bottom: calc(10% + 80px);
+  /* reserve space for footer overlap */
+  box-sizing: border-box;
 }
 
 .caption {
-    color: #737070;
-    font-size: 14px;
-    margin: 5px 10px auto;
-    display: block;
-    text-align: center;
+  color: #737070;
+  font-size: 14px;
+  margin: 10px 10px auto;
+  display: block;
+  text-align: center;
 }
 
-.meta img:hover { transition: 0.30s ease;  transform: scale(1.1); }
 
-.article-container figure.meta {
-  margin: 1rem 0 1.5rem;   /* space below the image */
+/* NEW articles: hero media (image or video) right under H1, same width as text */
+.article-container .meta,
+.article-container .meta-video {
+  text-align: center;
+  margin: 24px 0 62px !important;   /* consistent spacing */
 }
 
-.article-container figure.meta img {
-  display: block;          /* removes image’s inline gap */
-  width: 100%;
-  height: auto;
-  border-radius: 8px;      /* optional */
-}
-
-.article-container p + p {
-  margin-top: 1rem;        /* space between paragraphs */
-}
-
-.article-container .meta {
-  margin: 24px 0 62px !important;     /* creates the gap below the image */
-}
-
-/* video */
-/* Hero video aligned like the image in .meta */
-.article-container .meta-video { 
-  text-align: center; 
-  margin: 1rem 0 1.5rem;   /* same rhythm you use for image figure */
-}
-
+.article-container .meta img,
 .article-container .meta-video .article-hero-video {
-  display: inline-block;   /* match your image's inline-block centering */
-  width: 70%;
-  height: 400px;
-  object-fit: cover;       /* crop like the image’s fixed-height look */
-  border-radius: 8px;      /* same rounded corners as image */
+  display: block;                   /* fill the content width cleanly */
+  width: 100%;                      /* exactly the width of the text column */
+  height: auto;                     /* no crop; keep natural aspect ratio */
+  max-width: 100%;                  /* never overflow the container */
+  border-radius: 8px;
+  transition: transform .25s ease;  /* hover animation for both */
 }
 
-/* (Optional) make it friendlier on small screens */
+/* Subtle hover for both image & video */
+.article-container .meta:hover img,
+.article-container .meta-video:hover .article-hero-video {
+  transform: scale(1.05);
+}
+
+/* Mobile tweak is no longer necessary since we use width:100% and height:auto,
+   but you can keep it if you want explicit control. */
 @media (max-width: 576px) {
+  .article-container .meta img,
   .article-container .meta-video .article-hero-video {
     width: 100%;
     height: auto;
@@ -75,7 +51,8 @@ img {
 }
 
 
-/* Code Blocks as snippet & one line code snippet */
+
+/* ===== Code Blocks as snippet & one line code snippet ===== */
 /* Dark code block with a GitHub-style copy button */
 .article-container .codebox{
   position: relative;
@@ -88,7 +65,7 @@ img {
   overflow: hidden;
 }
 
-/* Code text */
+
 .article-container .codebox pre{ margin: 0; overflow-x: auto; }
 .article-container .codebox code{
   display: block;
@@ -128,3 +105,18 @@ img {
 /* Optional: nicer selection in code */
 .article-container .codebox code::selection{ background: rgba(255,224,138,.2); }
 
+
+/* img {
+  position: relative;
+  margin: 30px auto;
+  display: block;
+  height: 5%;
+  width: 70%;
+} */
+
+/* .article-container figure.meta img {
+  display: block;          
+  width: 100%;
+  height: auto;
+  border-radius: 8px;      
+} */
