@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+
+<html lang="en">
+    <head>
+        <!-- meta tags -->
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    
+        <title>SwissBorg Lost $41M in a Third-Party API Breach</title>
+        <meta name="description"
+            content="Solana Attack on SwissBorg Third-Party Staking Kilan API Breach result in $41M in Solana Lost">
+        <meta name="keywords"
+            content="DeFi, Exploits, Staking, Kilan,  smart contract security, Solana, SwissBorg, exploit analysis, hack postmortem, incident response, on-chain forensics, transaction trace, vulnerability, attack vector, protocol exploit, protocol hack, $41M loss SOL, Sep 15th 2025 attack, root cause analysis, remediation, mitigation, best practices, secure coding">
+        <meta name="author" content="Sasha Flores">
+        <meta property="og:type" content="website">
+    
+    
+    
+        <!-- Bootstrap CSS -->
+        <link href="../../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../../css/aos.css" rel="stylesheet">
+        <link href="../../css/navbar.css" rel="stylesheet">
+        <link href="../../css/new-common-articles.css" rel="stylesheet">
+        <link href="../../css/blog/security/swissborg-lost-41m-in-api-breach.css" rel="stylesheet">
+        <link href="../../css/audit-promo.css" rel="stylesheet">
+        <link href="../../css/footer.css" rel="stylesheet">
+    
+    
+    
+    
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-MXTX916K7T"></script>
+        <script>
+            window.dataLayer = window.dataLayer || [];
+            function gtag() { dataLayer.push(arguments); }
+            gtag('js', new Date());
+
+            gtag('config', 'G-MXTX916K7T');
+        </script>
+    </head>
+
+
+    <body class="page-offset">
+    <i class="bi bi-list mobile-nav-toggle d-xl-none"></i>
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+            <div class="container-fluid px-md-5">
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                    aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0" data-aos="fade-down" data-aos-duration="1000">
+                        <li class="nav-item">
+                            <a class="nav-link" aria-current="page" href="../../index.html">HOME</a>
+                        </li>
+
+                        <li class="nav-item dropdown"><a class="nav-link dropdown-toggle" href="#" id="aboutDropdown"
+                                role="button" data-bs-toggle="dropdown" aria-expanded="false">ABOUT ME</a>
+                            <ul class="dropdown-menu" aria-labelledby="aboutDropdown">
+                                <li><a class="dropdown-item" href="../../background.html">Background</a></li>
+                                <li><a class="dropdown-item" href="../../skills.html">Skills</a></li>
+                                <li><a class="dropdown-item" href="../../experience.html">Experience</a></li>
+                            </ul>
+                        </li>
+                        <li class="nav-item"><a class="nav-link" href="../../portfolio.html">PORTFOLIO</a></li>
+                        <li class="nav-item"> <a class="nav-link active" href="../blog.html">BLOG</a></li>
+                        <li class="nav-item"><a class="nav-link" href="../../contact.html">CONTACT</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    
+    <div class="article-container">
+        <h1 id="title">SwissBorg Lost $41M in SOL<br> Due To a Third-Party API Breach</h1>
+        <figure class="meta-video">
+            <video class="article-hero-video" autoplay muted loop playsinline preload="auto"
+                aria-label="Looping hero animation">
+                <source src="../../images/blog/security/swissborg-lost-41m-in-api-breach/sol.mp4" type="video/mp4">
+            </video>
+            <p class="caption">SwissBorg Exploit on September 8, 2025</p>
+        </figure>
+
+        <h4 class="title t-4">Hacker Stole $41M in SOL from Kiln's API, Staking Partner of SwissBorg on September 8, 2025.</h4>
+        <p>
+            <a href="https://swissborg.com/" target="_blank">SwissBorg</a> is a Switzerland-based crypto wealth management platform was hit by $41M theft due to security 
+            breach in its staking partner <a href="https://docs.api.kiln.fi/docs/quickstart" target="_blank">Kiln</a> that result in theft of 192,623.39 of Solana tokens. Despite
+            the scale of the exploit, CEO Cyrus Fazel confirmed that the incident only affected roughly 1% of its users base and the core application along with smart contracts 
+            remain secure and promised compromised users with full reimbursement.
+        </p>
+        
+        <h6 class="subtitle s-6">SwissBorg CEO Calls Hack a “Bad Day, Not a Fatal Blow”</h6>
+        <div style="display:flex; justify-content:center;">
+            <blockquote class="twitter-tweet">
+                <p lang="en" dir="ltr">
+                    SOL Earn Incident &amp; SwissBorg Recovery Plan<br><br>
+                    A partner API was compromised, impacting our SOL Earn Program (~193k SOL, &lt;1% of users).<br>
+                    👉 Rest assured, the SwissBorg app remains fully secure and all other funds in Earn programs are 100%
+                    safe.<br><br>
+                    Our recovery plan.<br>Immediate Actions…
+                </p>&mdash; SwissBorg (@swissborg)
+                <a href="https://twitter.com/swissborg/status/1965123506477359471?ref_src=twsrc%5Etfw">September 8, 2025</a>
+            </blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+        </div>
+
+        <h4 class="title t-4">Hack Analysis</h4>
+        <p>
+            Kiln provides staking infrastructure for Ethereum and Solana to make staking simple for retail investors who might not want to deal with 
+            the complexities of running validator nodes or engaging directly with DeFi protocols. Hacker targeted it's API that bridge SwissBorg's application 
+            to Solana's staking network which allowed the hacker to manipulate requests and siphon tokens meant for staking on the Solana network. 
+        </p>
+
+        <h5 class="subtitle s-5">Account `TYFWG3hvvxWMs2KXEk8cDuJCsXEyKs65eeqpD9P4mK1`:</h5>
+        <ul>
+            <li>
+                Hacker gained access to 8 stake accounts and succeeded in transferring the withdrawal authority from each account to his wallet
+                with address <a href="https://solscan.io/account/TYFWG3hvvxWMs2KXEk8cDuJCsXEyKs65eeqpD9P4mK1" target="_blank">TYFWG3hvvxWMs2KXEk8cDuJCsXEyKs65eeqpD9P4mK1</a>
+            </li>
+            <figure class="a-video zoom-l">
+                <video autoplay muted loop playsinline preload="auto">
+                    <source src="../../images/blog/security/swissborg-lost-41m-in-api-breach/withdrawalAuthority.mp4" type="video/mp4">
+                </video>
+                <figcaption>Transfer Withdrawal Authority on August 31, 2025</figcaption>
+            </figure>
+        </ul>
+        <ul>
+            <li>
+                After the hacker secured the withdrawal authority to his wallet address `TYFWG3hvvxWMs2KXEk8cDuJCsXEyKs65eeqpD9P4mK1`, 
+                he initiated a series of funds withdrawal from all 8 compromised accounts which resulted in losing 192,623.39 Solana tokens equivalent to $41M.
+            </li>
+            <fig class="a-figure zoom-l">
+                <img alt="large zoom" src="../../images/blog/security/swissborg-lost-41m-in-api-breach/withdrawFunds.png">
+                <figcaption>Withdrawal Funds from Compromised Accounts on September 8, 2025</figcaption>
+            </fig>
+            <ul>
+                <li>
+                    Withdraw from First Stake Account `9kHJ9Qn9xwRjXZx6zQqNSo53tzC9wXjfLZJNJCECR3CV` 25,373 SOL
+                    <a href="https://solscan.io/tx/5yVsTap9zCh23pjdfEWmbaHXPBMrss5B4NsxdjCgDL8QGQMSq7jsiSJrZ6vQDrV9sB54qzhsqdYaQxdKg6Pz4KqN" target="_blank">tx hash: 5yVsTap9zCh23pjdfEWmbaHXPBMrss5B4NsxdjCgDL8QGQMSq7jsiSJrZ6vQDrV9sB54qzhsqdYaQxdKg6Pz4KqN</a>
+                </li>
+                <fig class="a-figure zoom-l">
+                    <img alt="large zoom" src="../../images/blog/security/swissborg-lost-41m-in-api-breach/withdrawal1.png">
+                    <figcaption>First Withdrawal Funds from Compromised Accounts</figcaption>
+                </fig>
+
+                <li>
+                    Withdraw from Second Stake Account `DXxU84PWxpmToqW5GSZB5X7ucZt6gmdwkBi6ioP2fdXX`  25,373 SOL
+                    <a href="https://solscan.io/tx/4S1iX5mYqUKf3t1uQ8EGfKFynfWcdfPpqmwtPkeDP1XRvHP8rqxgpQBBfijm4ojp1LBF4HY5GaPJtYgckFUvbDXF" target="_blank">tx hash: 4S1iX5mYqUKf3t1uQ8EGfKFynfWcdfPpqmwtPkeDP1XRvHP8rqxgpQBBfijm4ojp1LBF4HY5GaPJtYgckFUvbDXF</a>
+                </li>
+                <fig class="a-figure zoom-l">
+                    <img alt="large zoom" src="../../images/blog/security/swissborg-lost-41m-in-api-breach/withdrawal2.png">
+                    <figcaption>Second Withdrawal Funds from Compromised Accounts</figcaption>
+                </fig>
+
+                <li>
+                    Withdraw from Third Stake Account `ALpwKn1RskbkkPcJQb157P57gxyt82WcHB4EhXActPcZ` 25,373 SOL
+                    <a href="https://solscan.io/tx/6Ri47GRE2JCvPnrA6wcrLnFooL8RhT5x8xN5J2mFwhrMryxzxFdfXYcThxPN49JdwtTdic45yVtYyrKip5oR8MX" target="_blank">tx hash: 6Ri47GRE2JCvPnrA6wcrLnFooL8RhT5x8xN5J2mFwhrMryxzxFdfXYcThxPN49JdwtTdic45yVtYyrKip5oR8MX</a>
+                </li>
+                <fig class="a-figure zoom-l">
+                    <img alt="large zoom" src="../../images/blog/security/swissborg-lost-41m-in-api-breach/withdrawal3.png">
+                    <figcaption>Third Withdrawal Funds from Compromised Accounts</figcaption>
+                </fig>
+
+                <li>
+                    Withdraw from Fourth Stake Account `77oy5fSKLHc1VHn3No8bxP1G8TqGKF2USZcAoL2tb7SY` 25,373 SOL
+                    <a href="https://solscan.io/tx/2EAqjHBY6m4opdBLDQ7YiTX3KHpTJiwidFCUZ7hkE1wpLt4pYDJEgqHaaZ4FBzEEAiZqe5fsq8czkTdd8gC52jMK" target="_blank">tx hash: 2EAqjHBY6m4opdBLDQ7YiTX3KHpTJiwidFCUZ7hkE1wpLt4pYDJEgqHaaZ4FBzEEAiZqe5fsq8czkTdd8gC52jMK</a>
+                </li>
+                <fig class="a-figure zoom-l">
+                    <img alt="large zoom" src="../../images/blog/security/swissborg-lost-41m-in-api-breach/withdrawal4.png">
+                    <figcaption>Fourth Withdrawal Funds from Compromised Accounts</figcaption>
+                </fig>
+
+                <li>
+                    Withdraw from Fifth Stake Account `GvyfmShUFnFpgzP63ruVzHb4dVSp4X7SMzznKdUNfYD5` 25,373 SOL
+                    <a href="https://solscan.io/tx/31kHEX3wvZhnZRLJvSHgT2ftDMW2AxxfLJ4D24cY7J1jo1onqMEfcnM3goargneWqZTDGYryouddtQMk9qAvFjTT" target="_blank">tx hash: 31kHEX3wvZhnZRLJvSHgT2ftDMW2AxxfLJ4D24cY7J1jo1onqMEfcnM3goargneWqZTDGYryouddtQMk9qAvFjTT</a>
+                </li>
+                <fig class="a-figure zoom-l">
+                    <img alt="large zoom" src="../../images/blog/security/swissborg-lost-41m-in-api-breach/withdrawal5.png">
+                    <figcaption>Fifth Withdrawal Funds from Compromised Accounts</figcaption>
+                </fig>
+
+                <li>
+                    Withdraw from Sixth Stake Account `5mh69Tx22Z574fo6QxgBe7aE5mTxHpSPDmfikjRQe534` 24,545 SOL
+                    <a href="https://solscan.io/tx/2oSyFfaAjiGkdZhivR6KY2mB3Vhc1UUjXYoRLNQrgFCESuMMvKAD9NakbUxkRjzDi2wzxtMaRQDjBBoQFgxGt3Wf" target="_blank">tx hash: 2oSyFfaAjiGkdZhivR6KY2mB3Vhc1UUjXYoRLNQrgFCESuMMvKAD9NakbUxkRjzDi2wzxtMaRQDjBBoQFgxGt3Wf</a>
+                </li>
+                <fig class="a-figure zoom-l">
+                    <img alt="large zoom" src="../../images/blog/security/swissborg-lost-41m-in-api-breach/withdrawal6.png">
+                    <figcaption>Sixth Withdrawal Funds from Compromised Accounts</figcaption>
+                </fig>
+
+                <li>
+                    Withdraw from Seventh Stake Account `BcNKASVphMrm9AWSXmYR7fw9ewB7Qau18K69wC1EZmGx` 22,170 SOL
+                    <a href="https://solscan.io/tx/2Cn6DzHKe5EMFjC2SnNznCotnHFg85AEUYz94QCBSrW5Z3CcgLmStKaeVoHj9Vipq9Rw96Wm5f7PeZ7uuWyZHsnL" target="_blank">tx hash: 2Cn6DzHKe5EMFjC2SnNznCotnHFg85AEUYz94QCBSrW5Z3CcgLmStKaeVoHj9Vipq9Rw96Wm5f7PeZ7uuWyZHsnL</a>
+                </li>
+                <fig class="a-figure zoom-l">
+                    <img alt="large zoom" src="../../images/blog/security/swissborg-lost-41m-in-api-breach/withdrawal7.png">
+                    <figcaption>Seventh Withdrawal Funds from Compromised Accounts</figcaption>
+                </fig>
+
+                <li>
+                    Withdraw from Eighth Stake Account `8ELwAvLLcmSwt1k3QHwBT7Hj9pEjv2qQF3X5yu4JXUKi` 19,039 SOL
+                    <a href="https://solscan.io/tx/CfFAp2GzwxK7B9jD1QPHaCT333czvaXpRMz74HhREyKkvr55HzXeewhVteDirpLP1TKdMtUfVLYm73p26PUWZ4d" target="_blank">tx hash: CfFAp2GzwxK7B9jD1QPHaCT333czvaXpRMz74HhREyKkvr55HzXeewhVteDirpLP1TKdMtUfVLYm73p26PUWZ4d</a>
+                </li>
+                <fig class="a-figure zoom-l">
+                    <img alt="large zoom" src="../../images/blog/security/swissborg-lost-41m-in-api-breach/withdrawal8.png">
+                    <figcaption>Eighth Withdrawal Funds from Compromised Accounts</figcaption>
+                </fig>
+            </ul>
+        </ul>
+        <ul>
+            <li>
+                Hacker splitted the total stolen funds of 192,623.39 SOL into one gigantic single transaction and four smaller transactions from 
+                wallet address `TYFWG3hvvxWMs2KXEk8cDuJCsXEyKs65eeqpD9P4mK1` to the following accounts: 
+            </li>
+            
+
+            <ul>
+                <li>
+                    First small transfer to wallet address `6v7ntAfqAyWX9fBsYXRu4PTkQkntVGXChkTjEJuhy1mz` of 100 SOL.
+                    <fig class="a-figure zoom-l">
+                        <img alt="large zoom" src="../../images/blog/security/swissborg-lost-41m-in-api-breach/transferStolenFunds1.png">
+                        <figcaption>First Small Transfer</figcaption>
+                    </fig>
+
+                </li>
+
+                <li>
+                    Second small transfer to wallet address `6bnSQH4UtGKgo4hUXRj8MeMz2bqPP6hxSaRrBjL96QaT` of 1,000 SOL.
+                    <fig class="a-figure zoom-l">
+                        <img alt="large zoom" src="../../images/blog/security/swissborg-lost-41m-in-api-breach/transferStolenFunds2.png">
+                        <figcaption>Second Small Transfer</figcaption>
+                    </fig>
+
+                </li>
+
+                <li>
+                    Third small transfer to wallet address `6bnSQH4UtGKgo4hUXRj8MeMz2bqPP6hxSaRrBjL96QaT` of 1,000 SOL.
+                    <fig class="a-figure zoom-l">
+                        <img alt="large zoom" src="../../images/blog/security/swissborg-lost-41m-in-api-breach/transferStolenFunds3.png">
+                        <figcaption>Third Small Transfer</figcaption>
+                    </fig>
+
+                </li>
+
+                <li>
+                    Fourth small transfer to wallet address `5jf8RjfS8LV8uoELufjhMPejskRS7HmSVcH77PH4Yctb` of 1,000 SOL.
+                    <fig class="a-figure zoom-l">
+                        <img alt="large zoom" src="../../images/blog/security/swissborg-lost-41m-in-api-breach/transferStolenFunds4.png">
+                        <figcaption>Fourth Small Transfer</figcaption>
+                    </fig>
+
+                </li>
+
+                <li>
+                    Fifth and Last gigantic transfer to wallet address `2dmoNLgfP1UjqM9ZxtTqWY1YJMHJdXnUkwTrcLhL7Xoq` of 189,524.34 SOL.
+                    <fig class="a-figure zoom-l">
+                        <img alt="large zoom" src="../../images/blog/security/swissborg-lost-41m-in-api-breach/transferStolenFunds5.png">
+                        <figcaption>Single Transaction Transfer of Major Stolen Funds</figcaption>
+                    </fig>
+
+                </li>
+            </ul>
+
+            <li>
+                Hacker depleted account <a href="https://solscan.io/account/TYFWG3hvvxWMs2KXEk8cDuJCsXEyKs65eeqpD9P4mK1" target="_blank">TYFWG3hvvxWMs2KXEk8cDuJCsXEyKs65eeqpD9P4mK1</a>
+                from all funds and end up with zero balance.
+                <fig class="a-figure zoom-l">
+                    <img alt="large zoom" src="../../images/blog/security/swissborg-lost-41m-in-api-breach/TYFinalStatus.png">
+                    <figcaption>Hacker's Final Wallet Address Balance</figcaption>
+                </fig>
+            </li>
+        </ul>
+
+        <h5 class="subtitle s-5">Account `2dmoNLgfP1UjqM9ZxtTqWY1YJMHJdXnUkwTrcLhL7Xoq`:</h5>
+
+        <ul>
+            <li>
+                By tracking the gigantic single transfer took place in account <strong>`2dmoNLgfP1UjqM9ZxtTqWY1YJMHJdXnUkwTrcLhL7Xoq`</strong>, the hacker 
+                initiated another series of total transfers of 9 transactions as follows:
+            </li>
+
+            <ul>
+                <li>
+                    Transfer of 1,000 SOL to account `5hHNfsq2eo3EXwb1Hyff6kdoVqsCcLKkkvy89hLj27P`
+                    <fig class="a-figure zoom-l">
+                        <img alt="large zoom" src="../../images/blog/security/swissborg-lost-41m-in-api-breach/2dAccountTransfer1.png">
+                        <figcaption>First Final Transfer of Funds Out of Major Account</figcaption>
+                    </fig>
+                </li>
+
+                <li>
+                    Transfer of 310 SOL to account `FH9HkEocEAnu172sNB69sw2uA4JqzV7QwPk8cuxpDLDn`
+                    <fig class="a-figure zoom-l">
+                        <img alt="large zoom" src="../../images/blog/security/swissborg-lost-41m-in-api-breach/2dAccountTransfer2.png">
+                        <figcaption>Second Final Transfer of Funds Out of Major Account</figcaption>
+                    </fig>
+                </li>
+
+                <li>
+                    Transfer of 310 SOL to account `GbN31VXnE1tBkncFrECan2kW4mQSJHEZRtNgbDyLhSKk`
+                    <fig class="a-figure zoom-l">
+                        <img alt="large zoom" src="../../images/blog/security/swissborg-lost-41m-in-api-breach/2dAccountTransfer3.png">
+                        <figcaption>Third Final Transfer of Funds Out of Major Account</figcaption>
+                    </fig>
+                </li>
+
+                <li>
+                    Transfer of 1,000 SOL to account `AvCgDyK9WE3pQUHrzjrw1aj4yeoFWUPkik3vAVQ5BKYz`
+                    <fig class="a-figure zoom-l">
+                        <img alt="large zoom" src="../../images/blog/security/swissborg-lost-41m-in-api-breach/2dAccountTransfer4.png">
+                        <figcaption>Fourth Final Transfer of Funds Out of Major Account</figcaption>
+                    </fig>
+                </li>
+
+                <li>
+                    Transfer of 1,000 SOL to account `FqsYj4FQEhdYCSr5an9iPTqZwKPMBnGXJo1zCXyv9QKW`
+                    <fig class="a-figure zoom-l">
+                        <img alt="large zoom" src="../../images/blog/security/swissborg-lost-41m-in-api-breach/2dAccountTransfer5.png">
+                        <figcaption>Fifth Final Transfer of Funds Out of Major Account</figcaption>
+                    </fig>
+                </li>
+
+                <li>
+                    Transfer of 412 SOL to account `9caEgRG2c8cXSAHnMnd3pdMH94ZNwdJuvYtFCpaxoCX6`
+                    <fig class="a-figure zoom-l">
+                        <img alt="large zoom" src="../../images/blog/security/swissborg-lost-41m-in-api-breach/2dAccountTransfer6.png">
+                        <figcaption>Sixth Final Transfer of Funds Out of Major Account</figcaption>
+                    </fig>
+                </li>
+
+                <li>
+                    Transfer of 60 SOL to account `E1scVKrgPrd9HFbtXDoGkyfTG65B2idPDPcoBLUz1hde`
+                    <fig class="a-figure zoom-l">
+                        <img alt="large zoom" src="../../images/blog/security/swissborg-lost-41m-in-api-breach/2dAccountTransfer7.png">
+                        <figcaption>Seventh Final Transfer of Funds Out of Major Account</figcaption>
+                    </fig>
+                </li>
+
+                <li>
+                    Transfer of 700 SOL to account `9QPm7FaqEToRcSJoBHZtSRfEARC1ZQ2hzMeCNb2ojRTu`
+                    <fig class="a-figure zoom-l">
+                        <img alt="large zoom" src="../../images/blog/security/swissborg-lost-41m-in-api-breach/2dAccountTransfer8.png">
+                        <figcaption>Eighth Final Transfer of Funds Out of Major Account</figcaption>
+                    </fig>
+                </li>
+
+                <li>
+                    Transfer of 1,200 SOL to account `EdeJNqdDVcphbxrGosSQEC8nPj3KQAhBt4ZDdTinuKNt`
+                    <fig class="a-figure zoom-l">
+                        <img alt="large zoom" src="../../images/blog/security/swissborg-lost-41m-in-api-breach/2dAccountTransfer9.png">
+                        <figcaption>Ninth Final Transfer of Funds Out of Major Account</figcaption>
+                    </fig>
+                </li>
+            </ul>
+
+            <li>
+                The Final status of wallet address <a href="https://solscan.io/account/2dmoNLgfP1UjqM9ZxtTqWY1YJMHJdXnUkwTrcLhL7Xoq?page_size=100#balanceChanges" target="_blank">2dmoNLgfP1UjqM9ZxtTqWY1YJMHJdXnUkwTrcLhL7Xoq</a>
+                after all above transfers ended with total balance of 183,532.45 SOL sitting in the hacker's account.
+                <fig class="a-figure zoom-l">
+                    <img alt="large zoom" src="../../images/blog/security/swissborg-lost-41m-in-api-breach/2dFinalStatus.png">
+                    <figcaption>Hacker's Final Wallet Address Balance</figcaption>
+                </fig>
+            </li>
+        </ul>
+
+        <h5 class="subtitle s-5">Account `6bnSQH4UtGKgo4hUXRj8MeMz2bqPP6hxSaRrBjL96QaT`:</h5>
+        <ul>
+            <li>
+                Account `6bnSQH4UtGKgo4hUXRj8MeMz2bqPP6hxSaRrBjL96QaT` had an initial balance of total 2,000 SOL transferred 
+                from account `TYFWG3hvvxWMs2KXEk8cDuJCsXEyKs65eeqpD9P4mK1`, tracking the hacker executing another series of transfers:
+            </li>
+            <ul>
+                <li>
+                    Transfer of 10 SOL to account `7CaTs8hAwF27AV8zpngiB1DLNnjBWdTgjj4tTgCy62kA`
+                    <fig class="a-figure zoom-l">
+                        <img alt="large zoom" src="../../images/blog/security/swissborg-lost-41m-in-api-breach/6bAccountTransfer1.png">
+                        <figcaption>First Final Transfer of Funds Out of Exploit2 Account</figcaption>
+                    </fig>
+                </li>
+
+                <li>
+                    Transfer of 100 SOL to account `8jHn6US1Y3GG5V2Jz1BYbmyxaV52GLKguVHMjcW3NLui`
+                    <fig class="a-figure zoom-l">
+                        <img alt="large zoom" src="../../images/blog/security/swissborg-lost-41m-in-api-breach/6bAccountTransfer2.png">
+                        <figcaption>Second Final Transfer of Funds Out of Exploit2 Account</figcaption>
+                    </fig>
+                </li>
+
+                <li>
+                    Transfer of 10 SOL to account `3XL3qRRsw8BmEne53anKuFZztKU5uftXYurdEsE9r1S1`
+                    <fig class="a-figure zoom-l">
+                        <img alt="large zoom" src="../../images/blog/security/swissborg-lost-41m-in-api-breach/6bAccountTransfer3.png">
+                        <figcaption>Third Final Transfer of Funds Out of Exploit2 Account to Exploit3 Account</figcaption>
+                    </fig>
+                </li>
+
+                <li>
+                    Transfer of 100 SOL to account `4nKXCXAFbyWgnkp9zQXqXmcN1veYYM7Ti7fKdMfbFnkz`
+                    <fig class="a-figure zoom-l">
+                        <img alt="large zoom" src="../../images/blog/security/swissborg-lost-41m-in-api-breach/6bAccountTransfer4.png">
+                        <figcaption>Fourth Final Transfer of Funds Out of Exploit2 Account</figcaption>
+                    </fig>
+                </li>
+
+                <li>
+                    Transfer of 500 SOL to account `3XL3qRRsw8BmEne53anKuFZztKU5uftXYurdEsE9r1S1`
+                    <fig class="a-figure zoom-l">
+                        <img alt="large zoom" src="../../images/blog/security/swissborg-lost-41m-in-api-breach/6bAccountTransfer5.png">
+                        <figcaption>Fifth Final Transfer of Funds Out of Exploit2 Account to Exploit3 Account</figcaption>
+                    </fig>
+                </li>
+
+                <li>
+                    Transfer of 100 SOL to account `3cHSYUDeCP8QUvikWAYxZvrY13Sch4cN6xT7QghfNbh4`
+                    <fig class="a-figure zoom-l">
+                        <img alt="large zoom" src="../../images/blog/security/swissborg-lost-41m-in-api-breach/6bAccountTransfer6.png">
+                        <figcaption>Sixth Final Transfer of Funds Out of Exploit2 Account</figcaption>
+                    </fig>
+                </li>
+
+                <li>
+                    Transfer of 500 SOL to account `3XL3qRRsw8BmEne53anKuFZztKU5uftXYurdEsE9r1S1`
+                    <fig class="a-figure zoom-l">
+                        <img alt="large zoom" src="../../images/blog/security/swissborg-lost-41m-in-api-breach/6bAccountTransfer7.png">
+                        <figcaption>Seventh Final Transfer of Funds Out of Exploit2 Account to Exploit3 Account</figcaption>
+                    </fig>
+                </li>
+
+                <li>
+                    Transfer of 100 SOL to account `91XrHcYL9eAFB3G7w53X4mXV4zaaZypVe3MrPCyU43dR` 
+                    <fig class="a-figure zoom-l">
+                        <img alt="large zoom" src="../../images/blog/security/swissborg-lost-41m-in-api-breach/6bAccountTransfer8.png">
+                        <figcaption>Eighth Final Transfer of Funds Out of Exploit2 Account to Bitget Exchange Depository Account</figcaption>
+                    </fig>
+                </li>
+
+                <li>
+                    Transfer of 50 SOL to account `3XL3qRRsw8BmEne53anKuFZztKU5uftXYurdEsE9r1S1`
+                    <fig class="a-figure zoom-l">
+                        <img alt="large zoom" src="../../images/blog/security/swissborg-lost-41m-in-api-breach/6bAccountTransfer9.png">
+                        <figcaption>Ninth Final Transfer of Funds Out of Exploit2 Account to Exploit3 Account</figcaption>
+                    </fig>
+                </li>
+
+                <li>
+                    Transfer of ?? SOL to account `??`
+                    <fig class="a-figure zoom-l">
+                        <img alt="large zoom" src="../../images/blog/security/swissborg-lost-41m-in-api-breach">
+                        <figcaption>?? Final Transfer of Funds Out of Exploit2 Account</figcaption>
+                    </fig>
+                </li>
+
+            </ul>
+            <li>
+                The Final status of wallet address <a href="https://solscan.io/account/6bnSQH4UtGKgo4hUXRj8MeMz2bqPP6hxSaRrBjL96QaT" target="_blank">6bnSQH4UtGKgo4hUXRj8MeMz2bqPP6hxSaRrBjL96QaT</a>
+                after all above transfers ended with total balance of 530 SOL sitting in the hacker's account.
+                <fig class="a-figure zoom-l">
+                    <img alt="large zoom" src="../../images/blog/security/swissborg-lost-41m-in-api-breach/6bFinalStatus.png">
+                    <figcaption>Final Balance of Exploit2 Account</figcaption>
+                </fig>
+            </li>
+        </ul>
+
+        <h5 class="subtitle s-5">Amount Deposited in Bitget Exchange:</h5>
+        <ul>
+            <li>
+                Amount of 100 SOL was transferred from account `6bnSQH4UtGKgo4hUXRj8MeMz2bqPP6hxSaRrBjL96QaT` to Bitget Deposit account `91XrHcYL9eAFB3G7w53X4mXV4zaaZypVe3MrPCyU43dR`
+                to deposit 99.987 SOL in Bitget Exchange `A77HErqtfN1hLLpvZ9pCtu66FEtM8BveoaKbbMoZ4RiR`
+                <fig class="a-figure zoom-l">
+                    <img alt="large zoom" src="../../images/blog/security/swissborg-lost-41m-in-api-breach/BitgetExchange.png">
+                    <figcaption>Bitget Exchange Deposit</figcaption>
+                </fig>
+            </li>
+        </ul>
+
+        <h5 class="subtitle s-5">Account `3XL3qRRsw8BmEne53anKuFZztKU5uftXYurdEsE9r1S1`:</h5>
+        <ul>
+            <li>
+                The Final status of wallet address <a href="https://solscan.io/account/3XL3qRRsw8BmEne53anKuFZztKU5uftXYurdEsE9r1S1" target="_blank">3XL3qRRsw8BmEne53anKuFZztKU5uftXYurdEsE9r1S1</a>
+                after all above transfers ended with total balance of 44.95 SOL sitting in the hacker's account.
+                <fig class="a-figure zoom-l">
+                    <img alt="large zoom" src="../../images/blog/security/swissborg-lost-41m-in-api-breach/FinalStatusExploit3.png">
+                    <figcaption>Final Balance of Exploit3 Account</figcaption>
+                </fig>
+            </li>
+        </ul>
+
+
+        <h4 class="title t-4">Post Hack mitigation</h4>
+        <p>
+            All Hacker Accounts are being tracked and labeled to warn all Solana users:
+            <ol>
+                <li><strong>Account TYFWG3hvvxWMs2KXEk8cDuJCsXEyKs65eeqpD9P4mK1:</strong> was labeled as Exploit 1.</li>
+                <li><strong>Account 6bnSQH4UtGKgo4hUXRj8MeMz2bqPP6hxSaRrBjL96QaT:</strong> was labeled as Exploit 2.</li>
+                <li><strong>Account 3XL3qRRsw8BmEne53anKuFZztKU5uftXYurdEsE9r1S1:</strong> was labeled as Exploit 3.</li>
+                <li><strong>Account 2dmoNLgfP1UjqM9ZxtTqWY1YJMHJdXnUkwTrcLhL7Xoq:</strong> hasn't been labeled yet but tracked.</li>
+            </ol>
+        </p>
+        <p>
+            <a href="https://www.kiln.fi/post/kiln-responds-to-infrastructure-issue-with-validator-exit-funds-remain-protected" target="_blank">Kiln</a> 
+            began the orderly exit of all of its Ethereum (ETH) validators. The exit process is a precautionary measure designed to ensure the continued integrity of the staked assets.
+        </p>
+
+        <p>
+            Kiln disabled its dashboard, widgets, and APIs during the investigation, initiating precautionary steps to safeguard validator operations and mitigate further risk.
+        </p>
+        <h6 class="subtitle s-6">Kiln Announcement Postmortem</h6>
+        <div style="display:flex; justify-content:center;">
+            <blockquote class="twitter-tweet">
+                <p lang="en" dir="ltr">
+                    We are currently investigating an incident and, as a precautionary measure, have temporarily disabled Kiln Connect and Dashboard 
+                    to ensure the highest level of security. Access to the service will be restored once the issue has been fully resolved.<br><br>
+                    See here for live updates:…
+                </p>&mdash; Kiln 🧱🔥 (@Kiln_finance) 
+                <a href="https://twitter.com/Kiln_finance/status/1965181372168831420?ref_src=twsrc%5Etfw">September 8, 2025</a>
+            </blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+        </div>
+
+        <h4 class="title t-4">Security Takeaways</h4>
+        <p>
+            The SwissBorg breach highlights how decentralized finance risks extend well beyond smart-contract code. Third-party APIs and staking partners introduce 
+            their own attack surface and must be vetted and monitored continuously. In this case, an attacker spent days setting up on-chain indicators and then drained 
+            millions in minutes once the gap was clear. Robust defense means layering safeguards—live authority alerts, transaction simulation, and recurring penetration 
+            tests on every external integration. SwissBorg’s rapid incident response shows strong operational discipline, but the episode is a reminder that frequent 
+            independent audits are critical to stopping the next large-scale exploit.
+        </p>
+
+
+        <section class="audit-promo">
+            <div class="audit-inner">
+                <h3>Protect Your Protocol and All Your Partners with Cyfrin CodeHawks Audit</h3>
+                <p>
+                    A completely redesigned competitive smart contract security audit platform with new features and functionality, 
+                    improved processes, and industry-leading usability.
+                </p>
+                <a class="audit-btn" href="https://cyfrin.typeform.com/contact-expert?typeform-source=www.cyfrin.io" target="_blank" rel="noopener noreferrer">
+                    Request an Audit
+                </a>
+            </div>
+        
+        </section>
+
+        
+            
+        
+
+    </div>
+
+    <footer>
+        <div class="footer-content">
+            <p>&copy; 2025 Sasha Flores. All Rights Reserved.</p>
+            <div class="social-links">
+                <a href="https://www.linkedin.com/in/sflores369/" target="_blank"><ion-icon name="logo-linkedin"></ion-icon></a>
+                <a href="https://discord.com/users/827160247428710422" target="_blank"><ion-icon name="logo-discord"></ion-icon></a>
+                <a href="https://github.com/SashaFlores" target="_blank"><ion-icon name="logo-github"></ion-icon></a>
+                <a href="https://www.youtube.com/@web3securityengineer" target="_blank"><ion-icon name="videocam-sharp"></ion-icon><span class="tooltip"></span></a>
+            </div>
+        </div>
+    </footer>
+    
+    
+    
+    <script src="../../js/bootstrap.bundle.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="../../js/aos.js"></script>
+    <script src="../../js/custom.js"></script>
+    <script src="../../js//code-copy.js"> </script>
+    
+   
+    
+    <script type="module" src="https://unpkg.com/ionicons@latest/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule="" src="https://unpkg.com/ionicons@latest/dist/ionicons/ionicons.js"></script>
+
+    </body>
+</html>
