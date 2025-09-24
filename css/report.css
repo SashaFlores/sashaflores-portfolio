@@ -1,0 +1,105 @@
+/* Container control */
+.legend {
+  padding-left: 30px; 
+  margin-bottom: 50px;
+  margin-top: 50px;
+}
+
+/* Alignment control */
+.legend-left   { text-align: left; }
+.legend-center { margin-left: auto; margin-right: auto; }
+.legend-right  { margin-left: auto; margin-right: 0; }
+
+/* Section Titles */
+.legend-sub-title {
+  color: #ffffff;     /* distinct from labels/expl */
+  margin: 15px 0 8px;
+  text-decoration: underline;
+}
+
+/* Rows that look like a table */
+.legend-row {
+  display: grid;
+  grid-template-columns: 150px auto; /* first column fixed width */
+  margin: 4px 0;
+  gap: 15px;
+}
+
+
+/* Explanations (second column) */
+.legend-expl {
+  color: #b2aeae;
+  white-space: nowrap;   /* 🚀 prevents wrapping */
+}
+
+
+
+.sev-high { color: #b30000; }
+.sev-medium { color: #e68a00; }
+.sev-low { color: #0066cc; }
+.sev-info { color: #808080; }
+
+.likely-high { color: #b30000; }
+.likely-medium { color: #e68a00; }
+.likely-low { color: #0066cc; }
+
+.status-exploited { color: #b30000; }
+.status-contributed { color: #009933; }
+.status-design { color: #3c6e71; }
+
+/* Table Styling */
+.incident-table {
+  width: 100%;
+  table-layout: fixed;
+  border-collapse: collapse;
+  margin-bottom: 100px;
+}
+
+
+.incident-table td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: left;
+}
+
+.incident-table th {
+  background-color: #393838;
+  text-align: center;
+  color: #cec3c3;
+  border: 1px solid #ddd;
+  font-size: 15px;
+  font-weight: normal;
+}
+
+.incident-table td:not([class]) {
+  color: #fff;  /* only affect plain text cells */
+}
+
+/* TABLE CONTENTS STYLE*/
+.incident-table td:nth-child(1),
+.incident-table th:nth-child(1),
+.incident-table td:nth-child(2),
+.incident-table th:nth-child(2) { 
+    width: 20%; 
+    text-align: center;
+}
+
+.incident-table td:nth-child(3),
+.incident-table th:nth-child(3) {
+    width: 30%;
+    text-align: center;
+}
+
+.incident-table td:nth-child(4),
+.incident-table th:nth-child(4),
+.incident-table td:nth-child(5),
+.incident-table th:nth-child(5) {
+    width: 30%;
+    text-align: center;
+}
+
+
+.incident-table td:nth-child(6),
+.incident-table th:nth-child(6) {
+  width: 65%;
+}
