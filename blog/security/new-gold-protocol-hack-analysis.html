@@ -94,17 +94,6 @@
         <p>
             The attack exploited critical compounded vulnerabilities in NGP's core smart contract logic primarily because of price oracle manipulation.
         </p>
-        <!-- <div style="display:flex; justify-content:center;">
-            <blockquote class="twitter-tweet">
-                <p lang="en" dir="ltr">
-                    🚨 Community Alert:<br>
-                    <br>Blockaid’s exploit detection system identified multiple malicious transactions targeting the NGP token on BSC. 
-                    <br>Roughly $2M has been drained.<br>
-                    <br>↓ We’re monitoring in real time and will share updates below 
-                    <a href="https://t.co/efxXma0REQ">pic.twitter.com/efxXma0REQ</a>
-                </p>&mdash; Blockaid (@blockaid_) <a href="https://twitter.com/blockaid_/status/1968397977929515221?ref_src=twsrc%5Etfw">September 17, 2025</a>
-            </blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
-        </div> -->
 
         <h5 class="subtitle s-5">What is a Price Oracle Manipulation?</h5>
         <p>
@@ -583,7 +572,7 @@
                     <td><span class="likely-high">High</span></td>
                     <td><span class="status-exploited">Exploited</span></td>
                     <td><span class="impact-high">High</span></td>
-                    <td>Whitelisted DEAD Address<br><a href="https://bscscan.com/address/0xd2f26200cd524db097cf4ab7cc2e5c38ab6ae5c9#code#F1#L256">Whitelisted `from` & `to`</a></td>
+                    <td>Whitelisted DEAD Address<br><a href="https://bscscan.com/address/0xd2f26200cd524db097cf4ab7cc2e5c38ab6ae5c9#code#F1#L256">Whitelisted<br> `from` & `to`</a></td>
                     <td>Enabled bypass of buy caps, cooldowns, and fee checks, allowing attacker to execute unrestricted swaps via DEAD address.</td>
                 </tr>
                 <tr>
@@ -607,11 +596,11 @@
                     <td><span class="likely-medium">Medium</span></td>
                     <td><span class="status-contributed">Contributed</span></td>
                     <td><span class="impact-medium">Medium</span></td>
-                    <td>Abuse of sync()<br><a href="https://bscscan.com/address/0xd2f26200cd524db097cf4ab7cc2e5c38ab6ae5c9#code#F1#L300">IUniswapV2Pair(mainPair).sync()</a></td>
+                    <td>Abuse of sync()<br><a href="https://bscscan.com/address/0xd2f26200cd524db097cf4ab7cc2e5c38ab6ae5c9#code#F1#L300">sync()</a></td>
                     <td>Locked manipulated reserves as valid pool state, inflating false price and amplifying profitability of attacker’s swaps.</td>
                 </tr>
                 <tr>
-                    <td><span class="sev-info">Informational</span></td>
+                    <td><span class="sev-info">Info<br>rmational</span></td>
                     <td><span class="likely-low">Low</span></td>
                     <td><span class="status-design">Design Risk</span></td>
                     <td><span class="impact-low">Low</span></td>
