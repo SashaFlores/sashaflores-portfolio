@@ -28,6 +28,8 @@ footer p {
   color: hsl(0, 0%, 84%);
   text-align: center;
   flex: 0 0 auto;                      /* don’t let it stretch weirdly */
+  font-size: 20px;
+  font-weight: 600;
 }
 
 footer .social-links {

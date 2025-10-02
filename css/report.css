@@ -1,6 +1,6 @@
 /* Container control */
 .legend {
-  padding-left: 30px; 
+  padding-left: 25px; 
   margin-bottom: 50px;
   margin-top: 50px;
 }
@@ -29,23 +29,33 @@
 /* Explanations (second column) */
 .legend-expl {
   color: #b2aeae;
-  white-space: nowrap;   /* 🚀 prevents wrapping */
+  white-space: nowrap; 
+  font-weight: 500;  /* 🚀 prevents wrapping */
 }
 
 
+.sev-critical { color: #89023e }
+.sev-high { color: #b71f24}
+.sev-medium { color: #f26419 }
+.sev-low { color: #ffd60a }
+.sev-info { color: #5a189a; }
 
-.sev-high { color: #b30000; }
-.sev-medium { color: #e68a00; }
-.sev-low { color: #0066cc; }
-.sev-info { color: #808080; }
+.imp-high { color: #b71f24}
+.imp-medium { color: #f26419}
+.imp-low { color: #ffd60a;}
 
-.likely-high { color: #b30000; }
-.likely-medium { color: #e68a00; }
-.likely-low { color: #0066cc; }
+.likely-high { color: #b71f24}
+.likely-medium { color: #f26419 }
+.likely-low { color: #ffd60a }
 
-.status-exploited { color: #b30000; }
-.status-contributed { color: #009933; }
-.status-design { color: #3c6e71; }
+.status-exploited { color: #b30000 }
+.status-contributed { color: #009933 }
+.status-design { color: #3c6e71 }
+
+.sev-critical, .sev-high, .sev-medium, .sev-low,
+.imp-high, .imp-medium, .imp-low,
+.likely-high, .likely-medium, .likely-low,
+.status-exploited, .status-contributed, .status-design { font-weight: 700 }
 
 /* Table Styling */
 .incident-table {

@@ -34,6 +34,7 @@
 }
 
 .form-title {
+    font-family: "Poiret One", sans-serif;
     margin-bottom: 50px;
     color: white;
 }
@@ -50,7 +51,7 @@
 .form-input {
     color: #d5d0d0;
     background-color: hsl(0, 0%, 25%);
-    font-size: 18px;
+    font-size: 25px;
     font-weight: 400;
     padding: 13px 20px;
     border: 1px solid hsl(0, 0%, 25%);
@@ -58,7 +59,12 @@
     outline: none;
 }
 
-.form-input::placeholder { font-weight: 500; }
+.form-input::placeholder { 
+    font-weight: 600; 
+    font-size: 25px; 
+    color:#5c677d; 
+    letter-spacing: 1px;
+}
 
 .form-input:focus {
     border-color:hsl(45, 100%, 72%);
@@ -78,15 +84,19 @@ textarea.form-input::-webkit-resizer { display: none; }
 .form-input:focus:invalid { border-color: hsl(0, 43%, 51%); }
 
 .form-btn {
-    position: relative;
-    width: 200px;
+    font-family: "Alumni Sans Pinstripe", sans-serif;
+    font-size: 25px;
+    font-weight: 800;
+    letter-spacing: 0.5px;
+    position: absolute;
+    min-width: 200px;
     background: hsl(0, 0%, 25%);
     color: hsl(45, 54%, 58%);
     display: flex;
     justify-content: center;
     align-items: center;
     gap: 10px;
-    padding: 13px 20px;
+    padding: 13px 24px;
     border-radius: 14px;
     box-shadow: 0 16px 40px hsla(0, 0%, 0%, 0.25);
     z-index: 1;

@@ -1,111 +1,197 @@
-
-
 /*quote1*/
 
 #quote1 {
-    background-image: url(../images/sm_banner.png);
-    background-repeat: no-repeat; 
-    background-size: auto;
-    border-radius: 5px;
+  background-image: url(../images/sm_banner.png);
+  background-repeat: no-repeat;
+  background-size: auto;
+  border-radius: 5px;
 }
 
-#quote1 h5 { color: #fff;  margin-top: 20px; text-align: center;}
+#quote1 h5 {
+  font-family: "Quintessential", serif;
+  font-size: 25px;
+  font-style: italic;
+  color: #fafaff;
+  letter-spacing: 2px;
+  margin-top: 20px;
+  text-align: center;
+}
 
-#quote1 p { margin-right: 15%; text-align-last: right; }
-
-/*quote1*/
 
 /*about-me*/
 #background {
-    margin-top: 10%;
-    margin-bottom: 5%;
+  margin-top: 10%;
+  margin-bottom: 5%;
 }
 
 
 #background .col-md-4 .download-button {
-    background-color: #9370DB; /* Green */
-    border: none;
-    border-radius: 20px;
-    /* color: hsl(0, 0%, 85%); */
-    padding: 15px 32px;
-    text-align: center;
-    text-decoration: none;
-    display: block;
-    font-size: 16px;
-    margin: 0 auto;
-    cursor: pointer;
+  background-color: #9370DB;
+  /* Green */
+  border: none;
+  border-radius: 20px;
+  /* color: hsl(0, 0%, 85%); */
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: block;
+  font-size: 16px;
+  margin: 0 auto;
+  cursor: pointer;
 }
+
 #background .col-md-4 .download-button a {
-    color: white;
+  color: white;
+}
+
+#background .col-md-12 img {
+  width: 350px;
+  height: 350px;
+  border-radius: 50px;
+  margin-top: 10px;
 }
 
 /* Background page: special color just for the first lede line */
 #background #details h6.intro-lede {
-  color: hsl(45, 100%, 71%);  /* your gold accent */
+  color: hsl(45, 100%, 71%);
+  /* your gold accent */
   font-weight: 600;
+  font-size: 25px;
+  letter-spacing: 1px;
+  font-style: italic;
 }
 
 /*about-me*/
 
-#details h5, #details h6 { margin-top: 30px;}
-
-#details h6 {margin-bottom: 20px;}
-
-#details h5, #details h6, #details p { color: #b6b6b6; }
-
-#skills { margin-top: 5%; }
-
-#experience { margin-top: 10%; }
-
-.experience-header { margin-bottom: 20px; }
-
-.experience-item { margin-bottom: 30px; }
-
-#skills h2, #experience h3 { color: #d5d0d0; }
-
-#skills h4, #experience h4 { color: hsl(194, 40%, 37%); }
-
-#experience h6 { color: hsl(217, 94%, 81%); }   
-
-#skills h6, #experience p { color: hsl(194, 60%, 50%); }
-
-#experience ul { color: hsl(0, 0%, 85%); }
-
-.section-divider {
-    border-top: 1px solid gray;
-    margin: 20px 0;
+#details h5,
+#details h6 {
+  margin-top: 30px;
 }
 
-#service { margin: 10% 20%;}
+#details h6 {
+  margin-bottom: 20px;
+}
 
-.header { color: hsl(0, 0%, 85%); margin-bottom: 60px;}
+#details h5,
+#details h6,
+#details p {
+  color: #b6b6b6;
+}
+
+#details p {
+  font-size: 25px;
+  font-style: italic;
+  letter-spacing: 1px;
+}
+
+#service {
+  margin: 10% 20%;
+}
+
+#service .header { 
+  font-family: "Poiret One", sans-serif;
+  font-size: 25px; 
+  font-weight: 600; 
+  letter-spacing: 1px;
+}
+
+.header {
+  color: hsl(0, 0%, 85%);
+  margin-bottom: 60px;
+}
 
 .service-list {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 30px;
-    list-style: none;
-    padding: 0;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 30px;
+  list-style: none;
+  padding: 0;
 }
 
 .service-item {
-    background: hsl(0, 0%, 16%);
-    padding: 20px;
-    border-radius: 14px;
-    box-shadow: hsl(194, 40%, 37%);
-    z-index: 1;
+  background: hsl(0, 0%, 16%);
+  padding: 20px;
+  border-radius: 14px;
+  box-shadow: hsl(194, 40%, 37%);
+  z-index: 1;
 }
 
-.service-title { color: hsl(194, 60%, 50%); margin: 0;}
-  
+.service-title {
+  color: hsl(194, 60%, 50%);
+  margin: 0;
+  font-size: 25px;
+  font-weight: 600;
+  letter-spacing: 1px;
+}
 
-.service-icon-box { margin-bottom: 10px; display: flex;  align-items: center; }
 
-.service-icon-box img { margin-right: 20px; }
+.service-icon-box {
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+}
+
+.service-icon-box img {
+  margin-right: 20px;
+}
+
+
+#skills {
+  margin-top: 10%;
+}
+
+#experience {
+  margin-top: 10%;
+}
+
+.experience-header {
+  margin-bottom: 20px;
+}
+
+.experience-item {
+  margin-bottom: 30px;
+}
+
+#skills h2,
+#experience h3 {
+  color: #d5d0d0;
+}
+
+#skills h4,
+#experience h4 {
+  font-family: "Poiret One", sans-serif;
+  font-size: 30px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  color: hsl(194, 40%, 37%);
+}
+
+#experience h6 {
+  color: hsl(217, 94%, 81%);
+}
+
+#skills h6,
+#experience p {
+  font-size: 20px;
+  letter-spacing: 1px;
+  color: hsl(194, 60%, 50%);
+}
+
+#experience ul {
+  color: hsl(0, 0%, 85%);
+}
+
+.section-divider {
+  border-top: 1px solid gray;
+  margin: 20px 0;
+}
+
+
 
 /* --- About sub-nav (ONLY on About pages) --- */
-header .about-subnav { 
-  margin-top: 100px;            /* shows below fixed navbar */
+header .about-subnav {
+  margin-top: 100px;
+  /* shows below fixed navbar */
   margin-bottom: 30px;
 }
 
@@ -117,7 +203,10 @@ header .about-subnav-list {
   border-bottom: 1px solid #2a2a2a;
 }
 
-header .about-subnav-item { flex: 1; text-align: center; }
+header .about-subnav-item {
+  flex: 1;
+  text-align: center;
+}
 
 header .about-subnav-link {
   display: block;
@@ -127,7 +216,9 @@ header .about-subnav-link {
   font-weight: 500;
 }
 
-header .about-subnav-link:hover { color: hsl(45, 100%, 71%) !important; }
+header .about-subnav-link:hover {
+  color: hsl(45, 100%, 71%) !important;
+}
 
 header .about-subnav-link.active {
   color: hsl(45, 100%, 71%) !important;
@@ -135,15 +226,8 @@ header .about-subnav-link.active {
 }
 
 @media (max-width: 576px) {
-  header .about-subnav-link { padding: 10px 4px; font-size: 0.95rem; }
+  header .about-subnav-link {
+    padding: 10px 4px;
+    font-size: 0.95rem;
+  }
 }
-
-
-
-
-  
-
-
-
-
- 

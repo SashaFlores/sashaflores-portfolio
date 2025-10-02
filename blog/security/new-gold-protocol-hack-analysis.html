@@ -21,9 +21,9 @@
         <link href="../../css/aos.css" rel="stylesheet">
         <link href="../../css/navbar.css" rel="stylesheet">
         <link href="../../css/new-common-articles.css" rel="stylesheet">
-        <link href="../../css/blog/security/new-gold-protocol-hack-analysis.css" rel="stylesheet">
-        <link href="../../css/report.css" rel="stylesheet">
-        <link href="../../css/audit-promo.css" rel="stylesheet">
+        <!-- <link href="../../css/blog/security/new-gold-protocol-hack-analysis.css" rel="stylesheet"> -->
+        <!-- <link href="../../css/report.css" rel="stylesheet"> -->
+        <!-- <link href="../../css/audit-promo.css" rel="stylesheet"> -->
         <link href="../../css/footer.css" rel="stylesheet">
     
     
@@ -74,7 +74,7 @@
     </header>
 
     <div class="article-container">
-        <h1 id="title">New Gold Protocol Hack Analysis Price Oracle Manipulation</h1>
+        <h1 id="title">New Gold Protocol Hack Analysis<br> Price Oracle Manipulation</h1>
         <figure class="meta">
             <img alt="OraclePrice" src="../../images/blog/security/new-gold-protocol-hack-analysis/oracle.png" />
             <p class="caption">Price Oracle Manipulation Hack in DeFi</p>
@@ -114,56 +114,84 @@
         </p>
 
         <h5 class="subtitle s-5">Smart Contract vulnerabilities</h5>
-        <ol>
+        <ol class="outer-ol">
             <li>
-                <a href="https://bscscan.com/address/0xd2f26200cd524db097cf4ab7cc2e5c38ab6ae5c9#code#F1#L357" target="_blank">getPrice</a> function:
+                <span class="ol-title">
+                    <a href="https://bscscan.com/address/0xd2f26200cd524db097cf4ab7cc2e5c38ab6ae5c9#code#F1#L357" target="_blank">getPrice</a> function:
+                </span>
+                <span class="ol-expl">
+                    which basically wraps the price returned by external function `getTokenPrice`.
+                <!-- </span>
                 <figure class="a-figure zoom-s">
                     <img alt="small zoom" src="../../images/blog/security/new-gold-protocol-hack-analysis/getPrice.png">
-                </figure>
-                which basically wraps the price returned by external function `getTokenPrice`.
+                </figure> -->
+                
+                <!----- Nested List --------->
+                <ol class="inner-ol">
+                    <li>
+                        <span class="ol-title">
+                            <a href="https://bscscan.com/address/0xd2f26200cd524db097cf4ab7cc2e5c38ab6ae5c9#code#F1#L332" target="_blank">`getTokenPrice()`</a> function, which:
+                        </span>
+                        <!-- <figure class="a-figure zoom-s">
+                            <img alt="small zoom" src="../../images/blog/security/new-gold-protocol-hack-analysis/getPriceToken.png">
+                        </figure> -->
+                
+                        <ul>
+                            <li>
+                                <span class="ul-title">Read directly the current reserves of NGP-USDT pair on Uniswap v2.</span>
+                                <span class="ul-expl">
+                                    <code>IUniswapV2Pair pair = IUniswapV2Pair(mainPair);</code><br>
+                                    <code>(uint reserve0, uint reserve1, ) = pair.getReserves();</code>
+                                </span>
+                            </li>
+                            <li>
+                                <span class="ul-title">Used the simple pool ratio of of USDT reserve to NGP reserve to calculate the
+                                    token's
+                                    price.</span>
+                                <span class="ul-expl"><code>price = (usdtReserve * 1e18) / tokenReserve;</code></span>
+                            </li>
+                        </ul>
+                    </li>
+                </ol>
             </li>
-            <ul>
-                <li>
-                    <a href="https://bscscan.com/address/0xd2f26200cd524db097cf4ab7cc2e5c38ab6ae5c9#code#F1#L332" target="_blank">`getTokenPrice()`</a> function, which:
-                    <figure class="a-figure zoom-s">
-                        <img alt="small zoom" src="../../images/blog/security/new-gold-protocol-hack-analysis/getPriceToken.png">
-                    </figure>
-                </li>
-                <ul>
-                    <li>
-                        Read directly the current reserves of NGP-USDT pair on Uniswap v2.
-                        <code>IUniswapV2Pair pair = IUniswapV2Pair(mainPair);</code><br>
-                        <code>(uint reserve0, uint reserve1, ) = pair.getReserves();</code>
-                    </li>
-                    <li>
-                        Used the simple pool ratio of of USDT reserve to NGP reserve to calculate the token's price.<br>
-                        <code>price = (usdtReserve * 1e18) / tokenReserve;</code>
-                    </li>
-                </ul>
-            </ul>
             <li>
-                <a href="https://bscscan.com/address/0xd2f26200cd524db097cf4ab7cc2e5c38ab6ae5c9#code#F1#L78" target="_blank">Whitelisted Addresses</a>
-                <ul>
+                <span class="ol-title">
+                    <a href="https://bscscan.com/address/0xd2f26200cd524db097cf4ab7cc2e5c38ab6ae5c9#code#F1#L78" target="_blank">Whitelisted Addresses</a>
+                </span>
+                <ol class="inner-ol">
                     <li>
-                        First, protocol had a constant `DEAD` address:<br>
-                        <code>address constant DEAD = 0x000000000000000000000000000000000000dEaD</code>
+                        <span class="ol-title">
+                            First, protocol had a constant `DEAD` address:
+                        </span>
+                        <span class="ol-expl">
+                            <code>address constant DEAD = 0x000000000000000000000000000000000000dEaD</code>
+                        </span>
                     </li>
                     <li>
-                        Second, stored mapping of `whitelisted` addresses:<br>
-                        <code>mapping(address => bool) public whitelisted</code>
+                        <span class="ol-title">
+                            Second, stored mapping of `whitelisted` addresses:
+                        </span>
+                        <span class="ol-expl">
+                            <code>mapping(address => bool) public whitelisted</code>
+                        </span>
                     </li>
                     <li>
-                        Third, in constructor the `DEAD` was listed as `whitelisted` address along with protocol and mintAddress:<br>
-                        <code>
-                            whitelisted[address(this)] = true;<br>
-                            whitelisted[address(DEAD)] = true;<br>
-                            whitelisted[mintAddress] = true;
-                        </code>
+                        <span class="ol-title">
+                            Third, in constructor the `DEAD` was listed as `whitelisted` address along with protocol and mintAddress:
+                        </span>
+                        <span class="ol-expl">
+                            <code>
+                                whitelisted[address(this)] = true;<br>
+                                whitelisted[address(DEAD)] = true;<br>
+                                whitelisted[mintAddress] = true;
+                            </code>
+                        </span>
                     </li>
-                    
-                </ul>
-                Whitelisting `DEAD` address enabled the attacker of bypassing key restrictions and limitations set by contract logic including but not limited 
-                to:
+                </ol>
+                <span class="ol-expl">
+                    Whitelisting `DEAD` address enabled the attacker of bypassing key restrictions and limitations set by contract logic including but not limited 
+                    to:
+                </span>
                 <ul>
                     <li>limit on max buying <code>maxBuyAmountInUsdt</code> which is 10_000.</li>
                     <li>max buy count in 24 hours <code>maxBuyPerDay</code> which is 3 per day.</li>
@@ -439,41 +467,64 @@
             <div class="legend-section">
                 <div class="legend-sub-title">Severity</div>
                 <div class="legend-row">
-                    <span class="sev-high">High Severity</span>
-                    <span class="legend-expl">Exploit leads to major fund loss or invariant break.</span>
+                    <span class="sev-critical">Critical</span>
+                    <span class="legend-expl">Direct issues lead to drained funds or take control of protocol.</span>
                 </div>
 
                 <div class="legend-row">
-                    <span class="sev-medium">Medium Severity</span>
-                    <span class="legend-expl">Weakness that degrades tokenomics or compounds attacks.</span>
+                    <span class="sev-high">High</span>
+                    <span class="legend-expl">Severe losses or control issues, but with some conditions.</span>
                 </div>
 
                 <div class="legend-row">
-                    <span class="sev-low">Low Severity</span>
-                    <span class="legend-expl">Minor bug with limited direct impact.</span>
+                    <span class="sev-medium">Medium</span>
+                    <span class="legend-expl">Issues that degrade security or amplify other bugs.</span>
+                </div>
+
+                <div class="legend-row">
+                    <span class="sev-low">Low</span>
+                    <span class="legend-expl">Minor edge cases &amp; small impact.</span>
                 </div>
 
                 <div class="legend-row">
                     <span class="sev-info">Informational</span>
-                    <span class="legend-expl">Coding/design issues with no direct exploitability.</span>
+                    <span class="legend-expl">No direct exploit, but harmful to trust/clarity.</span>
                 </div>
             </div>
-        
+
+            <div class="legend-section">
+                <div class="legend-sub-title">Impact</div>
+                <div class="legend-row">
+                    <span class="impact-high">High</span>
+                    <span class="legend-expl">Direct liquidity drain, major financial damage, or full invariant break.</span>
+                </div>
+
+                <div class="legend-row">
+                    <span class="impact-medium">Medium</span>
+                    <span class="legend-expl">Amplifies attack effectiveness, weakens tokenomics, or exposes partial risks.</span>
+                </div>
+
+                <div class="legend-row">
+                    <span class="impact-low">Low</span>
+                    <span class="legend-expl">Limited effect, cosmetic, or edge-case outcome.</span>
+                </div>
+            </div>
+
             <div class="legend-section">
                 <div class="legend-sub-title">Likelihood</div>
                 <div class="legend-row">
-                    <span class="likely-high">High Likelihood</span>
-                    <span class="legend-expl">Actively exploited or trivial to exploit.</span>
+                    <span class="likely-high">High</span>
+                    <span class="legend-expl">Trivial to exploit or already weaponized in attack.</span>
                 </div>
 
                 <div class="legend-row">
-                    <span class="likely-medium">Medium Likelihood</span>
-                    <span class="legend-expl">Exploitable under specific conditions.</span>
+                    <span class="likely-medium">Medium</span>
+                    <span class="legend-expl">Requires conditions or chaining but practical.</span>
                 </div>
 
                 <div class="legend-row">
-                    <span class="likely-low">Low Likelihood</span>
-                    <span class="legend-expl">Edge case, unlikely attack vector.</span>
+                    <span class="likely-low">Low</span>
+                    <span class="legend-expl">Edge cases, rare alignment, or theoretical.</span>
                 </div>
             </div>
         
@@ -481,15 +532,15 @@
                 <div class="legend-sub-title">Status</div>
                 <div class="legend-row">
                     <span class="status-exploited">Exploited</span>
-                    <span class="legend-expl">Confirmed part of the $2M exploit.</span>
+                    <span class="legend-expl">Confirmed used in the $2M NGP hack.</span>
                 </div>
                 <div class="legend-row">
                     <span class="status-contributed">Contributed</span>
-                    <span class="legend-expl">Not directly exploited but amplified the exploit’s effect.</span>
+                    <span class="legend-expl">Did not trigger alone but amplified the overall exploit.</span>
                 </div>
                 <div class="legend-row">
                     <span class="status-design">Design Risk</span>
-                    <span class="legend-expl">Weakness that could be abused in future scenarios.</span>
+                    <span class="legend-expl">Not exploited but introduces structural weakness.</span>
                 </div>
             </div>
             
@@ -503,8 +554,8 @@
                     <th>Likelihood</th>
                     <th>Status</th>
                     <th>Vulnerability</th>
-                    <th>Line of Code</th>
                     <th>Impact</th>
+                    <th>Description</th>
                 </tr>
             </thead>
             <tbody>

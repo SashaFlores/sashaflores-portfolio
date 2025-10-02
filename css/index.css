@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Alumni+Sans+Pinstripe:ital@0;1&family=Imperial+Script&family=Lavishly+Yours&family=Poiret+One&family=Quintessential&display=swap');
 
 
 div#particles-js {
@@ -16,15 +17,21 @@ div#particles-js {
 }
 
 h1.lgname {
-    color: #d5d0d0;
-    font-weight: 600;
-    font-size: 70px;
+    font-family: 'Lavishly Yours', cursive;
+    font-size: 110px;
+    font-weight: 300;
+    letter-spacing: 1px;
+    color: #dad7cd;
+    /* color: #d5d0d0; */
 }
 
 h3.anim_subheading {
-    color: #d5d0d0;
-    font-weight: 100!important;
+    /* font-family: "Poiret One", sans-serif; */
+    color: #848586;
     font-size: 50px;
+    font-weight: 600;
+    font-style: italic;
+    letter-spacing: 1px;
 }
 
 .first-bg {
@@ -44,7 +51,7 @@ h3.anim_subheading {
 }
 .social-links ion-icon {
     background-color: hsl(0, 4%, 15%);
-    color: hsl(40, 14%, 92%) !important;
+    color: #d1beb0 !important;
     border-radius: 30pc;
     padding: 15px;    
     transition: 0.30s ease; 
@@ -64,6 +71,6 @@ h3.anim_subheading {
     white-space: nowrap;
     opacity: 0;
 }
-.social-links a:hover .tooltip { opacity: 1; }
+.social-links a:hover .tooltip { opacity: 1 }
 
 
