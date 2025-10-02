@@ -23,7 +23,7 @@
   --article-inline-pad: clamp(1.75rem, 6vw, 4.5rem);
   --article-block-pad: clamp(5rem, 10vw, 8rem);
   --article-text: #ffe1a8;
-  --article-subtext: #c5cad9;
+  --article-subtext: #eed7c5;
   --article-muted: #7f8599;
   --accent-primary: hsl(194, 75%, 62%);
   --accent-secondary: #0be96b;
@@ -42,7 +42,7 @@ body {
   color: var(--article-text);
   font-family: 'Alumni Sans Pinstripe', sans-serif;
   font-size: clamp(1.25rem, 1.2rem + 1.5vw, 1.375rem);
-  letter-spacing: .9px;
+  letter-spacing: 0.05em;
 }
 
 .article-container {
@@ -326,7 +326,6 @@ body {
 .legend-row span:first-child {
   font-size: 1.15rem;
   font-weight: 700;
-  letter-spacing: 0.12em;
 }
 
 .legend-expl {
@@ -419,15 +418,19 @@ body {
   letter-spacing: 0.14em;
   font-size: 0.82rem;
   color: var(--accent-secondary);
+  text-align: center;
 }
 
 .incident-table td {
   padding: 1rem;
-  font-size: 0.98rem;
-  letter-spacing: 0.04em;
+  font-size: 1.15rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
   color: var(--article-subtext);
   vertical-align: top;
   background: var(--table-row);
+  text-align: center;
+
 }
 
 .incident-table tbody tr:nth-child(even) td {
@@ -445,6 +448,21 @@ body {
 
 .incident-table a:hover {
   color: var(--accent-secondary);
+}
+
+.incident-table td:nth-child(1),
+.incident-table td:nth-child(2),
+.incident-table td:nth-child(3),
+.incident-table td:nth-child(4) {
+  width: 10%;
+}
+
+.incident-table td:nth-child(5) {
+  width: 25%;
+}
+
+.incident-table td:nth-child(6) {
+  width: 50%;
 }
 
 /* =========================

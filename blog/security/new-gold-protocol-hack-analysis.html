@@ -553,71 +553,70 @@
                     <th>Severity</th>
                     <th>Likelihood</th>
                     <th>Status</th>
-                    <th>Vulnerability</th>
                     <th>Impact</th>
+                    <th>Vulnerability</th>
                     <th>Description</th>
                 </tr>
             </thead>
             <tbody>
                 <tr>
-                    <td class="sev-high">High</td>
-                    <td class="likely-high">High</td>
-                    <td class="status-exploited">Exploited</td>
-                    <td>Flash Loan Oracle Manipulation</td>
-                    <td><a href="https://bscscan.com/address/0xd2f26200cd524db097cf4ab7cc2e5c38ab6ae5c9#code#F1#L357">L 357</a></td>
-                    <td>
-                        Relied on a single DEX pool’s spot reserves, enabling attacker to distort NGP-USDT price with flash loans and trigger inflated valuations.
-                    </td>
+                    <td><span class="sev-critical">Critical</span></td>
+                    <td><span class="likely-high">High</span></td>
+                    <td><span class="status-exploited">Exploited</span></td>
+                    <td><span class="impact-high">High</span></td>
+                    <td>Flash Loan Oracle Manipulation<br><a href="https://bscscan.com/address/0xd2f26200cd524db097cf4ab7cc2e5c38ab6ae5c9#code#F1#L338" target="_blank">pair.getReserves()</a></td>
+                    <td>Relied on a single DEX pool’s spot reserves, allowing attacker to distort NGP-USDT price via flash loans and sell at inflated valuations.</td>
                 </tr>
                 <tr>
-                    <td class="sev-high">High</td>
-                    <td class="likely-high">High</td>
-                    <td class="status-exploited">Exploited</td>
-                    <td>Simplistic Price Calculation</td>
-                    <td><a href="https://bscscan.com/address/0xd2f26200cd524db097cf4ab7cc2e5c38ab6ae5c9#code#F1#L346">L 346</a></td>
-                    <td>
-                        Amplified manipulated reserves, letting attacker acquire NGP cheaply during pool imbalance and sell for outsized profit.
+                    <td><span class="sev-critical">Critical</span></td>
+                    <td><span class="likely-high">High</span></td>
+                    <td><span class="status-exploited">Exploited</span></td>
+                    <td><span class="impact-high">High</span></td>
+                    <td>Fee Deduction from LP Reserves Directly<br>
+                        <a href="https://bscscan.com/address/0xd2f26200cd524db097cf4ab7cc2e5c38ab6ae5c9#code#F1#L297" target="_blank">Treasury Fees</a><br>
+                        &<br> <a href="https://bscscan.com/address/0xd2f26200cd524db097cf4ab7cc2e5c38ab6ae5c9#code#F1#L299" target="_blank">Reward Fees</a>
                     </td>
+                    <td>Treasury/reward fees deducted from liquidity pool reserves instead of seller balances, breaking AMM invariant and directly draining pool.</td>
                 </tr>
                 <tr>
-                    <td class="sev-high">High</td>
-                    <td class="likely-high">High</td>
-                    <td class="status-exploited">Exploited</td>
-                    <td>Whitelisted DEAD Address</td>
-                    <td><a href="https://bscscan.com/address/0xd2f26200cd524db097cf4ab7cc2e5c38ab6ae5c9#code#F1#L256">L 256</a></td>
-                    <td>
-                        Enabled bypass of buy caps, cooldowns, and fee checks, allowing attacker to execute unrestricted swaps via DEAD address.
-                    </td>
+                    <td><span class="sev-high">High</span></td>
+                    <td><span class="likely-high">High</span></td>
+                    <td><span class="status-exploited">Exploited</span></td>
+                    <td><span class="impact-high">High</span></td>
+                    <td>Whitelisted DEAD Address<br><a href="https://bscscan.com/address/0xd2f26200cd524db097cf4ab7cc2e5c38ab6ae5c9#code#F1#L256">Whitelisted `from` & `to`</a></td>
+                    <td>Enabled bypass of buy caps, cooldowns, and fee checks, allowing attacker to execute unrestricted swaps via DEAD address.</td>
                 </tr>
                 <tr>
-                    <td class="sev-high">High</td>
-                    <td class="likely-high">High</td>
-                    <td class="status-exploited">Exploited</td>
-                    <td>Fee Deduction from LP Reserves</td>
-                    <td><a href="https://bscscan.com/address/0xd2f26200cd524db097cf4ab7cc2e5c38ab6ae5c9#code#F1#L297">L 297</a></td>
-                    <td>
-                        Drained liquidity pool directly by taking treasury and reward fees from reserves, breaking AMM invariant and collapsing pool.
-                    </td>
+                    <td><span class="sev-high">High</span></td>
+                    <td><span class="likely-high">High</span></td>
+                    <td><span class="status-exploited">Exploited</span></td>
+                    <td><span class="impact-high">High</span></td>
+                    <td>Simplistic Price Calculation<br><a href="https://bscscan.com/address/0xd2f26200cd524db097cf4ab7cc2e5c38ab6ae5c9#code#F1#L346">L 346</a></td>
+                    <td>Used a raw reserve ratio without TWAP/guards, making price trivial to manipulate during reserve imbalance.</td>
                 </tr>
                 <tr>
-                    <td class="sev-medium">Medium</td>
-                    <td class="likely-medium">Medium</td>
-                    <td class="status-contributed">Contributed</td>
-                    <td>Burn Logic Misuse</td>
-                    <td><a href="https://bscscan.com/address/0xd2f26200cd524db097cf4ab7cc2e5c38ab6ae5c9#code#F1#L284">L 284</a></td>
-                    <td>
-                        Redirected intended burns to market wallet, undermining supply deflation and compounding supply centralization during attack.
-                    </td>
+                    <td><span class="sev-medium">Medium</span></td>
+                    <td><span class="likely-medium">Medium</span></td>
+                    <td><span class="status-contributed">Contributed</span></td>
+                    <td><span class="impact-medium">Medium</span></td>
+                    <td>Burn Logic Misuse<br><a href="https://bscscan.com/address/0xd2f26200cd524db097cf4ab7cc2e5c38ab6ae5c9#code#F1#L284">isLpStopBurn()</a></td>
+                    <td>Redirected intended burns to market wallet, undermining supply deflation and compounding supply centralization during attack.</td>
                 </tr>
                 <tr>
-                    <td class="sev-medium">Medium</td>
-                    <td class="likely-medium">Medium</td>
-                    <td class="status-contributed">Contributed</td>
-                    <td>Abuse of sync()</td>
-                    <td><a href="https://bscscan.com/address/0xd2f26200cd524db097cf4ab7cc2e5c38ab6ae5c9#code#F1#L300">L 300</a></td>
-                    <td>
-                        Locked manipulated reserves as valid pool state, inflating false price and amplifying profitability of attacker’s swaps.
-                    </td>
+                    <td><span class="sev-medium">Medium</span></td>
+                    <td><span class="likely-medium">Medium</span></td>
+                    <td><span class="status-contributed">Contributed</span></td>
+                    <td><span class="impact-medium">Medium</span></td>
+                    <td>Abuse of sync()<br><a href="https://bscscan.com/address/0xd2f26200cd524db097cf4ab7cc2e5c38ab6ae5c9#code#F1#L300">IUniswapV2Pair(mainPair).sync()</a></td>
+                    <td>Locked manipulated reserves as valid pool state, inflating false price and amplifying profitability of attacker’s swaps.</td>
+                </tr>
+                <tr>
+                    <td><span class="sev-info">Informational</span></td>
+                    <td><span class="likely-low">Low</span></td>
+                    <td><span class="status-design">Design Risk</span></td>
+                    <td><span class="impact-low">Low</span></td>
+                    <td>Misleading Naming of Tokens Redistributions<br><a href="https://bscscan.com/address/0xd2f26200cd524db097cf4ab7cc2e5c38ab6ae5c9#code#F1#L293">burnPoolAmount</a></td>
+                    <td>Misnamed variable suggests burning, but actually redistributes tokens, confusing devs and auditors.</td>
                 </tr>
             </tbody>
         </table>
