@@ -191,7 +191,7 @@ body {
 .article-container .a-video.zoom-l  { --zoom: 1.70; }
 
 .article-container .a-figure.zoom-xl,
-.article-container .a-video.zoom-xl  { --zoom: 3; } */
+.article-container .a-video.zoom-xl  { --zoom: 3; } 
 
 
 /* =========================
@@ -286,9 +286,9 @@ body {
   LEGEND STYLES
   ========================= */
 .legend {
-  display: flex;
-  flex-wrap: wrap;
-  gap: clamp(1rem, 2vw, 2.5rem);
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(1.5rem, 3vw, 3rem);
   margin: clamp(2rem, 3vw, 3rem) 0;
   padding: clamp(2rem, 3.5vw, 2.75rem);
   border: 1px solid var(--border-soft);
@@ -309,6 +309,7 @@ body {
 .legend-sub-title {
   font-family: 'Poiret One', sans-serif;
   font-size: 1.05rem;
+  font-weight: 600;
   letter-spacing: 0.18em;
   color: var(--accent-secondary);
   text-transform: uppercase;
@@ -323,15 +324,16 @@ body {
 }
 
 .legend-row span:first-child {
-  font-weight: 600;
+  font-size: 1.15rem;
+  font-weight: 700;
   letter-spacing: 0.12em;
 }
 
 .legend-expl {
   color: var(--article-muted);
   font-size: 1.15rem;
+  font-weight: 600;
   letter-spacing: 0.04em;
-  line-height: 1.6;
 }
 
 .sev-critical,
@@ -355,11 +357,10 @@ body {
   padding: 0.35rem 0.9rem;
   font-size: 0.9375rem;
   text-transform: uppercase;
-  font-weight: 800;
   white-space: nowrap;
 }
 
-.sev-critical { color: #89023e; }
+.sev-critical { color: #c1121f; }
 .sev-high { color: #b71f24; }
 .sev-medium { color: #f26419; }
 .sev-low { color: #ffd60a; }
@@ -380,7 +381,7 @@ body {
 
 @media (max-width: 720px) {
   .legend {
-    flex-direction: column;
+    grid-template-columns: 1fr;
   }
 
   .incident-table {
@@ -459,7 +460,7 @@ body {
 .audit-promo::before {
   content: "";
   position: absolute;
-  inset: -44px -28px;
+  inset: -70px 0px;
   border-radius: 48px;
   background: linear-gradient(140deg, rgba(32, 120, 255, 0.9), rgba(51, 202, 255, 0.65));
   box-shadow: 0 40px 70px -45px rgba(38, 128, 255, 0.75);
@@ -518,5 +519,3 @@ body {
   transform: translateY(-3px);
   box-shadow: 0 22px 40px -22px rgba(0, 0, 0, 0.85);
 }
-
-

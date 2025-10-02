@@ -307,7 +307,7 @@ code {
 .article-container .a-video.zoom-l  { --zoom: 1.70; }
 
 .article-container .a-figure.zoom-xl,
-.article-container .a-video.zoom-xl  { --zoom: 3; } */
+.article-container .a-video.zoom-xl  { --zoom: 3; } 
 
 /* Optional caption */
 article-container .a-figure figcaption,
