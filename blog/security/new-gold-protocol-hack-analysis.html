@@ -21,9 +21,6 @@
         <link href="../../css/aos.css" rel="stylesheet">
         <link href="../../css/navbar.css" rel="stylesheet">
         <link href="../../css/new-common-articles.css" rel="stylesheet">
-        <!-- <link href="../../css/blog/security/new-gold-protocol-hack-analysis.css" rel="stylesheet"> -->
-        <!-- <link href="../../css/report.css" rel="stylesheet"> -->
-        <!-- <link href="../../css/audit-promo.css" rel="stylesheet"> -->
         <link href="../../css/footer.css" rel="stylesheet">
     
     
@@ -94,6 +91,7 @@
         <p>
             The attack exploited critical compounded vulnerabilities in NGP's core smart contract logic primarily because of price oracle manipulation.
         </p>
+
 
         <h5 class="subtitle s-5">What is a Price Oracle Manipulation?</h5>
         <p>
@@ -189,19 +187,19 @@
             </li>
             <li>
                 <a href="https://bscscan.com/address/0xd2f26200cd524db097cf4ab7cc2e5c38ab6ae5c9#code#F1#L249" target="_blank">_update</a> function:
-                <figure class="a-video zoom-m">
+                <!-- <figure class="a-video zoom-m">
                     <video autoplay muted loop playsinline preload="auto">
                         <source src="../../images/blog/security/new-gold-protocol-hack-analysis/updateVideo.mp4" type="video/mp4">
                     </video>
                     <figcaption>`_update` function video</figcaption>
-                </figure>
+                </figure> -->
             </li>
             <ul>
                 <li>
                     Check if `from` or `to` are whitelisted addresses:
-                    <figure class="a-figure zoom-m">
+                    <!-- <figure class="a-figure zoom-m">
                         <img alt="medium zoom" src="../../images/blog/security/new-gold-protocol-hack-analysis/whitelist.png">
-                    </figure>
+                    </figure> -->
                     <ul>
                         <li>
                             Anyone can transfer from/to `0x...dEaD` as if it were a system contract.<br>
@@ -216,9 +214,9 @@
                 </li>
                 <li>
                     Buy NGP or Remove Liquidity Logic:
-                    <figure class="a-figure zoom-m">
+                    <!-- <figure class="a-figure zoom-m">
                         <img alt="medium zoom" src="../../images/blog//security/new-gold-protocol-hack-analysis/buyNGP.png">
-                    </figure>
+                    </figure> -->
                     <ul>
                         <li>
                             The spot price feed from `getPrice` was used in `_update` function to enforce limitation on the maximum purchase amounts `maxBuyAmountInUsdt`:<br>
@@ -233,9 +231,9 @@
                 </li>
                 <li>
                     Sell NGP or Add Liquidity Logic:
-                    <figure class="a-figure zoom-m">
+                    <!-- <figure class="a-figure zoom-m">
                         <img alt="medium zoom" src="../../images/blog/security/new-gold-protocol-hack-analysis/sellNGP.png">
-                    </figure>
+                    </figure> -->
                     Selling NGP triggered the contract logic to deduct set of fees as follows:
                     <ul>
                         <li><strong>Market Fee Rate:</strong> 3%</li>

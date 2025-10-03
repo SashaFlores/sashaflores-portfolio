@@ -547,3 +547,47 @@ body {
   transform: translateY(-3px);
   box-shadow: 0 22px 40px -22px rgba(0, 0, 0, 0.85);
 }
+
+
+/* =========================
+  LIST SYSTEM
+  ========================= */
+.article-container ol.outer-ol,
+.article-container ol.outer-ol ol {
+  list-style: none;
+  margin: 0;
+  padding-left: 0;
+  counter-reset: item;
+}
+
+.article-container ol.outer-ol > li,
+.article-container ol.outer-ol ol > li {
+  position: relative;
+  counter-increment: item;
+  padding-left: 1.9rem;
+  margin-top: 0.55rem;
+}
+
+.article-container ol.outer-ol > li::before,
+.article-container ol.outer-ol ol > li::before {
+  content: counters(item, ".") ".";
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 1.6rem;
+  text-align: right;
+}
+
+.article-container ol.outer-ol > li > ol {
+  margin-top: 0.55rem;
+}
+
+.article-container .ol-title {
+  display: inline-block;
+  margin-right: 0.4rem;
+}
+
+.article-container .ol-expl,
+.article-container .ol-exp {
+  display: inline;
+}
