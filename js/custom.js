@@ -305,58 +305,121 @@ document.addEventListener('DOMContentLoaded', function () {
 /* contact form customize response as per netlify docs */
 document.addEventListener('DOMContentLoaded', function () {
     const form = document.querySelector("form[name='contact-me']");
-    const formBtn = document.querySelector("[data-form-btn]");
-    const formInputs = document.querySelectorAll("[data-form-input]");
-    const successMessage = document.querySelector(".success-message");
-    const errorMessage = document.querySelector(".error-message");
+    if (!form) return;
 
-    // Function to check if the form is valid
+    const formBtn = form.querySelector("[data-form-btn]");
+    const formInputs = form.querySelectorAll("[data-form-input]");
+    const srSuccess = document.querySelector(".success-message");
+    const srError = document.querySelector(".error-message");
+    const toast = document.querySelector("[data-form-toast]");
+    const toastTitle = toast?.querySelector("[data-toast-title]");
+    const toastMessage = toast?.querySelector("[data-toast-message]");
+    const toastIcon = toast?.querySelector("[data-toast-icon] ion-icon");
+    const toastClose = toast?.querySelector("[data-toast-close]");
+    let toastTimer = null;
+
     function checkFormValidity() {
-        return Array.from(formInputs).every(input => input.checkValidity());
+        return Array.from(formInputs).every((input) => input.checkValidity());
     }
 
-    // Add event listeners to form input fields
-    formInputs.forEach(input => {
-        input.addEventListener("input", function () {
-            // Check form validation
+    const hideToast = () => {
+        if (!toast) return;
+        toast.classList.remove('is-visible');
+        if (toastTimer) {
+            clearTimeout(toastTimer);
+            toastTimer = null;
+        }
+        setTimeout(() => {
+            if (!toast.classList.contains('is-visible')) {
+                toast.setAttribute('hidden', '');
+            }
+        }, 320);
+    };
+
+    const showToast = (variant, title, message) => {
+        if (srSuccess) {
+            srSuccess.textContent = variant === 'success' ? `${title}. ${message}` : '';
+        }
+        if (srError) {
+            srError.textContent = variant === 'error' ? `${title}. ${message}` : '';
+        }
+
+        if (!toast || !toastTitle || !toastMessage || !toastIcon) return;
+
+        toast.classList.remove('form-toast--success', 'form-toast--error', 'is-visible');
+        toast.classList.add(`form-toast--${variant}`);
+        toastTitle.textContent = title;
+        toastMessage.textContent = message;
+        toastIcon.setAttribute('name', variant === 'success' ? 'checkmark-circle-outline' : 'alert-circle-outline');
+        toast.removeAttribute('hidden');
+        // Trigger reflow so the animation plays even if the toast was already visible
+        void toast.offsetWidth;
+        toast.classList.add('is-visible');
+
+        if (toastTimer) {
+            clearTimeout(toastTimer);
+        }
+        toastTimer = setTimeout(hideToast, 6000);
+    };
+
+    toastClose?.addEventListener('click', hideToast);
+
+    document.addEventListener('keydown', (event) => {
+        if (event.key === 'Escape') {
+            hideToast();
+        }
+    });
+
+    formInputs.forEach((input) => {
+        input.addEventListener('input', () => {
+            if (!formBtn) return;
             if (checkFormValidity()) {
-                formBtn.removeAttribute("disabled");
+                formBtn.removeAttribute('disabled');
             } else {
-                formBtn.setAttribute("disabled", "");
+                formBtn.setAttribute('disabled', '');
             }
         });
     });
 
-    form.addEventListener('submit', function (e) {
-        e.preventDefault();
+    if (formBtn && !checkFormValidity()) {
+        formBtn.setAttribute('disabled', '');
+    }
 
-        // Change the button text to indicate sending
+    form.addEventListener('submit', async (event) => {
+        event.preventDefault();
+        if (!formBtn) return;
+
         formBtn.innerHTML = 'Sending...';
+        formBtn.setAttribute('disabled', '');
 
-        const formData = new FormData(this);
+        const formData = new FormData(form);
 
-        fetch("/", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/x-www-form-urlencoded"
-            },
-            body: new URLSearchParams(formData).toString()
-        })
-        .then(response => {
+        try {
+            const response = await fetch('/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                },
+                body: new URLSearchParams(formData).toString()
+            });
+
             if (response.ok) {
-                // Display success message
-                successMessage.textContent = "Your message was sent successfully. \nI will get back to you as quickly as I can.";
-                errorMessage.textContent = "";
+                showToast('success', 'Message sent', 'I will get back to you as quickly as I can.');
+                form.reset();
             } else {
-                // Display error message
-                successMessage.textContent = "";
-                errorMessage.textContent = "Please try again. \nThere was an error sending your message!";
+                showToast('error', 'Something went wrong', 'Please try again—there was an error sending your message.');
             }
-        })
-        .finally(() => {
-            // Reset the button text
+        } catch (error) {
+            console.error('Contact form submission failed', error);
+            showToast('error', 'Network error', 'Please check your connection and try again.');
+        } finally {
             formBtn.innerHTML = '<ion-icon name="paper-plane"></ion-icon><span>Send Message</span>';
-        });
+            if (!checkFormValidity()) {
+                formBtn.setAttribute('disabled', '');
+            } else {
+                formBtn.removeAttribute('disabled');
+            }
+        }
     });
 });
 
@@ -519,7 +582,5 @@ if (typeof window.ethereum !== 'undefined') {
 } else {
     console.error('MetaMask is not available');
 }
-
-
 
 

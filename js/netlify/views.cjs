@@ -1,4 +1,4 @@
-const { getStore } = require("@netlify/blobs");
+const createStore = require("./utils/createStore.cjs");
 
 const STORE_NAME = "post-stats";
 const KEY_PREFIX = "views:";
@@ -35,7 +35,7 @@ exports.handler = async (event) => {
     return { statusCode: 400, headers: jsonHeaders, body: JSON.stringify({ error: "Missing post identifier" }) };
   }
 
-  const store = getStore({ name: STORE_NAME });
+  const store = createStore(STORE_NAME);
   const key = `${KEY_PREFIX}${slug}`;
 
   try {

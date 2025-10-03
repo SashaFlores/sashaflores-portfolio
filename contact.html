@@ -90,10 +90,21 @@
                             <ion-icon name="paper-plane"></ion-icon><span>Send Message</span>
                         </button>
                     </form>
-                    <!-- Add a message container -->
-                    <div class="message-container">
+                    <div class="message-container visually-hidden" aria-live="polite" aria-atomic="true">
                         <p class="success-message"></p>
                         <p class="error-message"></p>
+                    </div>
+                    <div class="form-toast" data-form-toast hidden role="status" aria-live="polite" aria-atomic="true">
+                        <div class="form-toast__icon" data-toast-icon>
+                            <ion-icon name="checkmark-circle-outline"></ion-icon>
+                        </div>
+                        <div class="form-toast__content">
+                            <p class="form-toast__title" data-toast-title></p>
+                            <p class="form-toast__message" data-toast-message></p>
+                        </div>
+                        <button type="button" class="form-toast__close" data-toast-close aria-label="Dismiss notification">
+                            <ion-icon name="close-outline"></ion-icon>
+                        </button>
                     </div>
                 </section>   
             </div>
