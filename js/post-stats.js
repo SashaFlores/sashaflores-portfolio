@@ -73,7 +73,9 @@
       const likeButton = container.querySelector('[data-role="like"]');
       if (likeButton && !likeButton.dataset.handlerAttached) {
         likeButton.dataset.handlerAttached = 'true';
-        likeButton.addEventListener('click', async () => {
+        likeButton.addEventListener('click', async (event) => {
+          event.preventDefault();
+          event.stopPropagation();
           if (likeButton.dataset.clicked === 'true') return;
           const result = await postCount('likes', slug);
           if (result !== null) {
@@ -112,7 +114,9 @@
     const likeButton = articleStats.querySelector('[data-role="like"]');
     if (likeButton && !likeButton.dataset.handlerAttached) {
       likeButton.dataset.handlerAttached = 'true';
-      likeButton.addEventListener('click', async () => {
+      likeButton.addEventListener('click', async (event) => {
+        event.preventDefault();
+        event.stopPropagation();
         if (likeButton.dataset.clicked === 'true') return;
         const result = await postCount('likes', slug);
         if (result !== null) {
