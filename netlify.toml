@@ -5,3 +5,5 @@
   NODE_VERSION = "24.9.0"
   NPM_FLAGS = "--legacy-peer-deps"
 
+[functions]
+  directory = "js/netlify"

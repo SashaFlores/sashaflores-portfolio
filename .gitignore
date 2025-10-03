@@ -1,3 +1,5 @@
 .env
 articles.py
 extra.md
+node_modules/
+.DS_Store
