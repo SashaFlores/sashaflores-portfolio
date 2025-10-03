@@ -1,3 +1,7 @@
+[build]
+  image = "ubuntu-24.04"
+
 [build.environment]
   NODE_VERSION = "24.9.0"
   NPM_FLAGS = "--legacy-peer-deps"
+
