@@ -60,70 +60,15 @@
             <li class="nav-item"><a class="nav-link" href="./contact.html">contact</a></li>
           </ul>
 
-          <!-- <ul class="navbar-nav ml-auto mb-2 mb-lg-0">
-            <li class="nav-item connect-button">
-              <a class="nav-link" href="#">connect</a>
-            </li>
-          </ul> -->
-
-          <!-- <ul class="navbar-nav ml-auto mb-2 mb-lg-0">
-            <li class="nav-item subscribe-button">
-              <a class="nav-link" href="#">
-                <button id="myButton">subscribe</button>
-                <div id="myPopup" class="popup" data-sub>
-                  <div class="popup-content">
-                    <span id="closePopup" class="popup-close">&times;</span>
-                    <h3>Receive new articles directly in your inbox</h3> -->
-                    <!-- Netlify Form Markup -->
-                    <!-- <form name="subscribe-form" method="POST" data-netlify="true" data-netlify-honeypot="bot-field">
-                      <input type="hidden" name="form-name" value="subscribe-form" />
-                      <input type="email" name="email" placeholder="Enter your email" class="popup-input" required />
-                      <button type="submit" id="popup-subscribe-btn" disabled data-sub-btn>Subscribe</button>
-                    </form>
-
-                    <div class="subscribe-messages">
-                      <p class="error-message" style="color: red;"></p>
-                      <p class="success-message" style="color: green;"></p>
-                    </div>
-
-                  </div>
-                </div>
-              </a>
-            </li>
-          </ul> -->
+          <div class="nav-cta">
+            <button type="button" class="nav-cta__btn" data-connect-trigger aria-haspopup="dialog" aria-controls="walletModal">connect</button>
+            <button type="button" class="nav-cta__btn nav-cta__btn--accent" data-subscribe-trigger aria-haspopup="dialog" aria-controls="subscribeModal">subscribe</button>
+          </div>
 
         </div>
       </div>
 
     </nav>
-
-    <!-- Blog quick actions (blog only) -->
-    <!-- <div class="container-fluid px-md-5 blog-toolbar" aria-label="blog actions">
-      <!-- If you want CONNECT back, uncomment the next line -->
-      <!-- <a href="#" class="connect-link">connect</a> -->
-      <!-- <button id="myButton" class="subscribe-link">subscribe</button>
-    </div> -->
-
-    <!-- Keep the popup OUTSIDE the nav to avoid layout clashes -->
-    <!-- <div id="myPopup" class="popup" data-sub>
-      <div class="popup-content">
-        <span id="closePopup" class="popup-close">&times;</span>
-        <h3>Receive new articles directly in your inbox</h3> -->
-
-        <!-- Netlify Form Markup -->
-        <!-- <form name="subscribe-form" method="POST" data-netlify="true" data-netlify-honeypot="bot-field">
-          <input type="hidden" name="form-name" value="subscribe-form" />
-          <input type="email" name="email" placeholder="Enter your email" class="popup-input" required />
-          <button type="submit" id="popup-subscribe-btn" disabled data-sub-btn>Subscribe</button>
-        </form> -->
-
-        <!-- <div class="subscribe-messages">
-          <p class="error-message" style="color: red;"></p>
-          <p class="success-message" style="color: green;"></p>
-        </div>
-      </div>
-    </div> --> -->
-
   </header>
 
 
@@ -347,6 +292,43 @@
     </section>
   </article>
 
+  <form name="subscribe-form" method="POST" data-netlify="true" netlify-honeypot="bot-field" hidden>
+    <input type="hidden" name="form-name" value="subscribe-form">
+    <input type="text" name="bot-field">
+    <input type="email" name="email">
+  </form>
+
+  <div class="modal-overlay" data-subscribe-modal hidden>
+    <div class="modal-window" role="dialog" aria-modal="true" aria-labelledby="subscribeModalTitle">
+      <button type="button" class="modal-close" data-close-subscribe aria-label="Close subscribe dialog">&times;</button>
+      <h3 id="subscribeModalTitle" class="modal-title">Receive new articles directly in your inbox</h3>
+      <form class="modal-form" data-subscribe-form>
+        <label class="visually-hidden" for="subscribe-email">Email</label>
+        <input type="email" id="subscribe-email" name="email" placeholder="enter your email" autocomplete="email" required>
+        <span class="input-hint" data-subscribe-hint></span>
+        <button type="submit" class="modal-submit" data-subscribe-submit disabled>subscribe</button>
+        <p class="submit-feedback" data-subscribe-feedback role="status" aria-live="polite"></p>
+      </form>
+    </div>
+  </div>
+
+  <div class="modal-overlay" data-connect-modal hidden>
+    <div class="modal-window modal-window--wallet" role="dialog" aria-modal="true" aria-labelledby="walletModalTitle" id="walletModal">
+      <button type="button" class="modal-close" data-close-connect aria-label="Close wallet dialog">&times;</button>
+      <h3 id="walletModalTitle" class="modal-title">Connect your wallet</h3>
+      <p class="modal-intro">Select a wallet provider to continue. (Wallet integration coming soon.)</p>
+      <ul class="wallet-list">
+        <li><button type="button" class="wallet-button" data-wallet="metamask">MetaMask</button></li>
+        <li><button type="button" class="wallet-button" data-wallet="coinbase">Coinbase Wallet</button></li>
+        <li><button type="button" class="wallet-button" data-wallet="trust">Trust Wallet</button></li>
+        <li><button type="button" class="wallet-button" data-wallet="phantom">Phantom</button></li>
+        <li><button type="button" class="wallet-button" data-wallet="rainbow">Rainbow</button></li>
+        <li><button type="button" class="wallet-button" data-wallet="ledger">Ledger Live</button></li>
+      </ul>
+      <p class="wallet-placeholder-note">Connection support will arrive soon. For now, this list is a visual placeholder.</p>
+    </div>
+  </div>
+
   <footer>
     <div class="footer-content">
       <p>&copy; 2025 Sasha Flores. All Rights Reserved.</p>
@@ -368,6 +350,7 @@
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script src="js/aos.js"></script>
   <script src="js/custom.js"></script>
+  <script src="js/nav-cta.js" defer></script>
 
   <script type="module" src="https://unpkg.com/ionicons@latest/dist/ionicons/ionicons.esm.js"></script>
   <script nomodule="" src="https://unpkg.com/ionicons@latest/dist/ionicons/ionicons.js"></script>
