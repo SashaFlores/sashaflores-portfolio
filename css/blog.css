@@ -252,6 +252,75 @@ a { text-decoration: none; }
 }
 
 
+.blog-stats {
+  position: absolute;
+  left: 20px;
+  bottom: 15px;
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  font-family: 'Poiret One', sans-serif;
+  letter-spacing: 0.18rem;
+  text-transform: uppercase;
+  font-size: 0.9rem;
+}
+
+.blog-stats .stat {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  color: hsla(0, 0%, 84%, 0.75);
+}
+
+.blog-stats .stat ion-icon {
+  font-size: 1.15rem;
+}
+
+.blog-stats .stat-number {
+  min-width: 2.1rem;
+  text-align: left;
+}
+
+.blog-stats [data-role="like"] {
+  cursor: pointer;
+  padding: 0.35rem 0.85rem;
+  border-radius: 999px;
+  border: 1px solid rgba(144, 202, 249, 0.35);
+  transition: border-color 0.2s ease, background 0.2s ease, color 0.2s ease;
+  background: rgba(12, 16, 28, 0.6);
+}
+
+.blog-stats [data-role="like"]:hover,
+.blog-stats [data-role="like"]:focus-visible,
+.blog-stats [data-role="like"].stat-like--active {
+  border-color: var(--nav-link-active);
+  color: var(--nav-link-active);
+}
+
+.blog-stats [data-role="like"]:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(255, 224, 138, 0.25);
+}
+
+.blog-stats .stat-view {
+  padding: 0.35rem 0.65rem;
+  border-radius: 999px;
+  border: 1px solid rgba(144, 202, 249, 0.15);
+  background: rgba(12, 16, 28, 0.45);
+}
+
+.blog-stats .stat-like--active ion-icon {
+  color: var(--nav-link-active);
+}
+
+.blog-stats .stat[role="button"] {
+  text-decoration: none;
+}
+
+.blog-stats .stat[role="button"]:focus-visible {
+  outline: none;
+}
+
 
 
 

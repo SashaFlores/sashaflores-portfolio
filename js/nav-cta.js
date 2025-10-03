@@ -120,4 +120,18 @@
       setTimeout(() => button.classList.remove('wallet-button--selected'), 800);
       console.info(`Wallet connect placeholder clicked: ${name}`);
     }));
+
+  const likeButtons = document.querySelectorAll('[data-role="like"]');
+  likeButtons.forEach((button) => {
+    button.addEventListener('click', () => {
+      if (button.dataset.clicked === 'true') return;
+      const countSpan = button.querySelector('.stat-number');
+      if (!countSpan) return;
+      const current = Number(countSpan.textContent.replace(/[^0-9]/g, '')) || 0;
+      const next = current + 1;
+      countSpan.textContent = next.toLocaleString();
+      button.dataset.clicked = 'true';
+      button.classList.add('stat-like--active');
+    });
+  });
 })();

@@ -73,7 +73,7 @@ body {
 .article-container .meta,
 .article-container .meta-video {
   text-align: center;
-  margin: clamp(1.5rem, 3vw, 3.75rem) 0;
+  margin: clamp(1.2rem, 2.8vw, 3.5rem) auto clamp(0.4rem, 1.2vw, 0.9rem);
 }
 
 .article-container .meta img,
@@ -590,4 +590,67 @@ body {
 .article-container .ol-expl,
 .article-container .ol-exp {
   display: inline;
+}
+
+/* --- Per-post stats badge under hero media --- */
+
+.article-stats {
+  margin: clamp(0.2rem, 1.2vw, 0.6rem) auto clamp(2.4rem, 4.5vw, 3.2rem);
+  width: min(680px, 100%);
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: clamp(1.2rem, 2vw, 2rem);
+  padding: clamp(0.75rem, 1.3vw, 0.95rem) clamp(1rem, 2.5vw, 1.6rem);
+  border-radius: 14px;
+  border: 1px solid rgba(120, 132, 187, 0.35);
+  background: rgba(12, 16, 28, 0.9);
+  box-shadow: 0 20px 45px -40px rgba(0, 0, 0, 0.75);
+  font-family: 'Poiret One', sans-serif;
+  letter-spacing: 0.18rem;
+  text-transform: uppercase;
+}
+
+.article-stats .stat {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  color: var(--article-subtext);
+}
+
+.article-stats .stat ion-icon {
+  font-size: 1.35rem;
+}
+
+.article-stats .stat-number {
+  min-width: 2.4rem;
+  text-align: left;
+}
+
+.article-stats [data-role="like"] {
+  cursor: pointer;
+  padding: 0.55rem 1.25rem;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 224, 138, 0.4);
+  transition: border-color 0.2s ease, color 0.2s ease, background 0.2s ease;
+  background: rgba(20, 28, 54, 0.6);
+}
+
+.article-stats [data-role="like"]:hover,
+.article-stats [data-role="like"]:focus-visible,
+.article-stats [data-role="like"].stat-like--active {
+  border-color: var(--accent-secondary);
+  color: var(--accent-secondary);
+}
+
+.article-stats [data-role="like"]:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(255, 224, 138, 0.25);
+}
+
+.article-stats .stat-view {
+  padding: 0.55rem 1.25rem;
+  border-radius: 999px;
+  border: 1px solid rgba(144, 202, 249, 0.3);
+  background: rgba(9, 11, 20, 0.55);
 }
