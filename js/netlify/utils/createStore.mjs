@@ -45,6 +45,8 @@ const buildStoreOptions = (name) => {
   const siteID = process.env.NETLIFY_BLOBS_SITE_ID || process.env.NETLIFY_SITE_ID;
   const token = process.env.NETLIFY_BLOBS_TOKEN || process.env.NETLIFY_AUTH_TOKEN;
 
+  console.log(`[post-stats] env debug -> siteID: ${Boolean(siteID)} token: ${Boolean(token)} context: ${Boolean(process.env.NETLIFY_BLOBS_CONTEXT_URL)}`);
+
   if (siteID) options.siteID = siteID;
   if (token) options.token = token;
   return options;
