@@ -1,6 +1,6 @@
-const { getStore } = require('@netlify/blobs');
-const fs = require('fs/promises');
-const path = require('path');
+import { getStore } from '@netlify/blobs';
+import fs from 'fs/promises';
+import path from 'path';
 
 const LOCAL_ROOT = path.join(process.cwd(), '.netlify', 'local-stats');
 
@@ -36,45 +36,46 @@ const createLocalStore = (name) => {
   };
 };
 
-const isLocalLike = process.env.NETLIFY_DEV === 'true' || process.env.NETLIFY_LOCAL === 'true' || !process.env.NETLIFY;
+const isNetlifyProduction = process.env.NETLIFY === 'true' && process.env.NETLIFY_DEV !== 'true';
+const isLocalLike = process.env.NETLIFY_DEV === 'true' || process.env.NETLIFY_LOCAL === 'true' || !isNetlifyProduction;
 
-const createRemoteStore = (name) => {
+const buildStoreOptions = (name) => {
   const options = { name };
   const siteID = process.env.NETLIFY_BLOBS_SITE_ID || process.env.NETLIFY_SITE_ID;
   const token = process.env.NETLIFY_BLOBS_TOKEN || process.env.NETLIFY_AUTH_TOKEN;
 
-  // When running inside Netlify production we don't need to inject credentials manually.
-  // Outside (e.g. local CLI) we can only talk to the remote store if both values are present.
-  if (!process.env.NETLIFY && (!siteID || !token)) {
-    return null;
-  }
+  if (siteID) options.siteID = siteID;
+  if (token) options.token = token;
+  return options;
+};
 
+const tryCreateRemoteStore = (name, { silentFallback } = {}) => {
   try {
-    if (siteID) options.siteID = siteID;
-    if (token) options.token = token;
-    return getStore(options);
+    return getStore(buildStoreOptions(name));
   } catch (error) {
-    console.warn(`[post-stats] Remote store unavailable: ${error.message}`);
-    if (isLocalLike) {
-      return null;
+    if (!silentFallback) {
+      console.error(`[post-stats] Failed to access blob store "${name}":`, error);
     }
-    throw error;
+    return null;
   }
 };
 
 const createStore = (name) => {
-  const remoteStore = createRemoteStore(name);
-
-  if (!remoteStore && !isLocalLike) {
-    throw new Error('Netlify Blobs store is not available. Ensure the site has access to the "post-stats" store.');
+  if (!isLocalLike) {
+    const remoteStore = tryCreateRemoteStore(name);
+    if (!remoteStore) {
+      throw new Error(`Netlify Blobs store "${name}" is unavailable in production.`);
+    }
+    return remoteStore;
   }
 
-  if (!remoteStore && isLocalLike) {
-    console.warn('[post-stats] Falling back to local JSON storage for development.');
-    return createLocalStore(name);
+  const remoteStore = tryCreateRemoteStore(name, { silentFallback: true });
+  if (remoteStore) {
+    return remoteStore;
   }
 
-  return remoteStore;
+  console.warn(`[post-stats] Using on-disk fallback storage for "${name}". Counts will not persist across deploys.`);
+  return createLocalStore(name);
 };
 
-module.exports = createStore;
+export default createStore;
