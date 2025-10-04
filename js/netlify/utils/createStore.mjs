@@ -36,8 +36,9 @@ const createLocalStore = (name) => {
   };
 };
 
-const isNetlifyProduction = process.env.NETLIFY === 'true' && process.env.NETLIFY_DEV !== 'true';
-const isLocalLike = process.env.NETLIFY_DEV === 'true' || process.env.NETLIFY_LOCAL === 'true' || !isNetlifyProduction;
+const isNetlifyDev = process.env.NETLIFY_DEV === 'true';
+const isNetlifyCLI = process.env.NETLIFY_LOCAL === 'true';
+const allowLocalFallback = isNetlifyDev || isNetlifyCLI;
 
 const buildStoreOptions = (name) => {
   const options = { name };
@@ -61,21 +62,17 @@ const tryCreateRemoteStore = (name, { silentFallback } = {}) => {
 };
 
 const createStore = (name) => {
-  if (!isLocalLike) {
-    const remoteStore = tryCreateRemoteStore(name);
-    if (!remoteStore) {
-      throw new Error(`Netlify Blobs store "${name}" is unavailable in production.`);
-    }
-    return remoteStore;
-  }
-
-  const remoteStore = tryCreateRemoteStore(name, { silentFallback: true });
+  const remoteStore = tryCreateRemoteStore(name, { silentFallback: allowLocalFallback });
   if (remoteStore) {
     return remoteStore;
   }
 
-  console.warn(`[post-stats] Using on-disk fallback storage for "${name}". Counts will not persist across deploys.`);
-  return createLocalStore(name);
+  if (allowLocalFallback) {
+    console.warn(`[post-stats] Using on-disk fallback storage for "${name}". Counts will not persist across deploys.`);
+    return createLocalStore(name);
+  }
+
+  throw new Error(`Netlify Blobs store "${name}" is unavailable in this environment.`);
 };
 
 export default createStore;
