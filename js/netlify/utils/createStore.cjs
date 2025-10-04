@@ -36,57 +36,45 @@ const createLocalStore = (name) => {
   };
 };
 
+const isLocalLike = process.env.NETLIFY_DEV === 'true' || process.env.NETLIFY_LOCAL === 'true' || !process.env.NETLIFY;
+
 const createRemoteStore = (name) => {
+  const options = { name };
+  const siteID = process.env.NETLIFY_BLOBS_SITE_ID || process.env.NETLIFY_SITE_ID;
+  const token = process.env.NETLIFY_BLOBS_TOKEN || process.env.NETLIFY_AUTH_TOKEN;
+
+  // When running inside Netlify production we don't need to inject credentials manually.
+  // Outside (e.g. local CLI) we can only talk to the remote store if both values are present.
+  if (!process.env.NETLIFY && (!siteID || !token)) {
+    return null;
+  }
+
   try {
-    const options = { name };
-    const siteID = process.env.NETLIFY_BLOBS_SITE_ID || process.env.NETLIFY_SITE_ID;
-    const token = process.env.NETLIFY_BLOBS_TOKEN || process.env.NETLIFY_AUTH_TOKEN;
-    if (siteID && token) {
-      options.siteID = siteID;
-      options.token = token;
-    }
+    if (siteID) options.siteID = siteID;
+    if (token) options.token = token;
     return getStore(options);
   } catch (error) {
     console.warn(`[post-stats] Remote store unavailable: ${error.message}`);
-    return null;
+    if (isLocalLike) {
+      return null;
+    }
+    throw error;
   }
 };
 
 const createStore = (name) => {
   const remoteStore = createRemoteStore(name);
-  const localStore = createLocalStore(name);
 
-  const getValue = async (key) => {
-    if (remoteStore) {
-      try {
-        const value = await remoteStore.get(key);
-        if (value !== undefined && value !== null) {
-          return value;
-        }
-      } catch (error) {
-        console.warn(`[post-stats] Remote get failed for ${key}: ${error.message}`);
-      }
-    }
-    return localStore.get(key);
-  };
+  if (!remoteStore && !isLocalLike) {
+    throw new Error('Netlify Blobs store is not available. Ensure the site has access to the "post-stats" store.');
+  }
 
-  const setValue = async (key, value) => {
-    if (remoteStore) {
-      try {
-        await remoteStore.set(key, value);
-      } catch (error) {
-        console.warn(`[post-stats] Remote set failed for ${key}: ${error.message}`);
-        await localStore.set(key, value);
-        return;
-      }
-    }
-    await localStore.set(key, value);
-  };
+  if (!remoteStore && isLocalLike) {
+    console.warn('[post-stats] Falling back to local JSON storage for development.');
+    return createLocalStore(name);
+  }
 
-  return {
-    get: getValue,
-    set: setValue
-  };
+  return remoteStore;
 };
 
 module.exports = createStore;

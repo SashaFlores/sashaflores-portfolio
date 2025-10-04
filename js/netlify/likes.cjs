@@ -35,7 +35,13 @@ exports.handler = async (event) => {
     return { statusCode: 400, headers: jsonHeaders, body: JSON.stringify({ error: "Missing post identifier" }) };
   }
 
-  const store = createStore(STORE_NAME);
+  let store;
+  try {
+    store = createStore(STORE_NAME);
+  } catch (error) {
+    console.error('likes function: failed to initialise blob store', error);
+    return { statusCode: 500, headers: jsonHeaders, body: JSON.stringify({ error: 'Storage unavailable' }) };
+  }
   const key = `${KEY_PREFIX}${slug}`;
 
   try {
