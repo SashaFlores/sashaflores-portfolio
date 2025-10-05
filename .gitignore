@@ -4,5 +4,8 @@ extra.md
 node_modules/
 .DS_Store
 
+# Legacy Netlify functions (no longer deployed)
+js/netlify/
+
 # Local Netlify folder
 .netlify
