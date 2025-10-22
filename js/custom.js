@@ -64,9 +64,45 @@ class TypeWriter {
 // Init On DOM Load
 document.addEventListener('DOMContentLoaded', init);
 
+document.addEventListener('DOMContentLoaded', function () {
+    const blocks = document.querySelectorAll('.codebox pre code');
+    blocks.forEach(code => {
+        const lines = code.textContent.replace(/\r\n?/g, '\n').split('\n');
+        while (lines.length && lines[0].trim() === '') {
+            lines.shift();
+        }
+        while (lines.length && lines[lines.length - 1].trim() === '') {
+            lines.pop();
+        }
+
+        if (!lines.length) {
+            return;
+        }
+
+        let minIndent = Infinity;
+        lines.forEach(line => {
+            if (!line.trim()) {
+                return;
+            }
+            const leading = line.match(/^(\s*)/)[1].length;
+            minIndent = Math.min(minIndent, leading);
+        });
+
+        if (!isFinite(minIndent) || minIndent === 0) {
+            return;
+        }
+
+        const trimmed = lines.map(line => (line.trim() ? line.slice(minIndent) : ''));
+        code.textContent = trimmed.join('\n');
+    });
+});
+
 // Init App
 function init() {
     const txtElement = document.querySelector('.txt-type');
+    if (!txtElement) {
+        return;
+    }
     const words = JSON.parse(txtElement.getAttribute('data-words'));
     const wait = txtElement.getAttribute('data-wait');
     // Init TypeWriter
@@ -211,8 +247,8 @@ document.addEventListener('DOMContentLoaded', function () {
         const selectedCategory = button.textContent; // keep your current source of truth
         applyFilter(selectedCategory);
         setURL(selectedCategory);
-      });
-    });
+  });
+});
 
     // On load: apply from ?category=... if present
     const qs = new URLSearchParams(window.location.search);
@@ -295,9 +331,62 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   }
 
+  function normalizeCodeIndentation() {
+    const blocks = document.querySelectorAll('.codebox pre code');
+    blocks.forEach(code => {
+      const raw = code.textContent.replace(/\r\n?/g, '\n');
+      const lines = raw.split('\n');
+
+      while (lines.length && lines[0].trim() === '') {
+        lines.shift();
+      }
+      while (lines.length && lines[lines.length - 1].trim() === '') {
+        lines.pop();
+      }
+
+      if (!lines.length) return;
+
+      let minIndent = null;
+      const indentWidths = line => line.replace(/\t/g, '  ').match(/^(\s*)/)[1].length;
+
+      lines.forEach(line => {
+        if (!line.trim()) return;
+        const width = indentWidths(line);
+        minIndent = minIndent === null ? width : Math.min(minIndent, width);
+        if (minIndent === 0) return;
+      });
+
+      if (!minIndent) {
+        return;
+      }
+
+      const trimLine = line => {
+        let remaining = minIndent;
+        let index = 0;
+
+        while (remaining > 0 && index < line.length) {
+          const char = line[index];
+          if (char === ' ') {
+            remaining -= 1;
+          } else if (char === '\t') {
+            remaining -= 2;
+          } else {
+            break;
+          }
+          index += 1;
+        }
+        return line.slice(index);
+      };
+
+      const normalized = lines.map(line => (line.trim() ? trimLine(line) : ''));
+      code.textContent = normalized.join('\n');
+    });
+  }
+
   // Initialize blog filtering and popup after DOM is loaded
   initBlogFiltering();
   initPopup();
+  normalizeCodeIndentation();
 });
 
 
@@ -582,5 +671,3 @@ if (typeof window.ethereum !== 'undefined') {
 } else {
     console.error('MetaMask is not available');
 }
-
-

@@ -8,8 +8,7 @@
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
     <title>Essential Git Commands Every Software Developer Should Master for Version Control</title>
-    <meta name="description"
-        content="A comprehensive guide to mastering Git commands, including branching, merging, configuration, and debugging. 
+    <meta name="description" content="A comprehensive guide to mastering Git commands, including branching, merging, configuration, and debugging. 
         Perfect for developers looking to enhance their version control skills with Git.">
     <meta name="keywords"
         content="Git, GitBash, GitBash Commands, Version Control, Comprehensive Git Tutorial, Git basics for Beginners, Git for Software Developers, Git Cheat Sheet">
@@ -23,7 +22,7 @@
     <link href="../../css/new-common-articles.css" rel="stylesheet">
     <link href="../../css/footer.css" rel="stylesheet">
 
-    
+
 
 
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-MXTX916K7T"></script>
@@ -67,16 +66,18 @@
                     </ul>
 
                     <div class="nav-cta">
-                        <button type="button" class="nav-cta__btn" data-connect-trigger aria-haspopup="dialog" aria-controls="walletModal">CONNECT</button>
-                        <button type="button" class="nav-cta__btn nav-cta__btn--accent" data-subscribe-trigger aria-haspopup="dialog" aria-controls="subscribeModal">SUBSCRIBE</button>
+                        <button type="button" class="nav-cta__btn" data-connect-trigger aria-haspopup="dialog"
+                            aria-controls="walletModal">CONNECT</button>
+                        <button type="button" class="nav-cta__btn nav-cta__btn--accent" data-subscribe-trigger
+                            aria-haspopup="dialog" aria-controls="subscribeModal">SUBSCRIBE</button>
                     </div>
                 </div>
             </div>
         </nav>
     </header>
-    
+
     <div class="article-container">
-        <h1 id="title">Essential Git Commands Every Software Developer Should Master for Version Control</h1>
+        <h1 id="title">Essential Git Commands Every Software</br> Developer Should Master for Version Control</h1>
         <figure class="meta">
             <img alt="Time Square" src="../../images/blog//tools/versionControl.jpg" />
         </figure>
@@ -92,228 +93,893 @@
             </div>
         </div>
 
-        <h2 id="submodule">Setup and Config Commands</h2>
-        <h3 class="article-list">git config</h3>
-        <p><strong>Purpose:</strong> Set user information, editor, and other settings.</p>
-        <ul>
-            <li>To set global username: <code style="color:rgb(223, 149, 12); font-size:20px">git config --global userName "Your Name"</code></li>
-            <li>To set global email: <code style="color:rgb(223, 149, 12); font-size:20px">git config --global userEmail "your.email@example.com"</code></li>
-            <li>To list all configuration settings: <code style="color:rgb(223, 149, 12); font-size:20px">git config --list</code></li>
-            <li>To set vim as the default editor: <code style="color:rgb(223, 149, 12); font-size:20px">git config --global core.editor "vim"</code></li>
-            <li>To set VSCode as the default editor: <code style="color:rgb(223, 149, 12); font-size:20px">git config --global core.editor "code --wait"</code></li>
-        </ul>
-        <h3 class="article-list">git help</h3>
-        <p><strong>Purpose:</strong> Provides help for Git commands.</p>
-        <ul>
-            <li>To get help for a specific command: <code style="color:rgb(223, 149, 12); font-size:20px">git help &lt;command&gt;</code></li>
-            <li>To help with merge command, for example: <code style="color:rgb(223, 149, 12); font-size:20px">git help merge</code></li>
-            <li>To list all available Git commands: <code style="color:rgb(223, 149, 12); font-size:20px">git help -a</code></li>
-        </ul>
+        <h4 class="title t-4">Setup and Config Commands</h4>
+        <ol class="outer-ol">
+            <li>
+                <span class="ol-title">git config</span>
+                <span class="ol-expl">Set user information, editor, and other settings.</span>
+                <ol class="inner-ol">
+                    <li>
+                        <span class="ol-title">To set global username:</span>
+                        <span class="ol-expl">
+                            <div class="copyline">
+                                <code id="code-rpc">git config --global userName "Your Name"</code>
+                                <button class="copy-btn" data-copy-target="#code-rpc" aria-label="Copy line"><ion-icon name="copy-outline"></ion-icon></button>
+                            </div>
+                        </span>
+                    </li>
+                    <li>
+                        <span class="ol-title">To set global email:</span>
+                        <span class="ol-expl">
+                            <div class="copyline">
+                                <code id="code-rpc">git config --global userEmail "your.email@example.com"</code>
+                                <button class="copy-btn" data-copy-target="#code-rpc" aria-label="Copy line"><ion-icon name="copy-outline"></ion-icon></button>
+                            </div>
+                        </span>
+                    </li>
+                    <li>
+                        <span class="ol-title">To list all configuration settings:</span>
+                        <span class="ol-expl">
+                            <div class="copyline">
+                                <code id="code-rpc">git config --list</code>
+                                <button class="copy-btn" data-copy-target="#code-rpc" aria-label="Copy line"><ion-icon name="copy-outline"></ion-icon></button>
+                            </div>
+                        </span>
+                    </li>
+                    <li>
+                        <span class="ol-title">To set vim as the default editor:</span>
+                        <span class="ol-expl">
+                            <div class="copyline">
+                                <code id="code-rpc">git config --global core.editor "vim"</code>
+                                <button class="copy-btn" data-copy-target="#code-rpc" aria-label="Copy line"><ion-icon name="copy-outline"></ion-icon></button>
+                            </div>
+                        </span>
+                    </li>
+                    <li>
+                        <span class="ol-title">To set VSCode as the default editor:</span>
+                        <span class="ol-expl">
+                            <div class="copyline">
+                                <code id="code-rpc">git config --global core.editor "code --wait"</code>
+                                <button class="copy-btn" data-copy-target="#code-rpc" aria-label="Copy line"><ion-icon name="copy-outline"></ion-icon></button>
+                            </div>
+                        </span>
+                    </li>
+                </ol>
+            </li>
+            <li>
+                <span class="ol-title">git help</span>
+                <span class="ol-expl">Access help documentation for Git commands.</span>
+                <ol class="inner-ol">
+                    <li>
+                        <span class="ol-title">To get help for a specific command:</span>
+                        <span class="ol-expl">
+                            <div class="copyline">
+                                <code id="code-rpc">git help &lt;command&gt;</code>
+                                <button class="copy-btn" data-copy-target="#code-rpc" aria-label="Copy line"><ion-icon name="copy-outline"></ion-icon></button>
+                            </div>
+                        </span>
+                    </li>
+                    <li>
+                        <span class="ol-title">To help with merge command, for example:</span>
+                        <span class="ol-expl">
+                            <div class="copyline">
+                                <code id="code-rpc">git help merge</code>
+                                <button class="copy-btn" data-copy-target="#code-rpc" aria-label="Copy line"><ion-icon name="copy-outline"></ion-icon></button>
+                            </div>
+                        </span>
+                    </li>
+                    <li>
+                        <span class="ol-title">To list all available Git commands:</span>
+                        <span class="ol-expl">
+                            <div class="copyline">
+                                <code id="code-rpc">git help -a</code>
+                                <button class="copy-btn" data-copy-target="#code-rpc" aria-label="Copy line"><ion-icon name="copy-outline"></ion-icon></button>
+                            </div>
+                        </span>
+                    </li>
+                </ol>
+            </li>
+        </ol>
+
+        <h4 class="title t-4">Cloning and Creating Projects Commands</h4>
+        <ol class="outer-ol">
+            <li>
+                <span class="ol-title">git init</span>
+                <span class="ol-expl">Initialize a new Git repository.</span>
+                <ol class="inner-ol">
+                    <li>
+                        <span class="ol-title">To create a new repository:</span>
+                        <span class="ol-expl">
+                            <div class="copyline">
+                                <code id="code-rpc">git init &lt;directory-name&gt;</code>
+                                <button class="copy-btn" data-copy-target="#code-rpc" aria-label="Copy line"><ion-icon name="copy-outline"></ion-icon></button>
+                            </div>
+                        </span>
+                    </li>
+                    <li>
+                        <span class="ol-title">To create a bare repository (for servers):</span>
+                        <span class="ol-expl">
+                            <div class="copyline">
+                                <code id="code-rpc">git init --bare</code>
+                                <button class="copy-btn" data-copy-target="#code-rpc" aria-label="Copy line"><ion-icon name="copy-outline"></ion-icon></button>
+                            </div>
+                        </span>
+                    </li>
+                </ol>
+            </li>
+            <li>
+                <span class="ol-title">git clone</span>
+                <span class="ol-expl">Clone a remote repository to the local machine.</span>
+                <ol class="inner-ol">
+                    <li>
+                        <span class="ol-title">To clone a repository:</span>
+                        <span class="ol-expl">
+                            <div class="copyline">
+                                <code id="code-rpc">git clone &lt;url&gt; &lt;directory&gt;</code>
+                                <button class="copy-btn" data-copy-target="#code-rpc" aria-label="Copy line"><ion-icon name="copy-outline"></ion-icon></button>
+                            </div>
+                        </span>
+                    </li>
+                    <li>
+                        <span class="ol-title">To clone only the latest commit:</span>
+                        <span class="ol-expl">
+                            <div class="copyline">
+                                <code id="code-rpc">git clone --depth=1 &lt;url&gt;</code>
+                                <button class="copy-btn" data-copy-target="#code-rpc" aria-label="Copy line"><ion-icon name="copy-outline"></ion-icon></button>
+                            </div>
+                        </span>
+                    </li>
+                </ol>
+            </li>
+        </ol>
+
+        <h4 class="title t-4">Basic Snapshot Commands</h4>
+        <ol class="outer-ol">
+            <li>
+                <span class="ol-title">git add</span>
+                <span class="ol-expl">Stage changes to be committed.</span>
+                <ol class="inner-ol">
+                    <li>
+                        <span class="ol-title">To add a specific file:</span>
+                        <span class="ol-expl">
+                            <div class="copyline">
+                                <code id="code-rpc">git add &lt;file&gt;</code>
+                                <button class="copy-btn" data-copy-target="#code-rpc" aria-label="Copy line"><ion-icon name="copy-outline"></ion-icon></button>
+                            </div>
+                        </span>
+                    </li>
+                    <li>
+                        <span class="ol-title">To add all files:</span>
+                        <span class="ol-expl">
+                            <div class="copyline">
+                                <code id="code-rpc">git add .</code>
+                                <button class="copy-btn" data-copy-target="#code-rpc" aria-label="Copy line"><ion-icon name="copy-outline"></ion-icon></button>
+                            </div>
+                        </span>
+                    </li>
+                    <li>
+                        <span class="ol-title">To add changes interactively in patches: </span>
+                        <span class="ol-expl">
+                            <div class="copyline">
+                                <code id="code-rpc">git add -p</code>
+                                <button class="copy-btn" data-copy-target="#code-rpc" aria-label="Copy line"><ion-icon name="copy-outline"></ion-icon></button>
+                            </div>
+                        </span>
+                    </li>
+                </ol>
+            </li>
+            <li>
+                <span class="ol-title">git status</span>
+                <span class="ol-expl"> Show the working tree status.</span>
+                <ol class="inner-ol">
+                    <li>
+                        <span class="ol-title">To show the status of the working tree:</span>
+                        <span class="ol-expl">
+                            <div class="copyline">
+                                <code id="code-rpc">git status</code>
+                                <button class="copy-btn" data-copy-target="#code-rpc" aria-label="Copy line"><ion-icon name="copy-outline"></ion-icon></button>
+                            </div>
+                        </span>
+                    </li>
+                    <li>
+                        <span class="ol-title">To show the status in short format:</span>
+                        <span class="ol-expl">
+                            <div class="copyline">
+                                <code id="code-rpc">git status -s</code>
+                                <button class="copy-btn" data-copy-target="#code-rpc" aria-label="Copy line"><ion-icon name="copy-outline"></ion-icon></button>
+                            </div>
+                        </span>
+                    </li>
+                    <li>
+                        <span class="ol-title">To show ignored files:</span>
+                        <span class="ol-expl">
+                            <div class="copyline">
+                                <code id="code-rpc">git status --ignored</code>
+                                <button class="copy-btn" data-copy-target="#code-rpc" aria-label="Copy line"><ion-icon name="copy-outline"></ion-icon></button>
+                            </div>
+                        </span>
+                    </li>
+                </ol>
+            </li>
+            <li>
+                <span class="ol-title">git diff</span>
+                <span class="ol-expl">Show changes between commits, branches and working tree, etc.</span>
+                <ol class="inner-ol">
+                    <li>
+                        <span class="ol-title">To show unstaged changes: </span>
+                        <span class="ol-expl">
+                            <div class="copyline">
+                                <code id="code-rpc">git diff</code>
+                                <button class="copy-btn" data-copy-target="#code-rpc" aria-label="Copy line"><ion-icon name="copy-outline"></ion-icon></button>
+                            </div>
+                        </span>
+                    </li>
+                    <li>
+                        <span class="ol-title">To show changes changes staged for commit: </span>
+                        <span class="ol-expl">
+                            <div class="copyline">
+                                <code id="code-rpc">git diff --staged</code>
+                                <button class="copy-btn" data-copy-target="#code-rpc" aria-label="Copy line"><ion-icon name="copy-outline"></ion-icon></button>
+                            </div>
+                        </span>
+                    </li>
+                    <li>
+                        <span class="ol-title">To compare between two branches: </span>
+                        <span class="ol-expl">
+                            <div class="copyline">
+                                <code id="code-rpc">git diff &lt;branch1&gt; &lt;branch2&gt;</code>
+                                <button class="copy-btn" data-copy-target="#code-rpc" aria-label="Copy line"><ion-icon name="copy-outline"></ion-icon></button>
+                            </div>
+                        </span>
+                    </li>
+                </ol>
+            </li>
+            <li>
+                <span class="ol-title">git commit</span>
+                <span class="ol-expl">Record changes to the repository.</span>
+                <ol class="inner-ol">
+                    <li>
+                        <span class="ol-title">To commit all staged changes with a message:</span>
+                        <span class="ol-expl">
+                            <div class="copyline">
+                                <code id="code-rpc">git commit -m "message"</code>
+                                <button class="copy-btn" data-copy-target="#code-rpc" aria-label="Copy line"><ion-icon name="copy-outline"></ion-icon></button>
+                            </div>
+                        </span>
+                    </li>
+                    <li>
+                        <span class="ol-title">To modify the last commit:</span>
+                        <span class="ol-expl">
+                            <div class="copyline">
+                                <code id="code-rpc">git commit --amend</code>
+                                <button class="copy-btn" data-copy-target="#code-rpc" aria-label="Copy line"><ion-icon name="copy-outline"></ion-icon></button>
+                            </div>
+                        </span>
+                    </li>
+                    <li>
+                        <span class="ol-title">To amend the last commit without changing the message:</span>
+                        <span class="ol-expl">
+                            <div class="copyline">
+                                <code id="code-rpc">git commit --no-edit</code>
+                                <button class="copy-btn" data-copy-target="#code-rpc" aria-label="Copy line"><ion-icon name="copy-outline"></ion-icon></button>
+                            </div>
+                        </span>
+                    </li>
+                </ol>
+            </li>
+            <li>
+                <span class="ol-title">git reset</span>
+                <span class="ol-expl">Reset current HEAD to a specific state.</span>
+                <ol class="inner-ol">
+                    <li>
+                        <span class="ol-title">To unstage a file:</span>
+                        <span class="ol-expl">
+                            <div class="copyline">
+                                <code id="code-rpc">git reset &lt;file&gt;</code>
+                                <button class="copy-btn" data-copy-target="#code-rpc" aria-label="Copy line"><ion-icon name="copy-outline"></ion-icon></button>
+                            </div>
+                        </span>
+                    </li>
+                    <li>
+                        <span class="ol-title">To keep changes in the working directory:</span>
+                        <span class="ol-expl">
+                            <div class="copyline">
+                                <code id="code-rpc">git reset --soft &lt;commit&gt;</code>
+                                <button class="copy-btn" data-copy-target="#code-rpc" aria-label="Copy line"><ion-icon name="copy-outline"></ion-icon></button>
+                            </div>
+                        </span>
+                    </li>
+                    <li>
+                        <span class="ol-title">To discard changes in the working directory:</span>
+                        <span class="ol-expl">
+                            <div class="copyline">
+                                <code id="code-rpc">git reset --hard &lt;commit&gt;</code>
+                                <button class="copy-btn" data-copy-target="#code-rpc" aria-label="Copy line"><ion-icon name="copy-outline"></ion-icon></button>
+                            </div>
+                        </span>
+                    </li>
+                </ol>
+            </li>
+        </ol>
+
+        <h4 class="title t-4">Branching and Merging Commands</h4>
+        <ol class="outer-ol">
+            <li>
+                <span class="ol-title">git branch</span>
+                <span class="ol-expl">List, create, delete, or rename branches.</span>
+                <ol class="inner-ol">
+                    <li>
+                        <span class="ol-title">To list all branches:</span>
+                        <span class="ol-expl">
+                            <div class="copyline">
+                                <code id="code-rpc">git branch</code>
+                                <button class="copy-btn" data-copy-target="#code-rpc" aria-label="Copy line"><ion-icon name="copy-outline"></ion-icon></button>
+                            </div>
+                        </span>
+                    </li>
+                    <li>
+                        <span class="ol-title">To create a new branch:</span>
+                        <span class="ol-expl">
+                            <div class="copyline">
+                                <code id="code-rpc">git branch &lt;branch-name&gt;</code>
+                                <button class="copy-btn" data-copy-target="#code-rpc" aria-label="Copy line"><ion-icon name="copy-outline"></ion-icon></button>
+                            </div>
+                        </span>
+                    </li>
+                    <li>
+                        <span class="ol-title">To delete a branch:</span>
+                        <span class="ol-expl">
+                            <div class="copyline">
+                                <code id="code-rpc">git branch -d &lt;branch-name&gt;</code>
+                                <button class="copy-btn" data-copy-target="#code-rpc" aria-label="Copy line"><ion-icon name="copy-outline"></ion-icon></button>
+                            </div>
+                        </span>
+                    </li>
+                    <li>
+                        <span class="ol-title">To rename a branch:</span>
+                        <span class="ol-expl">
+                            <div class="copyline">
+                                <code id="code-rpc">git branch -m &lt;old-branch-name&gt; &lt;new-branch-name&gt;</code>
+                                <button class="copy-btn" data-copy-target="#code-rpc" aria-label="Copy line"><ion-icon name="copy-outline"></ion-icon></button>
+                            </div>
+                        </span>
+                    </li>
+                    <li>
+                        <span class="ol-title">To show the current branch:</span>
+                        <span class="ol-expl">
+                            <div class="copyline">
+                                <code id="code-rpc">git branch --show-current</code>
+                                <button class="copy-btn" data-copy-target="#code-rpc" aria-label="Copy line"><ion-icon name="copy-outline"></ion-icon></button>
+                            </div>
+                        </span>
+                    </li>
+                </ol>
+            </li>
+            <li>
+                <span class="ol-title">git checkout</span>
+                <span class="ol-expl">Switch branches or restore working tree files.</span>
+                <ol class="inner-ol">
+                    <li>
+                        <span class="ol-title">To switch to a branch:</span>
+                        <span class="ol-expl">
+                            <div class="copyline">
+                                <code id="code-rpc">git checkout &lt;branch-name&gt;</code>
+                                <button class="copy-btn" data-copy-target="#code-rpc" aria-label="Copy line"><ion-icon name="copy-outline"></ion-icon></button>
+                            </div>
+                        </span>
+                    </li>
+                    <li>
+                        <span class="ol-title">To create and switch to a new branch:</span>
+                        <span class="ol-expl">
+                            <div class="copyline">
+                                <code id="code-rpc">git checkout -b &lt;branch-name&gt;</code>
+                                <button class="copy-btn" data-copy-target="#code-rpc" aria-label="Copy line"><ion-icon name="copy-outline"></ion-icon></button>
+                            </div>
+                        </span>
+                    </li>
+                    <li>
+                        <span class="ol-title">To discard changes in the working directory:</span>
+                        <span class="ol-expl">
+                            <div class="copyline">
+                                <code id="code-rpc">git checkout -- &lt;file&gt;</code>
+                                <button class="copy-btn" data-copy-target="#code-rpc" aria-label="Copy line"><ion-icon name="copy-outline"></ion-icon></button>
+                            </div>
+                        </span>
+                    </li>
+                </ol>
+            </li>
+            <li>
+                <span class="ol-title">git merge</span>
+                <span class="ol-expl">Merge changes from one branch into another.</span>
+                <ol class="inner-ol">
+                    <li>
+                        <span class="ol-title">To merge a branch into the current branch:</span>
+                        <span class="ol-expl">
+                            <div class="copyline">
+                                <code id="code-rpc">git merge &lt;branch-name&gt;</code>
+                                <button class="copy-btn" data-copy-target="#code-rpc" aria-label="Copy line"><ion-icon name="copy-outline"></ion-icon></button>
+                            </div>
+                        </span>
+                    </li>
+                    <li>
+                        <span class="ol-title">To merge changes into the current branch but do not commit immediately:</span>
+                        <span class="ol-expl">
+                            <div class="copyline">
+                                <code id="code-rpc">git merge --squash &lt;branch-name&gt;</code>
+                                <button class="copy-btn" data-copy-target="#code-rpc" aria-label="Copy line"><ion-icon name="copy-outline"></ion-icon></button>
+                            </div>
+                        </span>
+                    </li>
+                    <li>
+                        <span class="ol-title">To create a merge commit even if a fast-forward merge is possible:</span>
+                        <span class="ol-expl">
+                            <div class="copyline">
+                                <code id="code-rpc">git merge --no-ff</code>
+                                <button class="copy-btn" data-copy-target="#code-rpc" aria-label="Copy line"><ion-icon name="copy-outline"></ion-icon></button>
+                            </div>
+                        </span>
+                    </li>
+                </ol>
+            </li>
+            <li>
+                <span class="ol-title">git rebase</span>
+                <span class="ol-expl">Merge changes from one branch into another.</span>
+                <ol class="inner-ol">
+                    <li>
+                        <span class="ol-title">To rebase the current branch onto another branch:</span>
+                        <span class="ol-expl">
+                            <div class="copyline">
+                                <code id="code-rpc">git rebase &lt;branch-name&gt;</code>
+                                <button class="copy-btn" data-copy-target="#code-rpc" aria-label="Copy line"><ion-icon name="copy-outline"></ion-icon></button>
+                            </div>
+                        </span>
+                    </li>
+                    <li>
+                        <span class="ol-title">To rebase interactively to edit commit history:</span>
+                        <span class="ol-expl">
+                            <div class="copyline">
+                                <code id="code-rpc">git rebase --interactive</code>
+                                <button class="copy-btn" data-copy-target="#code-rpc" aria-label="Copy line"><ion-icon name="copy-outline"></ion-icon></button>
+                            </div>
+                        </span>
+                    </li>
+                    <li>
+                        <span class="ol-title">To the rebase and reset to the original branch:</span>
+                        <span class="ol-expl">
+                            <div class="copyline">
+                                <code id="code-rpc">git rebase --abort</code>
+                                <button class="copy-btn" data-copy-target="#code-rpc" aria-label="Copy line"><ion-icon name="copy-outline"></ion-icon></button>
+                            </div>
+                        </span>
+                    </li>
+                </ol>
+            </li>
+            <li>
+                <span class="ol-title">git stash</span>
+                <span class="ol-expl">Save changes temporarily without committing.</span>
+                <ol class="inner-ol">
+                    <li>
+                        <span class="ol-title">To save changes with a message:</span>
+                        <span class="ol-expl">
+                            <div class="copyline">
+                                <code id="code-rpc">git stash save "message"</code>
+                                <button class="copy-btn" data-copy-target="#code-rpc" aria-label="Copy line"><ion-icon name="copy-outline"></ion-icon></button>
+                            </div>
+                        </span>
+                    </li>
+                    <li>
+                        <span class="ol-title">To apply changes from the stash and remove it from the stash list:</span>
+                        <span class="ol-expl">
+                            <div class="copyline">
+                                <code id="code-rpc">git stash pop</code>
+                                <button class="copy-btn" data-copy-target="#code-rpc" aria-label="Copy line"><ion-icon name="copy-outline"></ion-icon></button>
+                            </div>
+                        </span>
+                    </li>
+                    <li>
+                        <span class="ol-title">To list all stashes:</span>
+                        <span class="ol-expl">
+                            <div class="copyline">
+                                <code id="code-rpc">git stash list</code>
+                                <button class="copy-btn" data-copy-target="#code-rpc" aria-label="Copy line"><ion-icon name="copy-outline"></ion-icon></button>
+                            </div>
+                        </span>
+                    </li>
+                </ol>
+            </li>
+        </ol>
+
+        <h4 class="title t-4">Sharing and Updating Projects</h4>
+        <ol class="outer-ol">
+            <li>
+                <span class="ol-title">git fetch</span>
+                <span class="ol-expl">Download objects and refs from a remote repository.</span>
+                <ol class="inner-ol">
+                    <li>
+                        <span class="ol-title">To fetch changes from a remote repository:</span>
+                        <span class="ol-expl">
+                            <div class="copyline">
+                                <code id="code-rpc">git fetch origin</code>
+                                <button class="copy-btn" data-copy-target="#code-rpc" aria-label="Copy line"><ion-icon name="copy-outline"></ion-icon></button>
+                            </div>
+                        </span>
+                    </li>
+                    <li>
+                        <span class="ol-title">To fetch all changes from all remotes:</span>
+                        <span class="ol-expl">
+                            <div class="copyline">
+                                <code id="code-rpc">git fetch --all</code>
+                                <button class="copy-btn" data-copy-target="#code-rpc" aria-label="Copy line"><ion-icon name="copy-outline"></ion-icon></button>
+                            </div>
+                        </span>
+                    </li>
+                </ol>
+            </li>
+            <li>
+                <span class="ol-title">git pull</span>
+                <span class="ol-expl">Fetch and merge changes from a remote repository.</span>
+                <ol class="inner-ol">
+                    <li>
+                        <span class="ol-title">To pull changes from a specific branch:</span>
+                        <span class="ol-expl">
+                            <div class="copyline">
+                                <code id="code-rpc">git pull origin &lt;branch-name&gt;</code>
+                                <button class="copy-btn" data-copy-target="#code-rpc" aria-label="Copy line"><ion-icon name="copy-outline"></ion-icon></button>
+                            </div>
+                        </span>
+                    </li>
+                    <li>
+                        <span class="ol-title">To rebase the local branch with the upstream branch:</span>
+                        <span class="ol-expl">
+                            <div class="copyline">
+                                <code id="code-rpc">git pull --rebase</code>
+                                <button class="copy-btn" data-copy-target="#code-rpc" aria-label="Copy line"><ion-icon name="copy-outline"></ion-icon></button>
+                            </div>
+                        </span>
+                    </li>
+                </ol>
+            </li>
+            <li>
+                <span class="ol-title">git push</span>
+                <span class="ol-expl">Push local changes to a remote repository.</span>
+                <ol class="inner-ol">
+                    <li>
+                        <span class="ol-title">To push the current branch to origin:</span>
+                        <span class="ol-expl">
+                            <div class="copyline">
+                                <code id="code-rpc">git push origin &lt;branch-name&gt;</code>
+                                <button class="copy-btn" data-copy-target="#code-rpc" aria-label="Copy line"><ion-icon name="copy-outline"></ion-icon></button>
+                            </div>
+                        </span>
+                    </li>
+                    <li>
+                        <span class="ol-title">To force push changes, overwriting history:</span>
+                        <span class="ol-expl">
+                            <div class="copyline">
+                                <code id="code-rpc">git push --force</code>
+                                <button class="copy-btn" data-copy-target="#code-rpc" aria-label="Copy line"><ion-icon name="copy-outline"></ion-icon></button>
+                            </div>
+                        </span>
+                    </li>
+                </ol>
+            </li>
+            <li>
+                <span class="ol-title">git remote</span>
+                <span class="ol-expl">Manage remote repository connections.</span>
+                <ol class="inner-ol">
+                    <li>
+                        <span class="ol-title">To add a remote repository:</span>
+                        <span class="ol-expl">
+                            <div class="copyline">
+                                <code id="code-rpc">git remote add &lt;name&gt; &lt;url&gt;</code>
+                                <button class="copy-btn" data-copy-target="#code-rpc" aria-label="Copy line"><ion-icon name="copy-outline"></ion-icon></button>
+                            </div>
+                        </span>
+                    </li>
+                    <li>
+                        <span class="ol-title">To list all remote repositories/URLs:</span>
+                        <span class="ol-expl">
+                            <div class="copyline">
+                                <code id="code-rpc">git remote -v</code>
+                                <button class="copy-btn" data-copy-target="#code-rpc" aria-label="Copy line"><ion-icon name="copy-outline"></ion-icon></button>
+                            </div>
+                        </span>
+                    </li>
+                    <li>
+                        <span class="ol-title">To remove a remote repository:</span>
+                        <span class="ol-expl">
+                            <div class="copyline">
+                                <code id="code-rpc">git remote remove &lt;name&gt;</code>
+                                <button class="copy-btn" data-copy-target="#code-rpc" aria-label="Copy line"><ion-icon name="copy-outline"></ion-icon></button>
+                            </div>
+                        </span>
+                    </li>
+                </ol>
+            </li>
+            <li>
+                <span class="ol-title">git submodule</span>
+                <span class="ol-expl">Manage submodules in a Git repository.</span>
+                <ol class="inner-ol">
+                    <li>
+                        <span class="ol-title">To add a submodule:</span>
+                        <span class="ol-expl">
+                            <div class="copyline">
+                                <code id="code-rpc">git submodule add &lt;repository&gt;</code>
+                                <button class="copy-btn" data-copy-target="#code-rpc" aria-label="Copy line"><ion-icon name="copy-outline"></ion-icon></button>
+                            </div>
+                        </span>
+                    </li>
+                    <li>
+                        <span class="ol-title">To clone and initialize submodules:</span>
+                        <span class="ol-expl">
+                            <div class="copyline">
+                                <code id="code-rpc">git submodule update --init</code>
+                                <button class="copy-btn" data-copy-target="#code-rpc" aria-label="Copy line"><ion-icon name="copy-outline"></ion-icon></button>
+                            </div>
+                        </span>
+                    </li>
+                    <li>
+                        <span class="ol-title">To show the status of submodules:</span>
+                        <span class="ol-expl">
+                            <div class="copyline">
+                                <code id="code-rpc">git submodule status</code>
+                                <button class="copy-btn" data-copy-target="#code-rpc" aria-label="Copy line"><ion-icon name="copy-outline"></ion-icon></button>
+                            </div>
+                        </span>
+                    </li>
+                </ol>
+            </li>
+        </ol>
 
 
-        <h2 id="submodule">Getting and Creating Projects</h2>
-        <h3 class="article-list">git init</h3>
-        <p><strong>Purpose:</strong> Initialize a new Git repository.</p>
-        <ul>
-            <li>To create a new repository: <code style="color:rgb(223, 149, 12); font-size:20px">git init &lt;directory-name&gt;</code></li>
-            <li>To create a bare repository(for servers): <code style="color:rgb(223, 149, 12); font-size:20px">git init --bare</code></li>
-        </ul>
-        <h3 class="article-list">git clone</h3>
-        <p><strong>Purpose:</strong> Clone a remote repository to the local machine.</p>
-        <ul>
-            <li>To clone a repository: <code style="color:rgb(223, 149, 12); font-size:20px">git clone &lt;url&gt; &lt;directory&gt;</code></li>
-            <li>To clone only the latest commit: <code style="color:rgb(223, 149, 12); font-size:20px">git clone --depth=1 &lt;url&gt;</code></li>
-        </ul>
-        
-        
-        <h2 id="submodule">Basic Snapshotting Commands</h2>
-        <h3 class="article-list">git add</h3>
-        <p><strong>Purpose:</strong> Stage changes to be committed.</p>
-        <ul>
-            <li>To add a specific file: <code style="color:rgb(223, 149, 12); font-size:20px">git add &lt;file&gt;</code></li>
-            <li>To add all files: <code style="color:rgb(223, 149, 12); font-size:20px">git add .</code></li>
-            <li>To add changes interactively in patches: <code style="color:rgb(223, 149, 12); font-size:20px">git add -p</code></li>
-        </ul>
-        <h3 class="article-list">git status</h3>
-        <p><strong>Purpose:</strong> Show the working tree status.</p>
-        <ul>
-            <li>To show the status of the working tree: <code style="color:rgb(223, 149, 12); font-size:20px">git status</code></li>
-            <li>To show the status in short format: <code style="color:rgb(223, 149, 12); font-size:20px">git status -s</code></li>
-            <li>To show ignored files: <code style="color:rgb(223, 149, 12); font-size:20px">git status --ignored</code></li> 
-        </ul>
-        <h3 class="article-list">git diff</h3>
-        <p><strong>Purpose:</strong> Show changes between commits, branches, or the working tree.</p>
-        <ul>
-            <li>To show unstaged changes: <code style="color:rgb(223, 149, 12); font-size:20px">git diff</code></li>
-            <li>To show changes changes staged for commit: <code style="color:rgb(223, 149, 12); font-size:20px">git diff --staged</code></li>
-            <li>To compare between two branches: <code style="color:rgb(223, 149, 12); font-size:20px">git diff &lt;branch1&gt; &lt;branch2&gt;</code></li>
-        </ul>
-        <h3 class="article-list">git commit</h3>
-        <p><strong>Purpose:</strong> Record changes to the repository.</p>
-        <ul>
-            <li>To commit all staged changes with a message: <code style="color:rgb(223, 149, 12); font-size:20px">git commit -m "message"</code></li>
-            <li>To modify the last commit: <code style="color:rgb(223, 149, 12); font-size:20px">git commit --amend</code></li>
-            <li>To amend the last commit without changing the message: <code style="color:rgb(223, 149, 12); font-size:20px">git commit --no-edit</code></li>
-        </ul>
-        <h3 class="article-list">git reset</h3>
-        <p><strong>Purpose:</strong> Reset current HEAD to a specific state.</p>
-        <ul>
-            <li>To unstage a file: <code style="color:rgb(223, 149, 12); font-size:20px">git reset &lt;file&gt;</code></li>
-            <li>To keep changes in the working directory: <code style="color:rgb(223, 149, 12); font-size:20px">git reset --soft &lt;commit&gt;</code></li>
-            <li>To discard changes in the working directory: <code style="color:rgb(223, 149, 12); font-size:20px">git reset --hard &lt;commit&gt;</code></li>
-        </ul>
+        <h4 class="title t-4">Inspection and Comparison Commands</h4>
+        <ol class="outer-ol">
+            <li>
+                <span class="ol-title">git log</span>
+                <span class="ol-expl">Show the commit history.</span>
+                <ol class="inner-ol">
+                    <li>
+                        <span class="ol-title">To show the commit history:</span>
+                        <span class="ol-expl">
+                            <div class="copyline">
+                                <code id="code-rpc">git log</code>
+                                <button class="copy-btn" data-copy-target="#code-rpc" aria-label="Copy line"><ion-icon name="copy-outline"></ion-icon></button>
+                            </div>
+                        </span>
+                    </li>
+                    <li>
+                        <span class="ol-title">To show the commit history in one line:</span>
+                        <span class="ol-expl">
+                            <div class="copyline">
+                                <code id="code-rpc">git log --oneline</code>
+                                <button class="copy-btn" data-copy-target="#code-rpc" aria-label="Copy line"><ion-icon name="copy-outline"></ion-icon></button>
+                            </div>
+                        </span>
+                    </li>
+                    <li>
+                        <span class="ol-title">To show a graphical representation of the commit history:</span>
+                        <span class="ol-expl">
+                            <div class="copyline">
+                                <code id="code-rpc">git log --graph</code>
+                                <button class="copy-btn" data-copy-target="#code-rpc" aria-label="Copy line"><ion-icon name="copy-outline"></ion-icon></button>
+                            </div>
+                        </span>
+                    </li>
+                    <li>
+                        <span class="ol-title">To show the changes introduced in each commit:</span>
+                        <span class="ol-expl">
+                            <div class="copyline">
+                                <code id="code-rpc">git log -p</code>
+                                <button class="copy-btn" data-copy-target="#code-rpc" aria-label="Copy line"><ion-icon name="copy-outline"></ion-icon></button>
+                            </div>
+                        </span>
+                    </li>
+                </ol>
+            </li>
+            <li>
+                <span class="ol-title">git show</span>
+                <span class="ol-expl">Show details of a commit or object.</span>
+                <ol class="inner-ol">
+                    <li>
+                        <span class="ol-title">To show the details of a commit:</span>
+                        <span class="ol-expl">
+                            <div class="copyline">
+                                <code id="code-rpc">git show &lt;commit&gt;</code>
+                                <button class="copy-btn" data-copy-target="#code-rpc" aria-label="Copy line"><ion-icon name="copy-outline"></ion-icon></button>
+                            </div>
+                        </span>
+                    </li>
+                    <li>
+                        <span class="ol-title">To show the details of a commit:</span>
+                        <span class="ol-expl">
+                            <div class="copyline">
+                                <code id="code-rpc">git show HEAD</code>
+                                <button class="copy-btn" data-copy-target="#code-rpc" aria-label="Copy line"><ion-icon name="copy-outline"></ion-icon></button>
+                            </div>
+                        </span>
+                    </li>
+                </ol>
+            </li>
+            <li>
+                <span class="ol-title">git diff</span>
+                <span class="ol-expl">Show changes between commits, branches, or working tree.</span>
+                <ol class="inner-ol">
+                    <li>
+                        <span class="ol-title">To show unstaged changes:</span>
+                        <span class="ol-expl">
+                            <div class="copyline">
+                                <code id="code-rpc">git diff</code>
+                                <button class="copy-btn" data-copy-target="#code-rpc" aria-label="Copy line"><ion-icon name="copy-outline"></ion-icon></button>
+                            </div>
+                        </span>
+                    </li>
+                    <li>
+                        <span class="ol-title">To show changes staged for commit:</span>
+                        <span class="ol-expl">
+                            <div class="copyline">
+                                <code id="code-rpc">git diff --staged</code>
+                                <button class="copy-btn" data-copy-target="#code-rpc" aria-label="Copy line"><ion-icon name="copy-outline"></ion-icon></button>
+                            </div>
+                        </span>
+                    </li>
+                    <li>
+                        <span class="ol-title">To compare between two branches:</span>
+                        <span class="ol-expl">
+                            <div class="copyline">
+                                <code id="code-rpc">git diff &lt;branch1&gt; &lt;branch2&gt;</code>
+                                <button class="copy-btn" data-copy-target="#code-rpc" aria-label="Copy line"><ion-icon name="copy-outline"></ion-icon></button>
+                            </div>
+                        </span>
+                    </li>
+                    <li>
+                        <span class="ol-title">To show only the names of changed files:</span>
+                        <span class="ol-expl">
+                            <div class="copyline">
+                                <code id="code-rpc">git diff --name-only</code>
+                                <button class="copy-btn" data-copy-target="#code-rpc" aria-label="Copy line"><ion-icon name="copy-outline"></ion-icon></button>
+                            </div>
+                        </span>
+                    </li>
+                </ol>
+            </li>
+        </ol>
 
-        
-        <h2 id="submodule">Branching and Merging Commands</h2>
-        <h3 class="article-list">git branch</h3>
-        <p><strong>Purpose:</strong> List, create, delete, or rename branches.</p>
-        <ul>
-            <li>To list all branches: <code style="color:rgb(223, 149, 12); font-size:20px">git branch</code></li>
-            <li>To create a new branch: <code style="color:rgb(223, 149, 12); font-size:20px">git branch &lt;branch-name&gt;</code></li>
-            <li>To delete a branch: <code style="color:rgb(223, 149, 12); font-size:20px">git branch -d &lt;branch-name&gt;</code></li>
-            <li>To rename a branch: <code style="color:rgb(223, 149, 12); font-size:20px">git branch -m &lt;old-branch-name&gt; &lt;new-branch-name&gt;</code></li>
-            <li>To show the current branch: <code style="color:rgb(223, 149, 12); font-size:20px">git branch --show-current</code></li>
-        </ul>
+        <h4 class="title t-4">Patching Commands</h4>
+        <ol class="outer-ol">
+            <li>
+                <span class="ol-title">git cherry-pick</span>
+                <span class="ol-expl">Apply changes from a specific commit.</span>
+                <ol class="inner-ol">
+                    <li>
+                        <span class="ol-title">To apply a specific commit to the current branch:</span>
+                        <span class="ol-expl">
+                            <div class="copyline">
+                                <code id="code-rpc">git cherry-pick &lt;commit&gt;</code>
+                                <button class="copy-btn" data-copy-target="#code-rpc" aria-label="Copy line"><ion-icon name="copy-outline"></ion-icon></button>
+                            </div>
+                        </span>
+                    </li>
+                    <li>
+                        <span class="ol-title">To abort an ongoing cherry-pick operation:</span>
+                        <span class="ol-expl">
+                            <div class="copyline">
+                                <code id="code-rpc">git cherry-pick --abort</code>
+                                <button class="copy-btn" data-copy-target="#code-rpc" aria-label="Copy line"><ion-icon name="copy-outline"></ion-icon></button>
+                            </div>
+                        </span>
+                    </li>
+                </ol>
+            </li>
+            <li>
+                <span class="ol-title">git apply</span>
+                <span class="ol-expl">Apply a patch to the working directory.</span>
+                <ol class="inner-ol">
+                    <li>
+                        <span class="ol-title">To apply from a patch file:</span>
+                        <span class="ol-expl">
+                            <div class="copyline">
+                                <code id="code-rpc">git apply &lt;patch-file&gt;</code>
+                                <button class="copy-btn" data-copy-target="#code-rpc" aria-label="Copy line"><ion-icon name="copy-outline"></ion-icon></button>
+                            </div>
+                        </span>
+                    </li>
+                    <li>
+                        <span class="ol-title">To check if a patch can be applied cleanly:</span>
+                        <span class="ol-expl">
+                            <div class="copyline">
+                                <code id="code-rpc">git apply --check &lt;patch-file&gt;</code>
+                                <button class="copy-btn" data-copy-target="#code-rpc" aria-label="Copy line"><ion-icon name="copy-outline"></ion-icon></button>
+                            </div>
+                        </span>
+                    </li>
+                </ol>
+            </li>
+        </ol>
 
-        
-        <h3 class="article-list">git checkout</h3>
-        <p><strong>Purpose:</strong> Switch branches or restore working tree files.</p>
-        <ul>
-            <li>To switch to a branch: <code style="color:rgb(223, 149, 12); font-size:20px">git checkout &lt;branch-name&gt;</code></li>
-            <li>To create and switch to a new branch: <code style="color:rgb(223, 149, 12); font-size:20px">git checkout -b &lt;branch-name&gt;</code></li>
-            <li>To discard changes in the working directory: <code style="color:rgb(223, 149, 12); font-size:20px">git checkout -- &lt;file&gt;</code></li>
-        </ul>
-        
-        <h3 class="article-list">git merge</h3>
-        <p><strong>Purpose:</strong> Merge changes from one branch into another.</p>
-        <ul>
-            <li>To merge a branch into the current branch: <code style="color:rgb(223, 149, 12); font-size:20px">git merge &lt;branch-name&gt;</code></li>
-            <li>To merge changes into the current branch but do not commit immediately: <code style="color:rgb(223, 149, 12); font-size:20px">git merge --squash &lt;branch-name&gt;</code></li>
-            <li>To create a merge commit even if a fast-forward merge is possible: <code style="color:rgb(223, 149, 12); font-size:20px">git merge --no-ff</code></li>
-        </ul>
-
-        <h3 class="article-list">git rebase</h3>
-        <p><strong>Purpose:</strong> Move or combine commits onto a new base.</p>
-        <ul>
-            <li>To rebase the current branch onto another branch: <code style="color:rgb(223, 149, 12); font-size:20px">git rebase &lt;branch-name&gt;</code></li>
-            <li>To rebase interactively to edit commit history: <code style="color:rgb(223, 149, 12); font-size:20px">git rebase --interactive</code></li>
-            <li>To the rebase and reset to the original branch: <code style="color:rgb(223, 149, 12); font-size:20px">git rebase --abort</code></li>
-        </ul>
-        
-        <h3 class="article-list">git stash</h3>
-        <p><strong>Purpose:</strong> Save changes temporarily without committing.</p>
-        <ul>
-            <li>To save changes with a message: <code style="color:rgb(223, 149, 12); font-size:20px">git stash save "message"</code></li>
-            <li>To apply changes from the stash and remove it from the stash list: <code style="color:rgb(223, 149, 12); font-size:20px">git stash pop</code></li>
-            <li>To list all stashes: <code style="color:rgb(223, 149, 12); font-size:20px">git stash list</code></li>
-        </ul>
-
-        
-        <h2 id="submodule">Sharing and Updating Projects</h2>
-        
-        <h3 class="article-list">git fetch</h3>
-        <p><strong>Purpose:</strong> Download objects and refs from a remote repository.</p>
-        <ul>
-            <li>To fetch changes from a remote repository: <code style="color:rgb(223, 149, 12); font-size:20px">git fetch origin</code></li>
-            <li>To fetch all changes from all remotes: <code style="color:rgb(223, 149, 12); font-size:20px">git fetch --all</code></li>
-        </ul>
-        
-        <h3 class="article-list">git pull</h3>
-        <p><strong>Purpose:</strong> Fetch and merge changes from a remote repository.</p>
-        <ul>
-            <li>To pull changes from a specific branch: <code style="color:rgb(223, 149, 12); font-size:20px">git pull origin &lt;branch-name&gt;</code></li>
-            <li>To rebase the local branch with the upstream branch: <code style="color:rgb(223, 149, 12); font-size:20px">git pull --rebase</code></li>
-        </ul>
-        
-        <h3 class="article-list">git push</h3>
-        <p><strong>Purpose:</strong> Push local changes to a remote repository.</p>
-        <ul>
-            <li>To push the current branch to origin: <code style="color:rgb(223, 149, 12); font-size:20px">git push origin &lt;branch-name&gt;</code></li>
-            <li>To force push changes, overwriting history: <code style="color:rgb(223, 149, 12); font-size:20px">git push --force</code></li>
-        </ul>
-        
-        <h3 class="article-list">git remote</h3>
-        <p><strong>Purpose:</strong> Manage remote repository connections.</p>
-        <ul>
-            <li>To add a remote repository: <code style="color:rgb(223, 149, 12); font-size:20px">git remote add &lt;name&gt; &lt;url&gt;</code></li>
-            <li>To list all remote repositories/URLs: <code style="color:rgb(223, 149, 12); font-size:20px">git remote -v</code></li>
-            <li>To remove a remote repository: <code style="color:rgb(223, 149, 12); font-size:20px">git remote remove &lt;name&gt;</code></li>
-        </ul>
-        
-        <h3 class="article-list">git submodule</h3>
-        <p><strong>Purpose:</strong> Manage submodules in a Git repository.</p>
-        <ul>
-            <li>To add a submodule: <code style="color:rgb(223, 149, 12); font-size:20px">git submodule add &lt;repository&gt;</code></li>
-            <li>To clone and initialize submodules: <code style="color:rgb(223, 149, 12); font-size:20px">git submodule update --init</code></li>
-            <li>To show the status of submodules: <code style="color:rgb(223, 149, 12); font-size:20px">git submodule status</code></li>
-        </ul>
-
-
-        <h2 id="submodule">Inspection and Comparison Commands</h2>
-        <h3 class="article-list">git log</h3>
-        <p><strong>Purpose:</strong> Show the commit history.</p>
-        <ul>
-            <li>To show the commit history: <code style="color:rgb(223, 149, 12); font-size:20px">git log</code></li>
-            <li>To show the commit history in one line: <code style="color:rgb(223, 149, 12); font-size:20px">git log --oneline</code></li>
-            <li>To show a graphical representation of the commit history: <code style="color:rgb(223, 149, 12); font-size:20px">git log --graph</code></li>
-            <li>To show the changes introduced in each commit: <code style="color:rgb(223, 149, 12); font-size:20px">git log -p</code></li>
-        </ul>
-        
-        <h3 class="article-list">git show</h3>
-        <p><strong>Purpose:</strong> Show details of a commit or object.</p>
-        <ul>
-            <li>To show the details of a commit: <code style="color:rgb(223, 149, 12); font-size:20px">git show &lt;commit&gt;</code></li>
-            <li>To show the details of the last commit: <code style="color:rgb(223, 149, 12); font-size:20px">git show HEAD</code></li>
-        </ul>
-
-        <h3 class="article-list">git diff</h3>
-        <p><strong>Purpose:</strong> Show changes between commits, branches, or working tree.</p>
-        <ul>
-            <li>To show unstaged changes: <code style="color:rgb(223, 149, 12); font-size:20px">git diff</code></li>
-            <li>To show changes staged for commit: <code style="color:rgb(223, 149, 12); font-size:20px">git diff --staged</code></li>
-            <li>To compare between two branches: <code style="color:rgb(223, 149, 12); font-size:20px">git diff &lt;branch1&gt; &lt;branch2&gt;</code></li>
-            <li>To show only the names of changed files: <code style="color:rgb(223, 149, 12); font-size:20px">git diff --name-only</code></li>
-        </ul>
-
-        
-        <h2 id="submodule">Patching Commands</h2>
-        <h3 class="article-list">git cherry-pick</h3>
-        <p><strong>Purpose:</strong> Apply changes from a specific commit.</p>
-        <ul>
-            <li>To apply a specific commit to the current branch: <code style="color:rgb(223, 149, 12); font-size:20px">git cherry-pick &lt;commit&gt;</code></li>
-            <li>To abort an ongoing cherry-pick operation: <code style="color:rgb(223, 149, 12); font-size:20px">git cherry-pick --abort</code></li>
-        </ul>
-    
-        <h3 class="article-list">git apply</h3>
-        <p><strong>Purpose:</strong> Apply a patch to the working directory.</p>
-        <ul>
-            <li>To apply from a patch file: <code style="color:rgb(223, 149, 12); font-size:20px">git apply &lt;patch-file&gt;</code></li>
-            <li>To check if a patch can be applied cleanly: <code style="color:rgb(223, 149, 12); font-size:20px">git apply --check &lt;patch-file&gt;</code></li>
-        </ul>
-
-        
-        <h2 id="submodule">Debugging Commands</h2>
-        <h3 class="article-list">git bisect</h3>
-        <p><strong>Purpose:</strong> Find the commit that introduced a bug.</p>
-        <ul>
-            <li>To start the bisect process: <code style="color:rgb(223, 149, 12); font-size:20px">git bisect start</code></li>
-            <li>To mark a commit as good: <code style="color:rgb(223, 149, 12); font-size:20px">git bisect good &lt;commit&gt;</code></li>
-            <li>To mark a commit as bad: <code style="color:rgb(223, 149, 12); font-size:20px">git bisect bad &lt;commit&gt;</code></li>
-        </ul>
-        
-        <h3 class="article-list">git blame</h3>
-        <p><strong>Purpose:</strong> Show who made changes to each line of a file.</p>
-        <ul>
-            <li>To show changes by line in a file: <code style="color:rgb(223, 149, 12); font-size:20px">git blame &lt;file&gt;</code></li>
-            <li>To limit the blame to a range of lines: <code style="color:rgb(223, 149, 12); font-size:20px">git blame -L &lt;start&gt;,&lt;end&gt; &lt;file&gt;</code></li>
-        </ul>
-        
-        <h3 class="article-list">git grep</h3>
-        <p><strong>Purpose:</strong> Search for patterns in tracked files.</p>
-        <ul>
-            <li>To search for a pattern in the current branch: <code style="color:rgb(223, 149, 12); font-size:20px">git grep "pattern"</code></li>
-            <li>To search for a pattern with line numbers for a match: <code style="color:rgb(223, 149, 12); font-size:20px">git grep -n "pattern"</code></li>
-        </ul>
+        <h4 class="title t-4">Debugging Commands</h4>
+        <ol class="outer-ol">
+            <li>
+                <span class="ol-title">git bisect</span>
+                <span class="ol-expl">Find the commit that introduced a bug.</span>
+                <ol class="inner-ol">
+                    <li>
+                        <span class="ol-title">To start the bisect process:</span>
+                        <span class="ol-expl">
+                            <div class="copyline">
+                                <code id="code-rpc">git bisect start</code>
+                                <button class="copy-btn" data-copy-target="#code-rpc" aria-label="Copy line"><ion-icon name="copy-outline"></ion-icon></button>
+                            </div>
+                        </span>
+                    </li>
+                    <li>
+                        <span class="ol-title">To mark a commit as good:</span>
+                        <span class="ol-expl">
+                            <div class="copyline">
+                                <code id="code-rpc">git bisect good &lt;commit&gt;</code>
+                                <button class="copy-btn" data-copy-target="#code-rpc" aria-label="Copy line"><ion-icon name="copy-outline"></ion-icon></button>
+                            </div>
+                        </span>
+                    </li>
+                    <li>
+                        <span class="ol-title">To mark a commit as bad:</span>
+                        <span class="ol-expl">
+                            <div class="copyline">
+                                <code id="code-rpc">git bisect bad &lt;commit&gt;</code>
+                                <button class="copy-btn" data-copy-target="#code-rpc" aria-label="Copy line"><ion-icon name="copy-outline"></ion-icon></button>
+                            </div>
+                        </span>
+                    </li>
+                </ol>
+            </li>
+            <li>
+                <span class="ol-title">git blame</span>
+                <span class="ol-expl">Show who made changes to each line of a file.</span>
+                <ol class="inner-ol">
+                    <li>
+                        <span class="ol-title">To show changes by line in a file:</span>
+                        <span class="ol-expl">
+                            <div class="copyline">
+                                <code id="code-rpc">git blame &lt;file&gt;</code>
+                                <button class="copy-btn" data-copy-target="#code-rpc" aria-label="Copy line"><ion-icon name="copy-outline"></ion-icon></button>
+                            </div>
+                        </span>
+                    </li>
+                    <li>
+                        <span class="ol-title">To limit the blame to a range of lines:</span>
+                        <span class="ol-expl">
+                            <div class="copyline">
+                                <code id="code-rpc">git blame -L &lt;start&gt;,&lt;end&gt; &lt;file&gt;</code>
+                                <button class="copy-btn" data-copy-target="#code-rpc" aria-label="Copy line"><ion-icon name="copy-outline"></ion-icon></button>
+                            </div>
+                        </span>
+                    </li>
+                </ol>
+            </li>
+            <li>
+                <span class="ol-title">git grep</span>
+                <span class="ol-expl">Search for patterns in tracked files.</span>
+                <ol class="inner-ol">
+                    <li>
+                        <span class="ol-title">To search for a pattern in the current branch:</span>
+                        <span class="ol-expl">
+                            <div class="copyline">
+                                <code id="code-rpc">git grep "pattern"</code>
+                                <button class="copy-btn" data-copy-target="#code-rpc" aria-label="Copy line"><ion-icon name="copy-outline"></ion-icon></button>
+                            </div>
+                        </span>
+                    </li>
+                    <li>
+                        <span class="ol-title">To search for a pattern with line numbers for a match:</span>
+                        <span class="ol-expl">
+                            <div class="copyline">
+                                <code id="code-rpc">git grep -n "pattern"</code>
+                                <button class="copy-btn" data-copy-target="#code-rpc" aria-label="Copy line"><ion-icon name="copy-outline"></ion-icon></button>
+                            </div>
+                        </span>
+                    </li>
+                </ol>
+            </li>
+        </ol>
         
     </div>
 
@@ -325,11 +991,13 @@
 
     <div class="modal-overlay" data-subscribe-modal hidden>
         <div class="modal-window" role="dialog" aria-modal="true" aria-labelledby="subscribeModalTitle">
-            <button type="button" class="modal-close" data-close-subscribe aria-label="Close subscribe dialog">&times;</button>
+            <button type="button" class="modal-close" data-close-subscribe
+                aria-label="Close subscribe dialog">&times;</button>
             <h3 id="subscribeModalTitle" class="modal-title">Receive new articles directly in your inbox</h3>
             <form class="modal-form" data-subscribe-form>
                 <label class="visually-hidden" for="subscribe-email">Email</label>
-                <input type="email" id="subscribe-email" name="email" placeholder="enter your email" autocomplete="email" required>
+                <input type="email" id="subscribe-email" name="email" placeholder="enter your email"
+                    autocomplete="email" required>
                 <span class="input-hint" data-subscribe-hint></span>
                 <button type="submit" class="modal-submit" data-subscribe-submit disabled>subscribe</button>
                 <p class="submit-feedback" data-subscribe-feedback role="status" aria-live="polite"></p>
@@ -338,8 +1006,10 @@
     </div>
 
     <div class="modal-overlay" data-connect-modal hidden>
-        <div class="modal-window modal-window--wallet" role="dialog" aria-modal="true" aria-labelledby="walletModalTitle" id="walletModal">
-            <button type="button" class="modal-close" data-close-connect aria-label="Close wallet dialog">&times;</button>
+        <div class="modal-window modal-window--wallet" role="dialog" aria-modal="true"
+            aria-labelledby="walletModalTitle" id="walletModal">
+            <button type="button" class="modal-close" data-close-connect
+                aria-label="Close wallet dialog">&times;</button>
             <h3 id="walletModalTitle" class="modal-title">Connect your wallet</h3>
             <p class="modal-intro">Select a wallet provider to continue. (Wallet integration coming soon.)</p>
             <ul class="wallet-list">
@@ -350,7 +1020,8 @@
                 <li><button type="button" class="wallet-button" data-wallet="rainbow">Rainbow</button></li>
                 <li><button type="button" class="wallet-button" data-wallet="ledger">Ledger Live</button></li>
             </ul>
-            <p class="wallet-placeholder-note">Connection support will arrive soon. For now, this list is a visual placeholder.</p>
+            <p class="wallet-placeholder-note">Connection support will arrive soon. For now, this list is a visual
+                placeholder.</p>
         </div>
     </div>
 
@@ -375,9 +1046,7 @@
     <script src="../../js/aos.js"></script>
     <script src="../../js/custom.js"></script>
     <script src="../../js/post-slugs.js" defer></script>
-    <script>
-      window.POST_STATS_API_BASE = 'https://sashaflores-portfolio.vercel.app';
-    </script>
+    <script>window.POST_STATS_API_BASE = 'https://sashaflores-portfolio.vercel.app';</script>
     <script src="../../js/post-stats.js" defer></script>
     <script src="../../js/nav-cta.js" defer></script>
 

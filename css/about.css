@@ -1,5 +1,8 @@
-/*quote1*/
+@import url('https://fonts.googleapis.com/css2?family=Alumni+Sans+Pinstripe:ital@0;1&family=Imperial+Script&family=Lavishly+Yours&family=Poiret+One&family=Quintessential&display=swap');
 
+/*
+
+/*quote1*/
 #quote1 {
   background-image: url(../images/sm_banner.png);
   background-repeat: no-repeat;
@@ -140,25 +143,11 @@
   margin-top: 10%;
 }
 
-#experience {
-  margin-top: 10%;
-}
-
-.experience-header {
-  margin-bottom: 20px;
-}
-
-.experience-item {
-  margin-bottom: 30px;
-}
-
-#skills h2,
-#experience h3 {
+#skills h2 {
   color: #d5d0d0;
 }
 
-#skills h4,
-#experience h4 {
+#skills h4 {
   font-family: "Poiret One", sans-serif;
   font-size: 30px;
   font-weight: 600;
@@ -166,19 +155,96 @@
   color: hsl(194, 40%, 37%);
 }
 
-#experience h6 {
-  color: hsl(217, 94%, 81%);
-}
-
-#skills h6,
-#experience p {
+#skills h6 {
   font-size: 20px;
   letter-spacing: 1px;
   color: hsl(194, 60%, 50%);
 }
 
+
+#experience {
+  margin: 12% auto 11%;
+  --exp-role-color: hsl(194, 60%, 50%);
+  --exp-date-color: #748cab;
+  --exp-company-color: hsl(194, 40%, 72%);
+  --exp-text-color: #ffe1a8;
+  --exp-role-size: clamp(1.5625rem, 1.4rem + 1.4vw, 1.6875rem);
+  --exp-date-size: clamp(1.05rem, 0.95rem + 0.4vw, 1.3rem);
+  --exp-body-size: clamp(1.25rem, 1.2rem + 1.5vw, 1.375rem);
+  --exp-company-size: clamp(1.15rem, 1rem + 0.4vw, 1.35rem);
+}
+
+#experience .container {
+  max-width: 960px;
+  padding-inline: clamp(1.5rem, 4vw, 2.5rem);
+  font-family: 'Alumni Sans Pinstripe', sans-serif;
+  letter-spacing: 0.06em;
+}
+
+.experience-header {
+  font-family: 'Poiret One', sans-serif;
+  margin-bottom: clamp(1.5rem, 2vw, 2rem);
+  font-size: clamp(2rem, 1.75rem + 1vw, 2.6rem);
+  letter-spacing: 0.08em;
+  color: var(--exp-role-color);
+}
+
+.experience-item {
+  margin-bottom: clamp(2.75rem, 4vw, 3.5rem);
+  padding-bottom: clamp(1.5rem, 2vw, 2rem);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  color: var(--exp-text-color);
+}
+
+.experience-item:last-of-type {
+  border-bottom: none;
+}
+
+.experience-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: clamp(0.75rem, 2vw, 1.5rem);
+  flex-wrap: wrap;
+}
+
+.experience-role {
+  margin: 0;
+  font-family: "Poiret One", sans-serif;
+  font-size: clamp(1.3rem, 1.1rem + 0.6vw, 1.7rem);
+  font-weight: 600;
+  letter-spacing: 0.09em;
+  color: var(--exp-role-color);
+}
+
+.experience-dates {
+  font-size: var(--exp-date-size);
+  font-weight: 500;
+  color: var(--exp-date-color);
+  text-transform: uppercase;
+}
+
+.experience-company {
+  margin: clamp(0.35rem, 1vw, 0.75rem) 0 clamp(0.75rem, 1.5vw, 1.25rem);
+  font-size: var(--exp-company-size);
+  letter-spacing: 0.06em;
+  font-style: italic;
+  color: var(--exp-company-color);
+}
+
+.experience-list {
+  margin: 0;
+  padding-left: clamp(1.5rem, 2.5vw, 2rem);
+  display: grid;
+  font-size: var(--exp-body-size);
+  font-weight: 500;
+  line-height: 1.25;
+  list-style: disc;
+  color: var(--exp-text-color);
+}
+
 #experience ul {
-  color: hsl(0, 0%, 85%);
+  color: var(--exp-text-color);
 }
 
 .section-divider {

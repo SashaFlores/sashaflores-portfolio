@@ -219,12 +219,12 @@ body.scrolled nav.navbar {
 }
 
 #aboutDropdown::after {
-    display: none;
+  display: none;
 }
 
-/* =========================
-   NAV CTA BUTTONS & MODALS
-   ========================= */
+/*=========================
+  NAV CTA BUTTONS & MODALS
+  =========================*/
 
 .nav-cta {
   display: flex;

@@ -6,12 +6,12 @@ import (
     "os"
     "strings"
 
-    handler "sashafloresportfolio/api"
+    "sashafloresportfolio/internal/handlers"
 )
 
 func main() {
     mux := http.NewServeMux()
-    mux.HandleFunc("/api/counter", handler.Handler)
+    mux.HandleFunc("/api/counter", handlers.Counter)
 
     addr := os.Getenv("PORT")
     if strings.TrimSpace(addr) == "" {

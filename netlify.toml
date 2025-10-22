@@ -5,5 +5,10 @@
   NODE_VERSION = "24.9.0"
   NPM_FLAGS = "--legacy-peer-deps"
 
-# [functions]
-#   directory = "js/netlify"
+[[plugins]]
+  package = "@netlify/plugin-emails"
+  [plugins.inputs]
+    directory = "emails"
+
+[functions]
+  node_bundler = "esbuild"

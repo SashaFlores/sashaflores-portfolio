@@ -33,15 +33,16 @@
   --table-row-alt: rgba(21, 27, 51, 0.9);
   --badge-radius: 999px;
   --title-color: #219ebc;
-  --heading-color: #219ebc;
-  --subheading-color: #a2d2ff;
+  --heading-color: #669bbc;
+  --subheading-color: #023e8a;
+  --code-snippet-color: #588157;
 }
 
 body {
   background: #05060b;
   color: var(--article-text);
   font-family: 'Alumni Sans Pinstripe', sans-serif;
-  font-size: clamp(1.25rem, 1.2rem + 1.5vw, 1.375rem);
+  font-size: clamp(1.25rem, 1.2rem + 1.5vw, 1.5625rem);
   letter-spacing: 0.05em;
 }
 
@@ -57,7 +58,7 @@ body {
 }
 
 .article-container a {
-  color: var(--article-text);
+  color: var(--accent-primary);
   text-decoration: none;
   transition: color 0.25s ease;
 }
@@ -130,6 +131,7 @@ body {
 }
 
 .article-container h1 {
+  font-size: clamp(2.25rem, 1.8rem + 1.5vw, 2.75rem);
   text-align: center;
   color: var(--title-color);
   font-weight: 800;
@@ -138,18 +140,37 @@ body {
 .article-container .title.t-2,
 .article-container .title.t-3,
 .article-container .title.t-4 {
-  font-size: clamp(1.5625rem, 1.8rem + 1vw, 1.875rem);
   color: var(--heading-color);
   font-weight: 600;
 }
 
 .article-container .subtitle.s-5,
 .article-container .subtitle.s-6 {
-  font-size: clamp(1.5rem, 1.2rem + 0.6vw, 2rem);
   color: var(--subheading-color);
   margin: 0.5rem 0 1.25rem;
-  font-weight: 500;
+  font-weight: 600;
 }
+
+.article-container .title.t-2 {
+  font-size: clamp(2rem, 1.7rem + 1.1vw, 2.4rem);
+}
+
+.article-container .title.t-3 {
+  font-size: clamp(1.75rem, 1.55rem + 0.9vw, 2.1rem);
+}
+
+.article-container .title.t-4 {
+  font-size: clamp(1.55rem, 1.4rem + 0.7vw, 1.85rem);
+}
+
+.article-container .subtitle.s-5 {
+  font-size: clamp(1.5rem, 1.3rem + 0.5vw, 1.9rem);
+}
+
+.article-container .subtitle.s-6 {
+  font-size: clamp(1.25rem, 1.2rem + 0.4vw, 1.5rem);
+}
+
 
 /* =========================
   ARTICLE IMG & VIDEO STYLES
@@ -197,7 +218,21 @@ body {
 /* =========================
   CODE BLOCK & SNIPPET STYLES
   ========================= */
-.article-container .codebox {
+
+.article-container .inline-snippet {
+  display: inline-flex;
+  background: var(--border-soft);
+  color: inherit;
+  padding: 0 0.35rem;
+  border-radius: 6px;
+  font: inherit;
+  line-height: 1.05;
+}
+
+
+
+.article-container .codebox,
+.article-container .copyline {
   position: relative;
   background: rgba(8, 11, 24, 0.95);
   border: 1px solid var(--border-soft);
@@ -211,12 +246,14 @@ body {
   margin: 0;
 }
 
-.article-container .codebox code {
+.article-container .codebox code,
+.article-container .copyline code {
   display: block;
-  font-family: 'JetBrains Mono', 'SFMono-Regular', Menlo, monospace;
   font-size: 0.95rem;
   line-height: 1.55;
-  color: #e6edff;
+  color: var(--code-snippet-color);
+  text-align: left;
+  white-space: pre;
 }
 
 .article-container .copy-btn {
@@ -260,27 +297,7 @@ body {
   color: var(--accent-secondary);
 }
 
-.article-container .copyline {
-  position: relative;
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-  background: rgba(8, 11, 24, 0.95);
-  border: 1px solid var(--border-soft);
-  border-radius: 12px;
-  padding: 0.85rem 3.5rem 0.85rem 1.25rem;
-  margin: 1.25rem 0;
-  font-family: 'JetBrains Mono', 'SFMono-Regular', Menlo, monospace;
-  color: #e6edff;
-  font-size: 0.95rem;
-}
 
-.article-container .copyline .copy-btn {
-  position: absolute;
-  right: 10px;
-  top: 50%;
-  transform: translateY(-50%);
-}
 
 /* =========================
   LEGEND STYLES
@@ -416,7 +433,7 @@ body {
 
 .incident-table th {
   font-family: 'Poiret One', sans-serif;
-  padding: 1.1rem 1rem;
+  padding: 1.45rem 1rem;
   text-transform: uppercase;
   letter-spacing: 0.14em;
   font-size: 0.82rem;
@@ -475,9 +492,9 @@ body {
   word-break: break-word;
 }
 
-/* =========================
+/*=========================
   PROMO STYLES
-  ========================= */
+  =========================*/
 .audit-promo {
   margin: clamp(7rem, 10vw, 9rem) auto 0;
   position: relative;
@@ -527,14 +544,14 @@ body {
   letter-spacing: 0.08em;
 }
 
-.audit-btn {
+.article-container .audit-btn {
   justify-self: center;
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
   padding: 0.85rem 2.25rem;
   background: linear-gradient(135deg, var(--accent-secondary), var(--accent-primary));
-  color: #05060b;
+  color: #061b4a;
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.18em;
@@ -543,15 +560,17 @@ body {
   transition: transform 0.25s ease, box-shadow 0.25s ease;
 }
 
-.audit-btn:hover {
+.article-container .audit-btn:hover {
   transform: translateY(-3px);
   box-shadow: 0 22px 40px -22px rgba(0, 0, 0, 0.85);
+  color: #041c54;
 }
 
 
-/* =========================
+/*=========================
   LIST SYSTEM
-  ========================= */
+  =========================*/
+
 .article-container ol.outer-ol,
 .article-container ol.outer-ol ol {
   list-style: none;
@@ -562,37 +581,52 @@ body {
 
 .article-container ol.outer-ol > li,
 .article-container ol.outer-ol ol > li {
-  position: relative;
   counter-increment: item;
-  padding-left: 1.9rem;
   margin-top: 0.55rem;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  column-gap: 0.85rem;
+  align-items: start;
 }
 
 .article-container ol.outer-ol > li::before,
 .article-container ol.outer-ol ol > li::before {
   content: counters(item, ".") ".";
-  position: absolute;
-  left: 0;
-  top: 0;
-  width: 1.6rem;
-  text-align: right;
+  grid-column: 1;
+  align-self: start;
+  white-space: nowrap;
+}
+
+.article-container ol.outer-ol > li > *,
+.article-container ol.outer-ol ol > li > * {
+  grid-column: 2;
 }
 
 .article-container ol.outer-ol > li > ol {
   margin-top: 0.55rem;
 }
 
-.article-container .ol-title {
-  display: inline-block;
-  margin-right: 0.4rem;
+.article-container .ol-title,
+.article-container .ul-title {
+  display: block;
+  margin-bottom: 0.35rem;
 }
 
 .article-container .ol-expl,
-.article-container .ol-exp {
-  display: inline;
+.article-container .ul-expl {
+  display: block;
 }
 
-/* --- Per-post stats badge under hero media --- */
+.article-container ol.outer-ol > li::before {
+  font-weight: 600;
+}
+.article-container ol.outer-ol ol > li::before {
+  font-weight: 500;
+}
+
+/*=====================================
+  Per-post stats badge under hero media
+  ======================================*/
 
 .article-stats {
   margin: clamp(0.2rem, 1.2vw, 0.6rem) auto clamp(2.4rem, 4.5vw, 3.2rem);
@@ -653,4 +687,33 @@ body {
   border-radius: 999px;
   border: 1px solid rgba(144, 202, 249, 0.3);
   background: rgba(9, 11, 20, 0.55);
+}
+
+
+/* =========================
+  YOUTUBE EMBED STYLES
+  ========================= */
+
+.video-frame {
+  position: relative;
+  width: 100%;
+  max-width: 960px;
+  margin: 0 auto clamp(1.75rem, 4vw, 3rem);
+  border-radius: 16px;
+  overflow: hidden;
+  background: rgba(0, 0, 0, 0.8);
+}
+
+.video-frame::before {
+  content: "";
+  display: block;
+  padding-top: 56.25%; /* keeps a 16:9 aspect ratio */
+}
+
+.video-frame iframe {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
 }
