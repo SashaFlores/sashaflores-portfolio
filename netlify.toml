@@ -7,8 +7,6 @@
 
 [[plugins]]
   package = "@netlify/plugin-emails"
-  [plugins.inputs]
-    directory = "emails"
 
 [functions]
   node_bundler = "esbuild"

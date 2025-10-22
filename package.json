@@ -5,7 +5,10 @@
   "main": "index.js",
   "scripts": {
     "test": "echo OK",
-    "prepare": "husky"
+    "prepare": "husky",
+    "db:generate": "drizzle-kit generate",
+    "db:migrate": "netlify dev:exec drizzle-kit migrate",
+    "db:studio": "netlify dev:exec drizzle-kit studio"
   },
   "keywords": [
     "blockchain",
@@ -14,16 +17,17 @@
   "author": "sasha flores",
   "license": "MIT",
   "dependencies": {
-    "@netlify/blobs": "^10.0.11",
     "@netlify/emails": "^1.0.1",
-    "@vercel/speed-insights": "^1.2.0",
+    "@netlify/neon": "^0.1.0",
     "axios": "1.12.2",
+    "drizzle-orm": "^0.44.6",
     "node-fetch": "3.3.2"
   },
   "packageManager": "yarn@4.10.3",
   "devDependencies": {
     "@commitlint/cli": "^20.1.0",
     "@commitlint/config-conventional": "^20.0.0",
+    "drizzle-kit": "^0.31.5",
     "husky": "^9.1.7"
   }
 }
