@@ -23,7 +23,7 @@ const ensureTable = async () => {
       slug TEXT PRIMARY KEY,
       views BIGINT NOT NULL DEFAULT 0,
       likes BIGINT NOT NULL DEFAULT 0,
-      updated_at TIMES TAMPTZ NOT NULL DEFAULT NOW()
+      updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
     );
   `.catch((error) => {
     tableReadyPromise = null;
