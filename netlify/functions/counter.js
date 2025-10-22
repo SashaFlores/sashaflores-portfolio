@@ -1,4 +1,4 @@
-const { neon } = require('@netlify/neon');
+const { neon } = require('@neondatabase/serverless');
 
 let sqlClient;
 let tableReadyPromise;
@@ -6,15 +6,11 @@ let tableReadyPromise;
 const getSqlClient = () => {
   if (sqlClient) return sqlClient;
 
-  try {
-    sqlClient = neon(); // Uses NETLIFY_DATABASE_URL automatically
-  } catch (error) {
-    const connectionString = process.env.NETLIFY_DATABASE_URL || process.env.DATABASE_URL;
-    if (!connectionString) {
-      throw new Error('Database connection string is not configured.');
-    }
-    sqlClient = neon(connectionString);
+  const connectionString = process.env.NETLIFY_DATABASE_URL || process.env.DATABASE_URL;
+  if (!connectionString) {
+    throw new Error('Database connection string is not configured.');
   }
+  sqlClient = neon(connectionString);
   return sqlClient;
 };
 

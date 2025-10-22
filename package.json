@@ -17,8 +17,8 @@
   "author": "sasha flores",
   "license": "MIT",
   "dependencies": {
+    "@neondatabase/serverless": "^0.10.4",
     "@netlify/emails": "^1.0.1",
-    "@netlify/neon": "^0.1.0",
     "axios": "1.12.2",
     "drizzle-orm": "^0.44.6",
     "node-fetch": "3.3.2"
