@@ -1122,9 +1122,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"esbuild@npm:^0.25.4":
+"esbuild@npm:0.25.0
   version: 0.25.11
-  resolution: "esbuild@npm:0.25.11"
+  resolution: "esbuild@npm:0.25.0
   dependencies:
     "@esbuild/aix-ppc64": "npm:0.25.11"
     "@esbuild/android-arm": "npm:0.25.11"
@@ -1211,9 +1211,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"esbuild@npm:~0.18.20":
+"esbuild@npm:0.25.0
   version: 0.18.20
-  resolution: "esbuild@npm:0.18.20"
+  resolution: "esbuild@npm:0.25.0
   dependencies:
     "@esbuild/android-arm": "npm:0.18.20"
     "@esbuild/android-arm64": "npm:0.18.20"

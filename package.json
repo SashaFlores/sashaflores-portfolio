@@ -18,10 +18,10 @@
   "author": "sasha flores",
   "license": "MIT",
   "dependencies": {
-    "@neondatabase/serverless": "^0.10.4",
+    "@neondatabase/serverless": "1.0.2",
     "@netlify/emails": "^1.0.1",
     "axios": "1.12.2",
-    "dotenv": "^16.4.5",
+    "dotenv": "17.2.3",
     "drizzle-orm": "^0.44.6",
     "node-fetch": "3.3.2"
   },
@@ -30,7 +30,11 @@
     "@commitlint/cli": "^20.1.0",
     "@commitlint/config-conventional": "^20.0.0",
     "drizzle-kit": "^0.31.5",
-    "husky": "^9.1.7"
+    "husky": "^9.1.7",
+    "esbuild": "^0.25.0"
   },
-  "type": "module"
+  "type": "module",
+  "resolutions": {
+    "esbuild": "^0.25.0"
+  }
 }
