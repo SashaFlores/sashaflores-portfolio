@@ -265,6 +265,7 @@ a { text-decoration: none; }
 .blog-stats .stat {
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   gap: 0.4rem;
   color: hsla(0, 0%, 84%, 0.75);
 }
@@ -275,7 +276,11 @@ a { text-decoration: none; }
 
 .blog-stats .stat-number {
   min-width: 2.1rem;
-  text-align: left;
+  text-align: center;
+  font-family: 'Alumni Sans Pinstripe', sans-serif;
+  letter-spacing: 0.05em;
+  font-size: 1rem;
+  text-transform: none;
 }
 
 .blog-stats [data-role="like"] {
@@ -285,6 +290,7 @@ a { text-decoration: none; }
   border: 1px solid rgba(144, 202, 249, 0.35);
   transition: border-color 0.2s ease, background 0.2s ease, color 0.2s ease;
   background: rgba(12, 16, 28, 0.6);
+  color: hsla(0, 0%, 84%, 0.75);
 }
 
 .blog-stats [data-role="like"]:hover,
@@ -292,6 +298,11 @@ a { text-decoration: none; }
 .blog-stats [data-role="like"].stat-like--active {
   border-color: var(--nav-link-active);
   color: var(--nav-link-active);
+}
+
+.blog-stats [data-role="like"] .stat-number,
+.blog-stats .stat-view .stat-number {
+  color: currentColor;
 }
 
 .blog-stats [data-role="like"]:focus-visible {
@@ -304,6 +315,12 @@ a { text-decoration: none; }
   border-radius: 999px;
   border: 1px solid rgba(144, 202, 249, 0.15);
   background: rgba(12, 16, 28, 0.45);
+  color: hsla(0, 0%, 84%, 0.75);
+}
+
+.blog-stats .stat-view.stat-view--active {
+  border-color: var(--nav-link-active);
+  color: var(--nav-link-active);
 }
 
 .blog-stats .stat-like--active ion-icon {
@@ -317,7 +334,3 @@ a { text-decoration: none; }
 .blog-stats .stat[role="button"]:focus-visible {
   outline: none;
 }
-
-
-
-

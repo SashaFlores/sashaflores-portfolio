@@ -26,6 +26,17 @@
     <iframe width="560" height="315" src="https://www.youtube.com/embed/Z5RVfh3mlZ0?si=bP6HPVyNevvFnn-8" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
   </div>
 
+<!---Trigger THE FUNCTION MANUALLY IF NEEDED WHEN NEW POST PUBLISHED --->
+netlify functions:invoke notify-subscribers \
+  --payload '{
+    "title": "New Gold Protocol Hack Analysis",
+    "url": "https://sashaflores.xyz/blog/security/new-gold-protocol-hack-analysis.html",
+    "excerpt": "Price oracle manipulation drained the pool in hours…",
+    "preview": "A new security insight just dropped.",
+    "publishedAt": "2025-10-22T14:00:00Z"
+  }'
+
+
 
 
 
@@ -71,3 +82,22 @@
   font-style: normal;
 }
 
+<!------ Metadata Json --------->
+{
+  "name": "New Gold Protocol Hack Analysis",
+  "description": "Deep dive into the September 2025 price oracle exploit.",
+  "external_url": "https://sashaflores.xyz/blog/security/new-gold-protocol-hack-analysis.html",
+  "image": "ipfs://QmExampleCID/gold-protocol.png",
+  "animation_url": "https://sashaflores.xyz/media/gold-protocol.mp4",
+  "attributes": [
+    { "trait_type": "Category", "value": "Security" },
+    { "trait_type": "Series", "value": "Oracle Exploits" },
+    { "trait_type": "Published", "display_type": "date", "value": 1761109200 },
+    { "trait_type": "Access", "value": "Premium" }
+  ],
+  "properties": {
+    "read_time_minutes": 9,
+    "word_count": 2150,
+    "tags": ["DeFi", "Binance", "Oracle Manipulation"]
+  }
+}

@@ -926,6 +926,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"dotenv@npm:^16.4.5":
+  version: 16.6.1
+  resolution: "dotenv@npm:16.6.1"
+  checksum: 10c0/15ce56608326ea0d1d9414a5c8ee6dcf0fffc79d2c16422b4ac2268e7e2d76ff5a572d37ffe747c377de12005f14b3cc22361e79fc7f1061cce81f77d2c973dc
+  languageName: node
+  linkType: hard
+
 "drizzle-kit@npm:^0.31.5":
   version: 0.31.5
   resolution: "drizzle-kit@npm:0.31.5"
@@ -1913,6 +1920,7 @@ __metadata:
     "@neondatabase/serverless": "npm:^0.10.4"
     "@netlify/emails": "npm:^1.0.1"
     axios: "npm:1.12.2"
+    dotenv: "npm:^16.4.5"
     drizzle-kit: "npm:^0.31.5"
     drizzle-orm: "npm:^0.44.6"
     husky: "npm:^9.1.7"

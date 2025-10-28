@@ -85,7 +85,7 @@ function parsePayload(body) {
     throw new Error('Request body must be valid JSON.');
   }
 
-  const { title, url, excerpt, preview, publishedAt } = payload;
+  const { title, url, excerpt, preview, publishedAt, recipients } = payload;
 
   if (!title || !url) {
     throw new Error('Both "title" and "url" are required in the payload.');
@@ -96,7 +96,8 @@ function parsePayload(body) {
     url,
     excerpt: excerpt || '',
     preview: preview || 'A new security insight just dropped.',
-    publishedAt: publishedAt || new Date().toUTCString()
+    publishedAt: publishedAt || new Date().toUTCString(),
+    recipients: Array.isArray(recipients) ? recipients : undefined
   };
 }
 
@@ -105,7 +106,19 @@ export async function handler(event) {
     if (!fromEmail) missing('FROM_EMAIL');
 
     const payload = parsePayload(event.body);
-    const subscribers = await fetchSubscribers();
+    let subscribers;
+
+    if (payload.recipients && payload.recipients.length) {
+      subscribers = Array.from(
+        new Set(
+          payload.recipients
+            .map((email) => (email ? String(email).trim() : ''))
+            .filter(Boolean)
+        )
+      );
+    } else {
+      subscribers = await fetchSubscribers();
+    }
 
     if (subscribers.length === 0) {
       return {

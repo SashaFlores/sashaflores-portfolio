@@ -1,6 +1,7 @@
 (() => {
-  const API_BASE = (window.POST_STATS_API_BASE || '').replace(/\/$/, '');
-  const API_ENDPOINT = `${API_BASE}/api/counter`;
+  const rawBase = window.POST_STATS_API_BASE || '/.netlify/functions';
+  const API_BASE = rawBase.replace(/\/$/, '');
+  const API_ENDPOINT = `${API_BASE}/counter`;
   const SLUG_MAP = window.POST_SLUGS || {};
 
   const resolveSlugFromPath = (path) => {
@@ -56,8 +57,12 @@
   const updateContainerCounts = (container, counts) => {
     const likeNumberEl = container.querySelector('[data-role="like"] .stat-number');
     const viewNumberEl = container.querySelector('.stat-view .stat-number');
+    const viewWrap = container.querySelector('.stat-view');
     if (likeNumberEl) likeNumberEl.textContent = counts.likes.toLocaleString();
     if (viewNumberEl) viewNumberEl.textContent = counts.views.toLocaleString();
+    if (viewWrap) {
+      viewWrap.classList.toggle('stat-view--active', counts.views > 0);
+    }
   };
 
   const ensureSlugForContainer = (container) => {

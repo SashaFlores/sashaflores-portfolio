@@ -1,7 +1,8 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
+  
   <!-- meta tags -->
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -56,17 +57,19 @@
               </ul>
             </li>
             <li class="nav-item"><a class="nav-link" href="../../portfolio.html">PORTFOLIO</a></li>
-                        <li class="nav-item"> <a class="nav-link active" href="../../blog.html">BLOG</a></li>
-                        <li class="nav-item"><a class="nav-link" href="../../contact.html">CONTACT</a></li>
-                    </ul>
+            <li class="nav-item"> <a class="nav-link active" href="../../blog.html">BLOG</a></li>
+            <li class="nav-item"><a class="nav-link" href="../../contact.html">CONTACT</a></li>
+          </ul>
 
-                    <div class="nav-cta">
-                        <button type="button" class="nav-cta__btn" data-connect-trigger aria-haspopup="dialog" aria-controls="walletModal">CONNECT</button>
-                        <button type="button" class="nav-cta__btn nav-cta__btn--accent" data-subscribe-trigger aria-haspopup="dialog" aria-controls="subscribeModal">SUBSCRIBE</button>
-                    </div>
-                </div>
-            </div>
-        </nav>
+          <div class="nav-cta">
+            <button type="button" class="nav-cta__btn" data-connect-trigger aria-haspopup="dialog"
+              aria-controls="walletModal">CONNECT</button>
+            <button type="button" class="nav-cta__btn nav-cta__btn--accent" data-subscribe-trigger
+              aria-haspopup="dialog" aria-controls="subscribeModal">SUBSCRIBE</button>
+          </div>
+        </div>
+      </div>
+    </nav>
   </header>
 
 
@@ -74,19 +77,27 @@
     <h1 id="title">Unlock the Power of Inline Assembly: a Smart Contract Developer's Guide.</h1>
     <figure class="meta">
       <img alt="Time Square" src="https://miro.medium.com/1*nZyaG--DHPiAvd7qb2tDBg.jpeg" />
-      <p class="caption">Time Square (1903 Vs. 2020)</p>
     </figure>
 
     <div class="article-stats" data-post-id="inline-assembly">
-      <button type="button" class="stat" data-role="like">
-        <ion-icon name="thumbs-up-outline"></ion-icon>
-        <span class="stat-number">0</span>
+      <button class="stat-mint" type="button" aria-label="Mint placeholder">
+        <ion-icon name="sparkles-outline"></ion-icon>
+        <span>Mint Incoming</span>
       </button>
-      <div class="stat stat-view">
-        <ion-icon name="eye-outline"></ion-icon>
-        <span class="stat-number">0</span>
+      <div class="stat-group">
+        <button type="button" class="stat" data-role="like">
+          <ion-icon name="thumbs-up-outline"></ion-icon>
+          <span class="stat-number">0</span>
+        </button>
+        <div class="stat stat-view">
+          <ion-icon name="eye-outline"></ion-icon>
+          <span class="stat-number">0</span>
+        </div>
       </div>
     </div>
+
+
+
     <p>Yul is a low-level language that can be used in-line in Solidity via an assembly block, as a standalone language,
       and as a compilation target. Currently, the default dialect of Yul is the EVM dialect,
       so to harness this power, you must first gain a deep understanding of how the EVM works and second master the
@@ -690,7 +701,8 @@
     <p><b>Now let's overview everything we learned so far in the access storage contract, link to the source code in
         GitHub:</b></p>
     <div class="embed-link">
-      <a href="https://github.com/SashaFlores/all-about-yul/blob/main/contracts/assembly/AccessStorage.sol">all-about-yul</a>
+      <a
+        href="https://github.com/SashaFlores/all-about-yul/blob/main/contracts/assembly/AccessStorage.sol">all-about-yul</a>
     </div>
 
     <hr><img alt="" src="https://miro.medium.com/1*DOwtGGUs_EHBXQeyl20b0w.png" />
@@ -856,71 +868,74 @@
 
   </div>
 
-    <form name="subscribe-form" method="POST" data-netlify="true" netlify-honeypot="bot-field" hidden>
-        <input type="hidden" name="form-name" value="subscribe-form">
-        <input type="text" name="bot-field">
-        <input type="email" name="email">
-    </form>
+  <form name="subscribe-form" method="POST" data-netlify="true" netlify-honeypot="bot-field" hidden>
+    <input type="hidden" name="form-name" value="subscribe-form">
+    <input type="text" name="bot-field">
+    <input type="email" name="email">
+  </form>
 
-    <div class="modal-overlay" data-subscribe-modal hidden>
-        <div class="modal-window" role="dialog" aria-modal="true" aria-labelledby="subscribeModalTitle">
-            <button type="button" class="modal-close" data-close-subscribe aria-label="Close subscribe dialog">&times;</button>
-            <h3 id="subscribeModalTitle" class="modal-title">Receive new articles directly in your inbox</h3>
-            <form class="modal-form" data-subscribe-form>
-                <label class="visually-hidden" for="subscribe-email">Email</label>
-                <input type="email" id="subscribe-email" name="email" placeholder="enter your email" autocomplete="email" required>
-                <span class="input-hint" data-subscribe-hint></span>
-                <button type="submit" class="modal-submit" data-subscribe-submit disabled>subscribe</button>
-                <p class="submit-feedback" data-subscribe-feedback role="status" aria-live="polite"></p>
-            </form>
-        </div>
+  <div class="modal-overlay" data-subscribe-modal hidden>
+    <div class="modal-window" role="dialog" aria-modal="true" aria-labelledby="subscribeModalTitle">
+      <button type="button" class="modal-close" data-close-subscribe
+        aria-label="Close subscribe dialog">&times;</button>
+      <h3 id="subscribeModalTitle" class="modal-title">Receive new articles directly in your inbox</h3>
+      <form class="modal-form" data-subscribe-form>
+        <label class="visually-hidden" for="subscribe-email">Email</label>
+        <input type="email" id="subscribe-email" name="email" placeholder="enter your email" autocomplete="email"
+          required>
+        <span class="input-hint" data-subscribe-hint></span>
+        <button type="submit" class="modal-submit" data-subscribe-submit disabled>subscribe</button>
+        <p class="submit-feedback" data-subscribe-feedback role="status" aria-live="polite"></p>
+      </form>
     </div>
+  </div>
 
-    <div class="modal-overlay" data-connect-modal hidden>
-        <div class="modal-window modal-window--wallet" role="dialog" aria-modal="true" aria-labelledby="walletModalTitle" id="walletModal">
-            <button type="button" class="modal-close" data-close-connect aria-label="Close wallet dialog">&times;</button>
-            <h3 id="walletModalTitle" class="modal-title">Connect your wallet</h3>
-            <p class="modal-intro">Select a wallet provider to continue. (Wallet integration coming soon.)</p>
-            <ul class="wallet-list">
-                <li><button type="button" class="wallet-button" data-wallet="metamask">MetaMask</button></li>
-                <li><button type="button" class="wallet-button" data-wallet="coinbase">Coinbase Wallet</button></li>
-                <li><button type="button" class="wallet-button" data-wallet="trust">Trust Wallet</button></li>
-                <li><button type="button" class="wallet-button" data-wallet="phantom">Phantom</button></li>
-                <li><button type="button" class="wallet-button" data-wallet="rainbow">Rainbow</button></li>
-                <li><button type="button" class="wallet-button" data-wallet="ledger">Ledger Live</button></li>
-            </ul>
-            <p class="wallet-placeholder-note">Connection support will arrive soon. For now, this list is a visual placeholder.</p>
-        </div>
+  <div class="modal-overlay" data-connect-modal hidden>
+    <div class="modal-window modal-window--wallet" role="dialog" aria-modal="true" aria-labelledby="walletModalTitle"
+      id="walletModal">
+      <button type="button" class="modal-close" data-close-connect aria-label="Close wallet dialog">&times;</button>
+      <h3 id="walletModalTitle" class="modal-title">Connect your wallet</h3>
+      <p class="modal-intro">Select a wallet provider to continue. (Wallet integration coming soon.)</p>
+      <ul class="wallet-list">
+        <li><button type="button" class="wallet-button" data-wallet="metamask">MetaMask</button></li>
+        <li><button type="button" class="wallet-button" data-wallet="coinbase">Coinbase Wallet</button></li>
+        <li><button type="button" class="wallet-button" data-wallet="trust">Trust Wallet</button></li>
+        <li><button type="button" class="wallet-button" data-wallet="phantom">Phantom</button></li>
+        <li><button type="button" class="wallet-button" data-wallet="rainbow">Rainbow</button></li>
+        <li><button type="button" class="wallet-button" data-wallet="ledger">Ledger Live</button></li>
+      </ul>
+      <p class="wallet-placeholder-note">Connection support will arrive soon. For now, this list is a visual
+        placeholder.</p>
     </div>
+  </div>
 
-    <footer>
-        <div class="footer-content">
-            <p>&copy; 2025 Sasha Flores. All Rights Reserved.</p>
-            <div class="social-links">
-                <a href="https://www.linkedin.com/in/sflores369/" target="_blank"><ion-icon
-                        name="logo-linkedin"></ion-icon></a>
-                <a href="https://discord.com/users/827160247428710422" target="_blank"><ion-icon
-                        name="logo-discord"></ion-icon></a>
-                <a href="https://github.com/SashaFlores" target="_blank"><ion-icon name="logo-github"></ion-icon></a>
-                <a href="https://www.youtube.com/@web3securityengineer" target="_blank"><ion-icon
-                        name="videocam-sharp"></ion-icon><span class="tooltip"></span></a>
-                <!-- <a href="https://drive.google.com/file/d/126pcD_XZmZIKTWTNyxdWUUqjOIYt7uWk/view?usp=sharing" target="_blank"><ion-icon name="cloud-download-outline"></ion-icon></a> -->
-            </div>
-        </div>
-    </footer>
+  <footer>
+    <div class="footer-content">
+      <p>&copy; 2025 Sasha Flores. All Rights Reserved.</p>
+      <div class="social-links">
+        <a href="https://www.linkedin.com/in/sflores369/" target="_blank"><ion-icon name="logo-linkedin"></ion-icon></a>
+        <a href="https://discord.com/users/827160247428710422" target="_blank"><ion-icon
+            name="logo-discord"></ion-icon></a>
+        <a href="https://github.com/SashaFlores" target="_blank"><ion-icon name="logo-github"></ion-icon></a>
+        <a href="https://www.youtube.com/@web3securityengineer" target="_blank"><ion-icon
+            name="videocam-sharp"></ion-icon><span class="tooltip"></span></a>
+        <!-- <a href="https://drive.google.com/file/d/126pcD_XZmZIKTWTNyxdWUUqjOIYt7uWk/view?usp=sharing" target="_blank"><ion-icon name="cloud-download-outline"></ion-icon></a> -->
+      </div>
+    </div>
+  </footer>
 
-    <script src="../../js/bootstrap.bundle.min.js"></script>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="../../js/aos.js"></script>
-    <script src="../../js/custom.js"></script>
-    <script src="../../js/post-slugs.js" defer></script>
-    <script src="../../js/post-stats.js" defer></script>
-    <script src="../../js/nav-cta.js" defer></script>
+  <script src="../../js/bootstrap.bundle.min.js"></script>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="../../js/aos.js"></script>
+  <script src="../../js/custom.js"></script>
+  <script src="../../js/post-slugs.js" defer></script>
+  <script src="../../js/post-stats.js" defer></script>
+  <script src="../../js/nav-cta.js" defer></script>
 
-    <script type="module" src="https://unpkg.com/ionicons@latest/dist/ionicons/ionicons.esm.js"></script>
-    <script nomodule="" src="https://unpkg.com/ionicons@latest/dist/ionicons/ionicons.js"></script>
+  <script type="module" src="https://unpkg.com/ionicons@latest/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule="" src="https://unpkg.com/ionicons@latest/dist/ionicons/ionicons.js"></script>
 
-  
+
 </body>
 
 </html>
