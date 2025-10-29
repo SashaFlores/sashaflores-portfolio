@@ -7,6 +7,7 @@ const siteId = process.env.NETLIFY_SITE_ID;
 const apiToken = process.env.NETLIFY_API_TOKEN;
 const fromEmail = process.env.FROM_EMAIL;
 const fromName = process.env.FROM_NAME || 'SashaFlores';
+const fromHeader = fromName ? `${fromName} <${fromEmail}>` : fromEmail;
 
 const NETLIFY_API_ROOT = 'https://api.netlify.com/api/v1';
 let cachedFormId;
@@ -130,7 +131,7 @@ export async function handler(event) {
     const sendPromises = subscribers.map((to) =>
       sendEmail({
         template: 'new-post',
-        from: { email: fromEmail, name: fromName },
+        from: fromHeader,
         to,
         subject: 'SASHA FLORES PUBLISHED A NEW BLOG POST',
         parameters: {
