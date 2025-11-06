@@ -68,6 +68,15 @@ body {
   color: var(--accent-secondary);
 }
 
+.article-container blockquote {
+  background: rgba(255, 255, 255, 0.03); /* soft contrast on dark themes */
+  border-left: 6px solid rgba(255, 255, 255, 0.18);
+  padding: 1.25rem 1.5rem;
+  margin: 1rem 0 1.5rem 1.5rem;
+  color: var(--article-subtext); 
+  font-style: italic;
+}
+
 /* =========================
   HERO MEDIA STYLES
   ========================= */
@@ -142,6 +151,7 @@ body {
 .article-container .title.t-4 {
   color: var(--heading-color);
   font-weight: 600;
+  margin: 1.5rem 0 1rem;
 }
 
 .article-container .subtitle.s-5,
@@ -203,7 +213,7 @@ body {
 
 /* Optional: preset “zoom tiers” if you don’t want inline style */
 .article-container .a-figure.zoom-s,
-.article-container .a-video.zoom-s  { --zoom: 1.20; }
+.article-container .a-video.zoom-s  { --zoom: 1.05; }
 
 .article-container .a-figure.zoom-m,
 .article-container .a-video.zoom-m  { --zoom: 1.30; }

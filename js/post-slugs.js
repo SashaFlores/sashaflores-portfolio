@@ -1,5 +1,8 @@
 (function () {
   const SLUGS = {
+    '/blog/blockchain/web5.html': 'web5',
+    '/blog/blockchain/understanding-cryptographic-hash-functions.html': 'crypto-hash-functions',
+    '/blog/blockchain/understanding-merkle-trees.html': 'merkle-trees',
     '/blog/security/new-gold-protocol-hack-analysis.html': 'gold-protocol',
     '/blog/security/swissborg-lost-41m-in-api-breach.html': 'swissborg-breach',
     '/blog/security/two-exploits-13-5m-in-a-week-part2.html': 'two-exploits-part2',
